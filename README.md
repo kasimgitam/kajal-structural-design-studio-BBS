@@ -1,1 +1,0 @@
-# kajal-structural-design-studio-BBS

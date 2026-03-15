@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAJAL · structural design studio | Advanced BBS with column & beam zones</title>
+    <!-- Google Fonts: Cinzel Decorative + Calibri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Calibri', 'Inter', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: #e9eff7;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        .master-container {
+            max-width: 1600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2.5rem 2.5rem 1.5rem 1.5rem;
+            box-shadow: 0 30px 60px -20px #0b2b4f66;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-header {
+            background: linear-gradient(112deg, #06203b, #103a5e);
+            padding: 2rem 3rem 1.8rem 3rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 4px solid #f3b33d;
+        }
+        .brand-main {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 3.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 0 #103a5e;
+            line-height: 1.2;
+        }
+        .brand-sub {
+            font-family: 'Calibri', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #fedb9f;
+            margin-top: 0.2rem;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            font-family: 'Calibri', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #ffffff;
+            background: rgba(0,0,0,0.2);
+            padding: 0.4rem 2rem;
+            border-radius: 40px;
+            margin-top: 0.8rem;
+            display: inline-block;
+            border: 1px solid #f3b33d;
+        }
+        .tagline strong {
+            font-weight: 700;
+            color: #ffd966;
+        }
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+        .print-btn, .excel-btn {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid #739ac5;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .print-btn:hover, .excel-btn:hover {
+            background: #f3b33d;
+            border-color: #f3b33d;
+            color: #06203b;
+        }
+        .component-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: #e2eaf3;
+            padding: 1rem 3rem 0 3rem;
+            gap: 0.5rem;
+        }
+        .comp-btn {
+            background: transparent;
+            border: none;
+            padding: 1rem 2.2rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border-radius: 2rem 2rem 0 0;
+            color: #1f3b5c;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-bottom: 4px solid transparent;
+        }
+        .comp-btn.active {
+            background: white;
+            color: #06203b;
+            border-bottom: 4px solid #f3b33d;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.02);
+        }
+        .comp-btn:not(.active):hover {
+            background: #cbdaf0;
+        }
+        .content-panel {
+            background: #ffffff;
+            padding: 2.5rem 3rem;
+        }
+        .component-section {
+            display: none;
+        }
+        .component-section.active {
+            display: block;
+        }
+        .element-list {
+            background: #f7fafd;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #d7e2f0;
+        }
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .list-header h3 {
+            color: #103a5e;
+            font-weight: 600;
+        }
+        .add-btn {
+            background: #103a5e;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: 0.15s;
+        }
+        .add-btn:hover {
+            background: #1d4f78;
+        }
+        .element-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .element-tag {
+            background: white;
+            border: 1px solid #c2d4e6;
+            border-radius: 2rem;
+            padding: 0.4rem 1rem 0.4rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .element-tag span {
+            font-weight: 600;
+            color: #103a5e;
+        }
+        .remove-tag {
+            background: none;
+            border: none;
+            color: #aa3e3e;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .remove-tag:hover {
+            background: #ffe1e1;
+        }
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            background: #f7fafd;
+            padding: 2rem;
+            border-radius: 2rem;
+            margin-bottom: 2.2rem;
+            border: 1px solid #d7e2f0;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .input-group label {
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #2b4f6e;
+        }
+        .input-group input, .input-group select {
+            padding: 0.85rem 1.2rem;
+            border: 1px solid #c2d4e6;
+            border-radius: 1.2rem;
+            font-size: 1rem;
+            background: white;
+            transition: 0.15s;
+        }
+        .input-group select {
+            cursor: pointer;
+        }
+        .input-group input:focus, .input-group select:focus {
+            border-color: #103a5e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16,58,94,0.15);
+        }
+        .zone-info {
+            background: #e3f0ff;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid #f3b33d;
+            font-size: 0.95rem;
+        }
+        .zone-info strong {
+            color: #103a5e;
+        }
+        .btn-calc {
+            background: #103a5e;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+            border-radius: 3rem;
+            cursor: pointer;
+            box-shadow: 0 12px 20px -12px #103a5e;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            border: 1px solid #2d5b88;
+            margin-bottom: 2rem;
+        }
+        .btn-calc:hover {
+            background: #1d4f78;
+            transform: scale(1.02);
+        }
+        .results-area {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid #dbe4f0;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 6px 16px #d9e2ef;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 1100px;
+        }
+        th {
+            background: #e4edf9;
+            color: #0f3a5a;
+            font-weight: 600;
+            padding: 1rem 0.8rem;
+            border-bottom: 2px solid #adc6e2;
+        }
+        td {
+            padding: 0.9rem 0.8rem;
+            border-bottom: 1px solid #dce6f2;
+        }
+        .summary-card {
+            background: #e9f0fa;
+            border-radius: 1.5rem;
+            padding: 1.4rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 2rem;
+            margin-top: 1rem;
+            border-left: 8px solid #f3b33d;
+        }
+        .summary-card span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #103a5e;
+        }
+        .global-summary {
+            background: #e6f0ff;
+            border-radius: 2rem;
+            padding: 2rem 2.5rem;
+            margin: 2.5rem 0 1.5rem;
+            border: 2px solid #b9d1f0;
+            box-shadow: 0 8px 22px #bbd2f0;
+        }
+        .global-summary h2 {
+            color: #103a5e;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.8rem;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1.5rem;
+        }
+        .stat-block {
+            background: white;
+            padding: 1.2rem 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 12px #cedef0;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #2b4f6e;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b2b4f;
+        }
+        .studio-footer {
+            background: #06203b;
+            color: #b3cae5;
+            padding: 1.5rem 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            border-top: 4px solid #f3b33d;
+        }
+        .rights {
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+        .rights strong {
+            color: #fedb9f;
+            font-weight: 600;
+        }
+        .contact {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            background: #0f2e4b;
+            padding: 0.6rem 1.8rem;
+            border-radius: 4rem;
+        }
+        .contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: white;
+        }
+        .contact i { font-style: normal; font-weight: 400; color: #ffd966; }
+        .note {
+            background: #fef4e2;
+            border-left: 6px solid #f3b33d;
+            padding: 1rem 1.8rem;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Print styles */
+        @media print {
+            .brand-header .header-actions,
+            .component-tabs,
+            .input-grid,
+            .btn-calc,
+            .element-list .add-btn,
+            .element-list input,
+            .studio-footer,
+            .note {
+                display: none !important;
+            }
+            .element-items {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+            .element-tag {
+                background: #f0f5fc !important;
+                border: 1px solid #103a5e !important;
+                print-color-adjust: exact;
+            }
+            .brand-header {
+                background: linear-gradient(112deg, #06203b, #103a5e) !important;
+                color: white !important;
+                border-bottom: 4px solid #f3b33d !important;
+                print-color-adjust: exact;
+            }
+            th {
+                background: #103a5e !important;
+                color: white !important;
+                print-color-adjust: exact;
+            }
+            .summary-card {
+                border-left: 8px solid #f3b33d !important;
+            }
+            .global-summary {
+                border: 2px solid #103a5e !important;
+            }
+            .component-section {
+                display: block !important;
+                page-break-after: always;
+            }
+            .component-section:last-of-type {
+                page-break-after: avoid;
+            }
+            .print-contact-footer {
+                display: block !important;
+                text-align: center;
+                margin-top: 2rem;
+                color: #103a5e;
+                border-top: 1px dashed #103a5e;
+                padding-top: 1rem;
+            }
+        }
+        .print-contact-footer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="master-container">
+    <div class="brand-header">
+        <div class="brand-main">KAJAL</div>
+        <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
+        <div class="tagline"><strong>Build Smarter, Build Stronger</strong></div>
+        <div class="header-actions">
+            <button class="print-btn" id="printFullBtn">🖨️ Print full BBS</button>
+            <button class="excel-btn" id="excelFullBtn">📥 Excel complete BBS</button>
+        </div>
+    </div>
+
+    <div class="component-tabs">
+        <button class="comp-btn active" data-comp="footing">📐 Footings</button>
+        <button class="comp-btn" data-comp="column">📏 Columns</button>
+        <button class="comp-btn" data-comp="beam">📦 Beams</button>
+        <button class="comp-btn" data-comp="slab">🧱 Slabs</button>
+    </div>
+
+    <div class="content-panel" id="fullContent">
+        <!-- FOOTING SECTION (final) -->
+        <div id="footing-section" class="component-section active">
+            <h2 style="color:#103a5e;">📐 Footing BBS</h2>
+            <div class="element-list" id="footing-list-container">
+                <div class="list-header">
+                    <h3>📍 Footing tags (e.g., F1, F2, F3)</h3>
+                    <button class="add-btn" id="add-footing">➕ Add footing</button>
+                </div>
+                <div class="element-items" id="footing-tags"></div>
+                <input type="text" id="new-footing-name" placeholder="Enter name e.g. F4" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+            </div>
+            <div class="input-grid">
+                <div class="input-group"><label>Length Lx (mm)</label><input id="fL" value="2000"></div>
+                <div class="input-group"><label>Width Ly (mm)</label><input id="fW" value="1500"></div>
+                <div class="input-group"><label>Depth (mm)</label><input id="fD" value="300"></div>
+                <div class="input-group"><label>Cover (mm)</label><input id="fCov" value="50"></div>
+                <div class="input-group"><label>Reinforcement mat</label><select id="fMatType"><option value="single">Single mat</option><option value="double" selected>Double mat</option></select></div>
+            </div>
+            <h3 style="color:#103a5e;">⬇️ BOTTOM</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Bottom X dia (mm)</label><input id="fBotXdia" value="12"></div>
+                <div class="input-group"><label>Bottom X spacing</label><input id="fBotXsp" value="150"></div>
+                <div class="input-group"><label>Bottom Y dia (mm)</label><input id="fBotYdia" value="12"></div>
+                <div class="input-group"><label>Bottom Y spacing</label><input id="fBotYsp" value="150"></div>
+            </div>
+            <h3 style="color:#103a5e;">⬆️ TOP (double mat)</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Top X dia (mm)</label><input id="fTopXdia" value="12"></div>
+                <div class="input-group"><label>Top X spacing</label><input id="fTopXsp" value="150"></div>
+                <div class="input-group"><label>Top Y dia (mm)</label><input id="fTopYdia" value="12"></div>
+                <div class="input-group"><label>Top Y spacing</label><input id="fTopYsp" value="150"></div>
+            </div>
+            <button class="btn-calc" id="calcFooting">📊 GENERATE FOOTING BBS</button>
+            <div class="results-area" id="footingResult">
+                <table><thead><tr><th>Element</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table>
+                <div class="summary-card" id="footingSummary"></div>
+            </div>
+        </div>
+
+        <!-- COLUMN SECTION with Zone-A and Zone-B (final) -->
+        <div id="column-section" class="component-section">
+            <h2 style="color:#103a5e;">📏 Column BBS (Zone-A & Zone-B)</h2>
+            <div class="element-list" id="column-list-container">
+                <div class="list-header"><h3>📍 Column tags (e.g., C1, C2)</h3><button class="add-btn" id="add-column">➕ Add column</button></div>
+                <div class="element-items" id="column-tags"></div>
+                <input type="text" id="new-column-name" placeholder="Enter name e.g. C4" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+            </div>
+            <div class="input-grid">
+                <div class="input-group"><label>Column X (mm)</label><input id="colX" value="300"></div>
+                <div class="input-group"><label>Column Y (mm)</label><input id="colY" value="230"></div>
+                <div class="input-group"><label>Height (mm)</label><input id="colH" value="5700"></div>
+                <div class="input-group"><label>Long. dia (mm)</label><input id="colLongDia" value="16"></div>
+                <div class="input-group"><label>No. long. bars</label><input id="colLongQty" value="4"></div>
+                <div class="input-group"><label>Tie dia (mm)</label><input id="colTieDia" value="8"></div>
+                <div class="input-group"><label>Cover (mm)</label><input id="colCov" value="40"></div>
+                <div class="input-group"><label>Ld (mm) (no ties zone)</label><input id="colLd" value="800"></div>
+            </div>
+            <div class="zone-info">
+                <strong>🏗️ Column zones:</strong> Zone-A (end supports) – closer spacing; Zone-B (mid-span) – larger spacing. Enter both spacings below.
+            </div>
+            <div class="input-grid">
+                <div class="input-group"><label>🔵 Zone-A spacing (mm)</label><input id="colTieSpA" value="150"></div>
+                <div class="input-group"><label>🟢 Zone-B spacing (mm)</label><input id="colTieSpB" value="250"></div>
+                <div class="input-group"><label>Zone-A length (mm) each end</label><input id="colZoneALen" value="1000"></div>
+            </div>
+            <button class="btn-calc" id="calcColumn">📊 GENERATE COLUMN BBS</button>
+            <div class="results-area">
+                <table><thead><tr><th>Element</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table>
+                <div class="summary-card" id="columnSummary"></div>
+            </div>
+        </div>
+
+        <!-- BEAM SECTION with Zone-A (L/4) and Zone-B (L/2) as per IS Code -->
+        <div id="beam-section" class="component-section">
+            <h2 style="color:#103a5e;">📦 Beam BBS (IS Code: L/4 at ends, L/2 mid)</h2>
+            <div class="element-list" id="beam-list-container">
+                <div class="list-header"><h3>📍 Beam tags (e.g., B101)</h3><button class="add-btn" id="add-beam">➕ Add beam</button></div>
+                <div class="element-items" id="beam-tags"></div>
+                <input type="text" id="new-beam-name" placeholder="Enter name e.g. B103" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+            </div>
+            <div class="input-grid">
+                <div class="input-group"><label>Beam width (mm)</label><input id="bw" value="300"></div>
+                <div class="input-group"><label>Beam depth (mm)</label><input id="bd" value="380"></div>
+                <div class="input-group"><label>Clear span L (mm)</label><input id="bSpan" value="2500"></div>
+                <div class="input-group"><label>Main bar dia (mm)</label><input id="bMainDia" value="12"></div>
+                <div class="input-group"><label>No. main bars</label><input id="bMainQty" value="4"></div>
+                <div class="input-group"><label>Stirrup dia (mm)</label><input id="bStirDia" value="8"></div>
+                <div class="input-group"><label>Cover (mm)</label><input id="bCov" value="25"></div>
+                <div class="input-group"><label>Ld (mm) each side</label><input id="bLd" value="600"></div>
+            </div>
+            <div class="zone-info">
+                <strong>📐 IS 456:2000 provisions:</strong> Zone-A (end regions L/4 length) – closer stirrup spacing; Zone-B (central L/2) – larger spacing. Enter spacings below.
+            </div>
+            <div class="input-grid">
+                <div class="input-group"><label>🔵 Zone-A stirrup spacing (mm)</label><input id="bStirSpA" value="150"></div>
+                <div class="input-group"><label>🟢 Zone-B stirrup spacing (mm)</label><input id="bStirSpB" value="250"></div>
+            </div>
+            <button class="btn-calc" id="calcBeam">📊 GENERATE BEAM BBS</button>
+            <div class="results-area">
+                <table><thead><tr><th>Element</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table>
+                <div class="summary-card" id="beamSummary"></div>
+            </div>
+        </div>
+
+        <!-- SLAB SECTION (simplified, unchanged) -->
+        <div id="slab-section" class="component-section">
+            <h2 style="color:#103a5e;">🧱 Slab BBS</h2>
+            <div class="element-list" id="slab-list-container">
+                <div class="list-header"><h3>📍 Slab tags (e.g., S1)</h3><button class="add-btn" id="add-slab">➕ Add slab</button></div>
+                <div class="element-items" id="slab-tags"></div>
+                <input type="text" id="new-slab-name" placeholder="Enter name e.g. S3" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+            </div>
+            <div class="input-grid">
+                <div class="input-group"><label>Slab Lx (mm)</label><input id="sL" value="5000"></div>
+                <div class="input-group"><label>Slab Ly (mm)</label><input id="sW" value="5000"></div>
+                <div class="input-group"><label>Beam width (mm)</label><input id="sBeam" value="300"></div>
+                <div class="input-group"><label>Cover (mm)</label><input id="sCov" value="20"></div>
+                <div class="input-group"><label>Main bar dia (mm)</label><input id="sMainDia" value="8"></div>
+                <div class="input-group"><label>Main spacing (mm)</label><input id="sMainSp" value="200"></div>
+                <div class="input-group"><label>Extra bar dia</label><input id="sExtraDia" value="8"></div>
+                <div class="input-group"><label>Extra spacing</label><input id="sExtraSp" value="125"></div>
+                <div class="input-group"><label>Extra length L</label><input id="sExtraLen" value="1500"></div>
+                <div class="input-group"><label>Top dist. dia</label><input id="sTopDia" value="8"></div>
+            </div>
+            <button class="btn-calc" id="calcSlab">📊 GENERATE SLAB BBS</button>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table><div class="summary-card" id="slabSummary"></div></div>
+        </div>
+
+        <!-- GLOBAL SUMMARY -->
+        <div class="global-summary" id="globalSummaryBlock">
+            <h2>📋 PROJECT TOTAL – REINFORCEMENT SUMMARY</h2>
+            <div class="summary-stats" id="globalStats"></div>
+            <div style="margin-top:1.5rem;" id="globalBreakdown"></div>
+        </div>
+        <div class="note">⚡ Beam zones: L/4 at ends (Zone-A), L/2 at mid (Zone-B) as per IS 456. Column zones as specified.</div>
+    </div>
+
+    <div class="studio-footer">
+        <div class="rights">© 2026 · <strong>KAJAL STRUCTURAL DESIGN STUDIO</strong> · All rights reserved</div>
+        <div class="contact"><span>📞 9390396951</span><span>✉️ designbykajal786@gmail.com</span></div>
+    </div>
+    <div class="print-contact-footer">KAJAL STRUCTURAL DESIGN STUDIO · 9390396951 · designbykajal786@gmail.com</div>
+</div>
+
+<script>
+    (function() {
+        // ---------- element tag management ----------
+        const footings = ['F1'];
+        const columns = ['C1'];
+        const beams = ['B101'];
+        const slabs = ['S1'];
+
+        function renderTags() {
+            document.getElementById('footing-tags').innerHTML = footings.map(f => `<div class="element-tag"><span>${f}</span><button class="remove-tag" data-type="footing" data-value="${f}">✕</button></div>`).join('');
+            document.getElementById('column-tags').innerHTML = columns.map(c => `<div class="element-tag"><span>${c}</span><button class="remove-tag" data-type="column" data-value="${c}">✕</button></div>`).join('');
+            document.getElementById('beam-tags').innerHTML = beams.map(b => `<div class="element-tag"><span>${b}</span><button class="remove-tag" data-type="beam" data-value="${b}">✕</button></div>`).join('');
+            document.getElementById('slab-tags').innerHTML = slabs.map(s => `<div class="element-tag"><span>${s}</span><button class="remove-tag" data-type="slab" data-value="${s}">✕</button></div>`).join('');
+        }
+
+        document.getElementById('add-footing').addEventListener('click', ()=>{
+            const inp = document.getElementById('new-footing-name');
+            if(inp.value.trim()) { footings.push(inp.value.trim()); inp.value = ''; renderTags(); }
+        });
+        document.getElementById('add-column').addEventListener('click', ()=>{
+            const inp = document.getElementById('new-column-name');
+            if(inp.value.trim()) { columns.push(inp.value.trim()); inp.value = ''; renderTags(); }
+        });
+        document.getElementById('add-beam').addEventListener('click', ()=>{
+            const inp = document.getElementById('new-beam-name');
+            if(inp.value.trim()) { beams.push(inp.value.trim()); inp.value = ''; renderTags(); }
+        });
+        document.getElementById('add-slab').addEventListener('click', ()=>{
+            const inp = document.getElementById('new-slab-name');
+            if(inp.value.trim()) { slabs.push(inp.value.trim()); inp.value = ''; renderTags(); }
+        });
+
+        document.addEventListener('click', (e)=>{
+            if(e.target.classList.contains('remove-tag')){
+                const type = e.target.dataset.type, val = e.target.dataset.value;
+                if(type === 'footing') { const idx = footings.indexOf(val); if(idx>-1) footings.splice(idx,1); }
+                if(type === 'column') { const idx = columns.indexOf(val); if(idx>-1) columns.splice(idx,1); }
+                if(type === 'beam') { const idx = beams.indexOf(val); if(idx>-1) beams.splice(idx,1); }
+                if(type === 'slab') { const idx = slabs.indexOf(val); if(idx>-1) slabs.splice(idx,1); }
+                renderTags();
+            }
+        });
+
+        // state
+        let footingWt = 0, columnWt = 0, beamWt = 0, slabWt = 0;
+        let footingHTML = '', columnHTML = '', beamHTML = '', slabHTML = '';
+
+        const uw = (dia) => (dia * dia) / 162;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        const r3 = (v) => Math.round(v * 1000) / 1000;
+
+        function captureFooting() { footingHTML = document.getElementById('footingResult').innerHTML; }
+        function captureColumn() { columnHTML = document.querySelector('#column-section .results-area').innerHTML; }
+        function captureBeam() { beamHTML = document.querySelector('#beam-section .results-area').innerHTML; }
+        function captureSlab() { slabHTML = document.querySelector('#slab-section .results-area').innerHTML; }
+
+        function updateGlobalSummary() {
+            const totalWt = footingWt + columnWt + beamWt + slabWt;
+            document.getElementById('globalStats').innerHTML = `
+                <div class="stat-block"><span class="stat-label">Footing</span><div class="stat-value">${r2(footingWt)} kg</div></div>
+                <div class="stat-block"><span class="stat-label">Column</span><div class="stat-value">${r2(columnWt)} kg</div></div>
+                <div class="stat-block"><span class="stat-label">Beam</span><div class="stat-value">${r2(beamWt)} kg</div></div>
+                <div class="stat-block"><span class="stat-label">Slab</span><div class="stat-value">${r2(slabWt)} kg</div></div>
+                <div class="stat-block" style="background:#d0e2ff;"><span class="stat-label">TOTAL</span><div class="stat-value">${r2(totalWt)} kg</div></div>
+            `;
+            document.getElementById('globalBreakdown').innerHTML = `<strong>📌 Breakdown:</strong> Footing ${r2(footingWt)} kg · Column ${r2(columnWt)} kg · Beam ${r2(beamWt)} kg · Slab ${r2(slabWt)} kg`;
+        }
+
+        // tabs
+        const compBtns = document.querySelectorAll('.comp-btn');
+        const sections = { footing: document.getElementById('footing-section'), column: document.getElementById('column-section'), beam: document.getElementById('beam-section'), slab: document.getElementById('slab-section') };
+        compBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                compBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const comp = btn.dataset.comp;
+                Object.values(sections).forEach(s => s.classList.remove('active'));
+                sections[comp].classList.add('active');
+            });
+        });
+
+        // footing calc (final)
+        document.getElementById('calcFooting').addEventListener('click', ()=>{
+            const L = +document.getElementById('fL').value || 2000;
+            const W = +document.getElementById('fW').value || 1500;
+            const D = +document.getElementById('fD').value || 300;
+            const cov = +document.getElementById('fCov').value || 50;
+            const matType = document.getElementById('fMatType').value;
+
+            const botXdia = +document.getElementById('fBotXdia').value || 12;
+            const botXsp = +document.getElementById('fBotXsp').value || 150;
+            const botYdia = +document.getElementById('fBotYdia').value || 12;
+            const botYsp = +document.getElementById('fBotYsp').value || 150;
+            const topXdia = +document.getElementById('fTopXdia').value || 12;
+            const topXsp = +document.getElementById('fTopXsp').value || 150;
+            const topYdia = +document.getElementById('fTopYdia').value || 12;
+            const topYsp = +document.getElementById('fTopYsp').value || 150;
+
+            function calcDir(len, perpDim, dia, sp) {
+                const barLen = len - 2*cov;
+                const bend = 2 * (D - 2*cov);
+                const cut = (barLen + bend - 2*2*dia) / 1000;
+                const nos = Math.floor((perpDim - 2*cov) / sp) + 1;
+                const total = nos * cut;
+                const wt = total * uw(dia);
+                return { cut, nos, total, wt };
+            }
+
+            const botX = calcDir(L, W, botXdia, botXsp);
+            const botY = calcDir(W, L, botYdia, botYsp);
+
+            let totalWtFooting = 0;
+            let rows = '';
+
+            footings.forEach(f => {
+                rows += `<tr><td>${f}</td><td>Bottom</td><td>X</td><td>${botXdia}</td><td>${botX.nos}</td><td>${r3(botX.cut)}</td><td>${r3(botX.total)}</td><td>${r2(botX.wt)}</td></tr>`;
+                rows += `<tr><td>${f}</td><td>Bottom</td><td>Y</td><td>${botYdia}</td><td>${botY.nos}</td><td>${r3(botY.cut)}</td><td>${r3(botY.total)}</td><td>${r2(botY.wt)}</td></tr>`;
+                totalWtFooting += botX.wt + botY.wt;
+
+                if (matType === 'double') {
+                    const topX = calcDir(L, W, topXdia, topXsp);
+                    const topY = calcDir(W, L, topYdia, topYsp);
+                    rows += `<tr><td>${f}</td><td>Top</td><td>X</td><td>${topXdia}</td><td>${topX.nos}</td><td>${r3(topX.cut)}</td><td>${r3(topX.total)}</td><td>${r2(topX.wt)}</td></tr>`;
+                    rows += `<tr><td>${f}</td><td>Top</td><td>Y</td><td>${topYdia}</td><td>${topY.nos}</td><td>${r3(topY.cut)}</td><td>${r3(topY.total)}</td><td>${r2(topY.wt)}</td></tr>`;
+                    totalWtFooting += topX.wt + topY.wt;
+                }
+            });
+
+            footingWt = totalWtFooting;
+            document.getElementById('footingBody').innerHTML = rows;
+            document.getElementById('footingSummary').innerHTML = `<span>🧾 Total footing steel (${footings.length} elements, ${matType==='double'?'double':'single'} mat): ${r2(footingWt)} kg</span>`;
+            captureFooting(); updateGlobalSummary();
+        });
+
+        // column calc with Zone-A and Zone-B (final)
+        document.getElementById('calcColumn').addEventListener('click', ()=>{
+            const H = +document.getElementById('colH').value || 5700;
+            const longDia = +document.getElementById('colLongDia').value || 16;
+            const longQty = +document.getElementById('colLongQty').value || 4;
+            const tieDia = +document.getElementById('colTieDia').value || 8;
+            const cov = +document.getElementById('colCov').value || 40;
+            const Ld = +document.getElementById('colLd').value || 800;
+            const colX = +document.getElementById('colX').value || 300;
+            const colY = +document.getElementById('colY').value || 230;
+            const spA = +document.getElementById('colTieSpA').value || 150;
+            const spB = +document.getElementById('colTieSpB').value || 250;
+            const zoneALen = +document.getElementById('colZoneALen').value || 1000;
+
+            const longCut = H/1000;
+            const longTot = longQty * longCut;
+            const longWt = longTot * uw(longDia);
+
+            const a = colX - 2*cov;
+            const b = colY - 2*cov;
+            const peri = 2*(a+b);
+            const hook = 2*12*tieDia;
+            const bend = 3*2*tieDia + 2*3*tieDia;
+            const tieCut = (peri + hook - bend)/1000;
+
+            const effZoneA = Math.min(zoneALen, H/3);
+            const zoneACount = Math.floor(effZoneA / spA) + 1;
+            const zoneBLength = H - 2 * effZoneA;
+            let zoneBCount = 0;
+            if (zoneBLength > 0) {
+                zoneBCount = Math.floor(zoneBLength / spB) - 1;
+                if (zoneBCount < 0) zoneBCount = 0;
+            }
+            const totalTieNos = (zoneACount * 2) + zoneBCount;
+            const tieTot = totalTieNos * tieCut;
+            const tieWt = tieTot * uw(tieDia);
+
+            columnWt = (longWt + tieWt) * columns.length;
+
+            let rows = '';
+            columns.forEach(c => {
+                rows += `<tr><td>${c}</td><td>Longitudinal</td><td>—</td><td>${longDia}</td><td>${longQty}</td><td>${r3(longCut)}</td><td>${r3(longTot)}</td><td>${r2(longWt)}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>Ties (Zone-A)</td><td>A</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia))}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>Ties (Zone-B)</td><td>B</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia))}</td></tr>`;
+            });
+
+            document.getElementById('columnBody').innerHTML = rows;
+            document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} elements, Zone-A:${spA}mm, Zone-B:${spB}mm): ${r2(columnWt)} kg</span>`;
+            captureColumn(); updateGlobalSummary();
+        });
+
+        // beam calc with L/4 and L/2 zones as per IS code
+        document.getElementById('calcBeam').addEventListener('click', ()=>{
+            const bw = +document.getElementById('bw').value || 300;
+            const bd = +document.getElementById('bd').value || 380;
+            const span = +document.getElementById('bSpan').value || 2500;
+            const mainDia = +document.getElementById('bMainDia').value || 12;
+            const mainQty = +document.getElementById('bMainQty').value || 4;
+            const stirDia = +document.getElementById('bStirDia').value || 8;
+            const cov = +document.getElementById('bCov').value || 25;
+            const Ld = +document.getElementById('bLd').value || 600;
+            const spA = +document.getElementById('bStirSpA').value || 150;   // Zone-A spacing (ends)
+            const spB = +document.getElementById('bStirSpB').value || 250;   // Zone-B spacing (mid)
+
+            // main bars (straight, with Ld at both ends)
+            const mainCut = (2*Ld + span - 2*2*mainDia)/1000;
+            const mainTot = mainQty * mainCut;
+            const mainWt = mainTot * uw(mainDia);
+
+            // stirrup cutting length (same for all zones)
+            const a = bw - 2*cov;
+            const bb = bd - 2*cov;
+            const peri = 2*(a+bb);
+            const hook = 2*12*stirDia;
+            const bend = 3*2*stirDia + 2*3*stirDia;
+            const stirCut = (peri + hook - bend)/1000;
+
+            // IS code: Zone-A = L/4 at each end, Zone-B = L/2 in middle
+            const zoneALen = span / 4;   // each end
+            const zoneBLen = span / 2;    // central portion
+
+            // Number of stirrups in each zone (simplified, +1 for starting)
+            const zoneACount = Math.floor(zoneALen / spA) + 1;
+            const zoneBCount = Math.floor(zoneBLen / spB) - 1; // subtract one to avoid double-counting at boundaries
+            if (zoneBCount < 0) zoneBCount = 0;
+
+            const totalStirrups = (zoneACount * 2) + zoneBCount;
+            const stirTot = totalStirrups * stirCut;
+            const stirWt = stirTot * uw(stirDia);
+
+            const perBeamWt = mainWt + stirWt;
+            beamWt = perBeamWt * beams.length;
+
+            let rows = '';
+            beams.forEach(b => {
+                rows += `<tr><td>${b}</td><td>Main bars</td><td>—</td><td>${mainDia}</td><td>${mainQty}</td><td>${r3(mainCut)}</td><td>${r3(mainTot)}</td><td>${r2(mainWt)}</td></tr>`;
+                rows += `<tr><td>${b}</td><td>Stirrups (Zone-A)</td><td>A (L/4)</td><td>${stirDia}</td><td>${zoneACount*2}</td><td>${r3(stirCut)}</td><td>${r3(zoneACount*2*stirCut)}</td><td>${r2(zoneACount*2*stirCut*uw(stirDia))}</td></tr>`;
+                rows += `<tr><td>${b}</td><td>Stirrups (Zone-B)</td><td>B (L/2)</td><td>${stirDia}</td><td>${zoneBCount}</td><td>${r3(stirCut)}</td><td>${r3(zoneBCount*stirCut)}</td><td>${r2(zoneBCount*stirCut*uw(stirDia))}</td></tr>`;
+            });
+
+            document.getElementById('beamBody').innerHTML = rows;
+            document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} elements, Zone-A(L/4):${spA}mm, Zone-B(L/2):${spB}mm): ${r2(beamWt)} kg</span>`;
+            captureBeam(); updateGlobalSummary();
+        });
+
+        // slab calc (unchanged)
+        document.getElementById('calcSlab').addEventListener('click', ()=>{
+            const L = +document.getElementById('sL').value || 5000;
+            const beam = +document.getElementById('sBeam').value || 300;
+            const cov = +document.getElementById('sCov').value || 20;
+            const mainDia = +document.getElementById('sMainDia').value || 8;
+            const mainSp = +document.getElementById('sMainSp').value || 200;
+            const extraDia = +document.getElementById('sExtraDia').value || 8;
+            const extraSp = +document.getElementById('sExtraSp').value || 125;
+            const extraLen = +document.getElementById('sExtraLen').value || 1500;
+            const topDia = +document.getElementById('sTopDia').value || 8;
+
+            const mainNos = Math.floor((L - beam) / mainSp) + 1;
+            const mainCut = (L - 2*cov)/1000;
+            const mainTot = mainNos * mainCut;
+            const mainWt = mainTot * uw(mainDia);
+
+            const distNos = mainNos;
+            const distTot = distNos * mainCut;
+            const distWt = distTot * uw(mainDia);
+
+            const extraPerSide = Math.floor((L - beam) / extraSp) + 1;
+            const extraCut = (extraLen - cov)/1000;
+            const extraXtot = extraPerSide * 2 * extraCut;
+            const extraYtot = extraPerSide * 2 * extraCut;
+            const extraWt = (extraXtot + extraYtot) * uw(extraDia);
+
+            const topPerSide = Math.floor((extraLen - beam) / extraSp) + 1;
+            const topSafe = topPerSide > 0 ? topPerSide : 0;
+            const topCut = (L - 2*cov)/1000;
+            const topXtot = topSafe * 2 * topCut;
+            const topYtot = topSafe * 2 * topCut;
+            const topWt = (topXtot + topYtot) * uw(topDia);
+
+            const perSlabWt = mainWt + distWt + extraWt + topWt;
+            slabWt = perSlabWt * slabs.length;
+
+            let rows = '';
+            slabs.forEach(s => {
+                rows += `<tr><td>${s}</td><td>Main bottom (X)</td><td>${mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(mainTot)}</td><td>${r2(mainWt)}</td></tr>`;
+                rows += `<tr><td>${s}</td><td>Distribution (Y)</td><td>${mainDia}</td><td>${distNos}</td><td>${r3(mainCut)}</td><td>${r3(distTot)}</td><td>${r2(distWt)}</td></tr>`;
+                rows += `<tr><td>${s}</td><td>Extra top (X+Y)</td><td>${extraDia}</td><td>${extraPerSide*4}</td><td>${r3(extraCut)}</td><td>${r3(extraXtot+extraYtot)}</td><td>${r2(extraWt)}</td></tr>`;
+                rows += `<tr><td>${s}</td><td>Top distrib (X+Y)</td><td>${topDia}</td><td>${topSafe*4}</td><td>${r3(topCut)}</td><td>${r3(topXtot+topYtot)}</td><td>${r2(topWt)}</td></tr>`;
+            });
+            document.getElementById('slabBody').innerHTML = rows;
+            document.getElementById('slabSummary').innerHTML = `<span>🧾 Total slab steel (${slabs.length} elements): ${r2(slabWt)} kg</span>`;
+            captureSlab(); updateGlobalSummary();
+        });
+
+        // initial calculation
+        setTimeout(()=>{
+            document.getElementById('calcFooting').click();
+            document.getElementById('calcColumn').click();
+            document.getElementById('calcBeam').click();
+            document.getElementById('calcSlab').click();
+        }, 100);
+
+        // print full BBS
+        document.getElementById('printFullBtn').addEventListener('click', ()=>{
+            captureFooting(); captureColumn(); captureBeam(); captureSlab();
+            const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+            const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+            const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+            const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+            const globalHTML = document.getElementById('globalSummaryBlock').outerHTML;
+            const win = window.open('', '_blank');
+            win.document.write(`
+                <html><head><title>KAJAL · complete BBS</title><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+                <style>
+                    body{font-family:Calibri,sans-serif;padding:1.5rem;}
+                    .brand-header{background:linear-gradient(112deg,#06203b,#103a5e);color:white;padding:1.5rem;border-bottom:4px solid #f3b33d;text-align:center;print-color-adjust:exact;}
+                    .brand-main{font-family:'Cinzel Decorative',cursive;font-size:3.2rem;color:white;text-shadow:2px 2px 0 #103a5e;}
+                    .brand-sub{color:#fedb9f;font-size:1.6rem;}
+                    .tagline{background:rgba(0,0,0,0.2);padding:0.3rem 2rem;border-radius:40px;display:inline-block;border:1px solid #f3b33d;color:white;}
+                    .element-items{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0;}
+                    .element-tag{background:#f0f5fc;border:1px solid #103a5e;border-radius:2rem;padding:0.4rem 1.5rem;font-weight:600;color:#103a5e;}
+                    h2{color:#103a5e;border-bottom:2px solid #f3b33d;padding-bottom:0.3rem;}
+                    table{width:100%;border-collapse:collapse;margin:1rem 0;}
+                    th{background:#103a5e;color:white;padding:0.8rem;border-bottom:2px solid #f3b33d;print-color-adjust:exact;}
+                    td{padding:0.7rem;border-bottom:1px solid #aaa;}
+                    .summary-card{background:#e9f0fa;border-left:8px solid #f3b33d;padding:1rem 2rem;margin:1rem 0;print-color-adjust:exact;}
+                    .global-summary{background:#e6f0ff;border:2px solid #103a5e;padding:1.5rem;margin:2rem 0;print-color-adjust:exact;}
+                    .summary-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+                    .stat-block{background:white;padding:1rem;border-radius:1rem;border:1px solid #aac1df;}
+                    .print-footer{margin-top:2rem;text-align:center;color:#103a5e;border-top:1px dashed #103a5e;padding-top:1rem;}
+                    .footing-page,.column-page,.beam-page,.slab-page{page-break-after:always;}
+                    .summary-page{page-break-before:always;}
+                </style></head>
+                <body>
+                    <div class="brand-header"><div class="brand-main">KAJAL</div><div class="brand-sub">STRUCTURAL DESIGN STUDIO</div><div class="tagline"><strong>Build Smarter, Build Stronger</strong></div></div>
+                    <div class="footing-page"><h2>📐 Footing BBS</h2><div class="element-items">${footingTags}</div>${footingHTML}</div>
+                    <div class="column-page"><h2>📏 Column BBS (Zone-A/Zone-B)</h2><div class="element-items">${columnTags}</div>${columnHTML}</div>
+                    <div class="beam-page"><h2>📦 Beam BBS (L/4 & L/2 zones)</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
+                    <div class="slab-page"><h2>🧱 Slab BBS</h2><div class="element-items">${slabTags}</div>${slabHTML}</div>
+                    <div class="summary-page">${globalHTML}</div>
+                    <div class="print-footer">KAJAL · 9390396951 · designbykajal786@gmail.com<br>Generated ${new Date().toLocaleString()}</div>
+                </body></html>
+            `);
+            win.document.close(); win.print();
+        });
+
+        // excel export
+        document.getElementById('excelFullBtn').addEventListener('click', ()=>{
+            captureFooting(); captureColumn(); captureBeam(); captureSlab();
+            const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+            const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+            const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+            const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+            const html = `<html><head><meta charset="UTF-8"><style>td{border:1px solid #000;}</style></head><body>
+                <h2>KAJAL STRUCTURAL DESIGN STUDIO</h2><h3>Build Smarter, Build Stronger</h3>
+                ${document.getElementById('globalSummaryBlock').outerHTML}
+                <h2>FOOTING BBS</h2>${footingTags}${footingHTML}
+                <h2>COLUMN BBS (Zone-A/Zone-B)</h2>${columnTags}${columnHTML}
+                <h2>BEAM BBS (L/4 & L/2 zones)</h2>${beamTags}${beamHTML}
+                <h2>SLAB BBS</h2>${slabTags}${slabHTML}
+                <p>Contact: 9390396951 · designbykajal786@gmail.com</p></body></html>`;
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'KAJAL_full_bbs.xls'; a.click();
+        });
+
+        renderTags();
+    })();
+</script>
+</body>
+</html>
