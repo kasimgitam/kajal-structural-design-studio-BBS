@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAJAL · structural design studio | Advanced BBS with column & beam zones</title>
+    <title>KAJAL · structural design studio | Advanced BBS with full beam details</title>
     <!-- Google Fonts: Cinzel Decorative + Calibri -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -287,7 +287,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 0.95rem;
-            min-width: 1100px;
+            min-width: 1200px;
         }
         th {
             background: #e4edf9;
@@ -548,9 +548,9 @@
             </div>
         </div>
 
-        <!-- BEAM SECTION with Zone-A (L/4) and Zone-B (L/2) as per IS Code -->
+        <!-- BEAM SECTION with full details: top, bottom, crank, extra bars at supports & mid-span -->
         <div id="beam-section" class="component-section">
-            <h2 style="color:#103a5e;">📦 Beam BBS (IS Code: L/4 at ends, L/2 mid)</h2>
+            <h2 style="color:#103a5e;">📦 Beam BBS (IS Code: top, bottom, crank, extra bars)</h2>
             <div class="element-list" id="beam-list-container">
                 <div class="list-header"><h3>📍 Beam tags (e.g., B101)</h3><button class="add-btn" id="add-beam">➕ Add beam</button></div>
                 <div class="element-items" id="beam-tags"></div>
@@ -560,27 +560,54 @@
                 <div class="input-group"><label>Beam width (mm)</label><input id="bw" value="300"></div>
                 <div class="input-group"><label>Beam depth (mm)</label><input id="bd" value="380"></div>
                 <div class="input-group"><label>Clear span L (mm)</label><input id="bSpan" value="2500"></div>
-                <div class="input-group"><label>Main bar dia (mm)</label><input id="bMainDia" value="12"></div>
-                <div class="input-group"><label>No. main bars</label><input id="bMainQty" value="4"></div>
-                <div class="input-group"><label>Stirrup dia (mm)</label><input id="bStirDia" value="8"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="bCov" value="25"></div>
                 <div class="input-group"><label>Ld (mm) each side</label><input id="bLd" value="600"></div>
             </div>
             <div class="zone-info">
-                <strong>📐 IS 456:2000 provisions:</strong> Zone-A (end regions L/4 length) – closer stirrup spacing; Zone-B (central L/2) – larger spacing. Enter spacings below.
+                <strong>📐 IS 456:2000 provisions:</strong> 
+                <ul style="margin-top:0.5rem; margin-left:1.5rem;">
+                    <li>Bottom reinforcement (main)</li>
+                    <li>Top reinforcement (holding bars)</li>
+                    <li>Cranked bars (0.42H extra length)</li>
+                    <li>Extra bars at supports (top)</li>
+                    <li>Extra bars at mid-span (bottom)</li>
+                </ul>
             </div>
+            <h3 style="color:#103a5e;">⬇️ BOTTOM REINFORCEMENT</h3>
             <div class="input-grid">
-                <div class="input-group"><label>🔵 Zone-A stirrup spacing (mm)</label><input id="bStirSpA" value="150"></div>
-                <div class="input-group"><label>🟢 Zone-B stirrup spacing (mm)</label><input id="bStirSpB" value="250"></div>
+                <div class="input-group"><label>Bottom straight dia (mm)</label><input id="bBotDia" value="12"></div>
+                <div class="input-group"><label>No. of bottom straight bars</label><input id="bBotQty" value="2"></div>
+                <div class="input-group"><label>Bottom cranked dia (mm)</label><input id="bCrankDia" value="12"></div>
+                <div class="input-group"><label>No. of cranked bars</label><input id="bCrankQty" value="2"></div>
+            </div>
+            <h3 style="color:#103a5e;">⬆️ TOP REINFORCEMENT</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Top straight dia (mm)</label><input id="bTopDia" value="10"></div>
+                <div class="input-group"><label>No. of top straight bars</label><input id="bTopQty" value="2"></div>
+            </div>
+            <h3 style="color:#103a5e;">➕ EXTRA BARS (IS Code)</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Extra support top dia (mm)</label><input id="bExtraSupDia" value="12"></div>
+                <div class="input-group"><label>No. extra at supports (each end)</label><input id="bExtraSupQty" value="2"></div>
+                <div class="input-group"><label>Extra support length L/4 (mm)</label><input id="bExtraSupLen" value="625"></div>
+                <div class="input-group"><label>Extra mid-span bottom dia (mm)</label><input id="bExtraMidDia" value="12"></div>
+                <div class="input-group"><label>No. extra at mid-span</label><input id="bExtraMidQty" value="2"></div>
+                <div class="input-group"><label>Extra mid-span length L/4 (mm)</label><input id="bExtraMidLen" value="625"></div>
+            </div>
+            <h3 style="color:#103a5e;">🌀 STIRRUPS (with zones)</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Stirrup dia (mm)</label><input id="bStirDia" value="8"></div>
+                <div class="input-group"><label>🔵 Zone-A spacing (mm) [ends L/4]</label><input id="bStirSpA" value="150"></div>
+                <div class="input-group"><label>🟢 Zone-B spacing (mm) [mid L/2]</label><input id="bStirSpB" value="250"></div>
             </div>
             <button class="btn-calc" id="calcBeam">📊 GENERATE BEAM BBS</button>
             <div class="results-area">
-                <table><thead><tr><th>Element</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table>
+                <table><thead><tr><th>Element</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table>
                 <div class="summary-card" id="beamSummary"></div>
             </div>
         </div>
 
-        <!-- SLAB SECTION (simplified, unchanged) -->
+        <!-- SLAB SECTION (simplified) -->
         <div id="slab-section" class="component-section">
             <h2 style="color:#103a5e;">🧱 Slab BBS</h2>
             <div class="element-list" id="slab-list-container">
@@ -610,7 +637,7 @@
             <div class="summary-stats" id="globalStats"></div>
             <div style="margin-top:1.5rem;" id="globalBreakdown"></div>
         </div>
-        <div class="note">⚡ Beam zones: L/4 at ends (Zone-A), L/2 at mid (Zone-B) as per IS 456. Column zones as specified.</div>
+        <div class="note">⚡ Beam includes top, bottom, cranked bars, extra at supports & mid-span as per IS 456.</div>
     </div>
 
     <div class="studio-footer">
@@ -795,67 +822,130 @@
 
             let rows = '';
             columns.forEach(c => {
-                rows += `<tr><td>${c}</td><td>Longitudinal</td><td>—</td><td>${longDia}</td><td>${longQty}</td><td>${r3(longCut)}</td><td>${r3(longTot)}</td><td>${r2(longWt)}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>Ties (Zone-A)</td><td>A</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia))}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>Ties (Zone-B)</td><td>B</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia))}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>Longitudinal</td><td>${longDia}</td><td>${longQty}</td><td>${r3(longCut)}</td><td>${r3(longTot)}</td><td>${r2(longWt)}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>Ties (Zone-A)</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia))}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>Ties (Zone-B)</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia))}</td></tr>`;
             });
 
             document.getElementById('columnBody').innerHTML = rows;
-            document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} elements, Zone-A:${spA}mm, Zone-B:${spB}mm): ${r2(columnWt)} kg</span>`;
+            document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} elements): ${r2(columnWt)} kg</span>`;
             captureColumn(); updateGlobalSummary();
         });
 
-        // beam calc with L/4 and L/2 zones as per IS code
+        // beam calc with full details
         document.getElementById('calcBeam').addEventListener('click', ()=>{
             const bw = +document.getElementById('bw').value || 300;
             const bd = +document.getElementById('bd').value || 380;
             const span = +document.getElementById('bSpan').value || 2500;
-            const mainDia = +document.getElementById('bMainDia').value || 12;
-            const mainQty = +document.getElementById('bMainQty').value || 4;
-            const stirDia = +document.getElementById('bStirDia').value || 8;
             const cov = +document.getElementById('bCov').value || 25;
             const Ld = +document.getElementById('bLd').value || 600;
-            const spA = +document.getElementById('bStirSpA').value || 150;   // Zone-A spacing (ends)
-            const spB = +document.getElementById('bStirSpB').value || 250;   // Zone-B spacing (mid)
+            
+            // Bottom reinforcement
+            const botDia = +document.getElementById('bBotDia').value || 12;
+            const botQty = +document.getElementById('bBotQty').value || 2;
+            
+            // Cranked bars
+            const crankDia = +document.getElementById('bCrankDia').value || 12;
+            const crankQty = +document.getElementById('bCrankQty').value || 2;
+            
+            // Top reinforcement
+            const topDia = +document.getElementById('bTopDia').value || 10;
+            const topQty = +document.getElementById('bTopQty').value || 2;
+            
+            // Extra bars at supports (top)
+            const extraSupDia = +document.getElementById('bExtraSupDia').value || 12;
+            const extraSupQty = +document.getElementById('bExtraSupQty').value || 2;
+            const extraSupLen = +document.getElementById('bExtraSupLen').value || 625; // L/4
+            
+            // Extra bars at mid-span (bottom)
+            const extraMidDia = +document.getElementById('bExtraMidDia').value || 12;
+            const extraMidQty = +document.getElementById('bExtraMidQty').value || 2;
+            const extraMidLen = +document.getElementById('bExtraMidLen').value || 625; // L/4
+            
+            // Stirrups
+            const stirDia = +document.getElementById('bStirDia').value || 8;
+            const spA = +document.getElementById('bStirSpA').value || 150;   // Zone-A (ends)
+            const spB = +document.getElementById('bStirSpB').value || 250;   // Zone-B (mid)
 
-            // main bars (straight, with Ld at both ends)
-            const mainCut = (2*Ld + span - 2*2*mainDia)/1000;
-            const mainTot = mainQty * mainCut;
-            const mainWt = mainTot * uw(mainDia);
-
-            // stirrup cutting length (same for all zones)
+            // Cutting length calculations
+            const clearSpan = span; // in mm
+            
+            // 1. Bottom straight bars (extend into supports with Ld)
+            const bottomCut = (clearSpan + 2*Ld - 2*cov) / 1000;
+            
+            // 2. Cranked bars (with 0.42D extra for crank)
+            const crankH = bd - 2*cov; // approximate
+            const crankExtra = 0.42 * crankH; // extra length per crank
+            const crankCut = (clearSpan + 2*Ld - 2*cov + 2*crankExtra) / 1000;
+            
+            // 3. Top straight bars (usually full length)
+            const topCut = (clearSpan + 2*Ld - 2*cov) / 1000;
+            
+            // 4. Extra bars at supports (L/4 length each)
+            const extraSupCut = (extraSupLen - cov) / 1000;
+            
+            // 5. Extra bars at mid-span (L/4 length each)
+            const extraMidCut = (extraMidLen - cov) / 1000;
+            
+            // 6. Stirrups - cutting length
             const a = bw - 2*cov;
             const bb = bd - 2*cov;
             const peri = 2*(a+bb);
             const hook = 2*12*stirDia;
             const bend = 3*2*stirDia + 2*3*stirDia;
             const stirCut = (peri + hook - bend)/1000;
-
-            // IS code: Zone-A = L/4 at each end, Zone-B = L/2 in middle
-            const zoneALen = span / 4;   // each end
-            const zoneBLen = span / 2;    // central portion
-
-            // Number of stirrups in each zone (simplified, +1 for starting)
+            
+            // Stirrup quantities based on zones
+            const zoneALen = span / 4; // each end
+            const zoneBLen = span / 2;
             const zoneACount = Math.floor(zoneALen / spA) + 1;
-            const zoneBCount = Math.floor(zoneBLen / spB) - 1; // subtract one to avoid double-counting at boundaries
-            if (zoneBCount < 0) zoneBCount = 0;
+            const zoneBCount = Math.floor(zoneBLen / spB) - 1;
+            const totalStirrups = (zoneACount * 2) + (zoneBCount > 0 ? zoneBCount : 0);
 
-            const totalStirrups = (zoneACount * 2) + zoneBCount;
-            const stirTot = totalStirrups * stirCut;
-            const stirWt = stirTot * uw(stirDia);
-
-            const perBeamWt = mainWt + stirWt;
-            beamWt = perBeamWt * beams.length;
-
+            let totalWtBeam = 0;
             let rows = '';
+
             beams.forEach(b => {
-                rows += `<tr><td>${b}</td><td>Main bars</td><td>—</td><td>${mainDia}</td><td>${mainQty}</td><td>${r3(mainCut)}</td><td>${r3(mainTot)}</td><td>${r2(mainWt)}</td></tr>`;
-                rows += `<tr><td>${b}</td><td>Stirrups (Zone-A)</td><td>A (L/4)</td><td>${stirDia}</td><td>${zoneACount*2}</td><td>${r3(stirCut)}</td><td>${r3(zoneACount*2*stirCut)}</td><td>${r2(zoneACount*2*stirCut*uw(stirDia))}</td></tr>`;
-                rows += `<tr><td>${b}</td><td>Stirrups (Zone-B)</td><td>B (L/2)</td><td>${stirDia}</td><td>${zoneBCount}</td><td>${r3(stirCut)}</td><td>${r3(zoneBCount*stirCut)}</td><td>${r2(zoneBCount*stirCut*uw(stirDia))}</td></tr>`;
+                // Bottom straight
+                const botTot = botQty * bottomCut;
+                const botWt = botTot * uw(botDia);
+                rows += `<tr><td>${b}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot)}</td><td>${r2(botWt)}</td></tr>`;
+                totalWtBeam += botWt;
+                
+                // Cranked bars
+                const crankTot = crankQty * crankCut;
+                const crankWt = crankTot * uw(crankDia);
+                rows += `<tr><td>${b}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot)}</td><td>${r2(crankWt)}</td></tr>`;
+                totalWtBeam += crankWt;
+                
+                // Top straight
+                const topTot = topQty * topCut;
+                const topWt = topTot * uw(topDia);
+                rows += `<tr><td>${b}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot)}</td><td>${r2(topWt)}</td></tr>`;
+                totalWtBeam += topWt;
+                
+                // Extra bars at supports (two ends)
+                const extraSupTot = (extraSupQty * 2) * extraSupCut;
+                const extraSupWt = extraSupTot * uw(extraSupDia);
+                rows += `<tr><td>${b}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot)}</td><td>${r2(extraSupWt)}</td></tr>`;
+                totalWtBeam += extraSupWt;
+                
+                // Extra bars at mid-span
+                const extraMidTot = extraMidQty * extraMidCut;
+                const extraMidWt = extraMidTot * uw(extraMidDia);
+                rows += `<tr><td>${b}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot)}</td><td>${r2(extraMidWt)}</td></tr>`;
+                totalWtBeam += extraMidWt;
+                
+                // Stirrups
+                const stirTot = totalStirrups * stirCut;
+                const stirWt = stirTot * uw(stirDia);
+                rows += `<tr><td>${b}</td><td>Stirrups (A&B)</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot)}</td><td>${r2(stirWt)}</td></tr>`;
+                totalWtBeam += stirWt;
             });
 
+            beamWt = totalWtBeam;
             document.getElementById('beamBody').innerHTML = rows;
-            document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} elements, Zone-A(L/4):${spA}mm, Zone-B(L/2):${spB}mm): ${r2(beamWt)} kg</span>`;
+            document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} elements): ${r2(beamWt)} kg</span>`;
             captureBeam(); updateGlobalSummary();
         });
 
@@ -951,7 +1041,7 @@
                     <div class="brand-header"><div class="brand-main">KAJAL</div><div class="brand-sub">STRUCTURAL DESIGN STUDIO</div><div class="tagline"><strong>Build Smarter, Build Stronger</strong></div></div>
                     <div class="footing-page"><h2>📐 Footing BBS</h2><div class="element-items">${footingTags}</div>${footingHTML}</div>
                     <div class="column-page"><h2>📏 Column BBS (Zone-A/Zone-B)</h2><div class="element-items">${columnTags}</div>${columnHTML}</div>
-                    <div class="beam-page"><h2>📦 Beam BBS (L/4 & L/2 zones)</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
+                    <div class="beam-page"><h2>📦 Beam BBS (full details)</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
                     <div class="slab-page"><h2>🧱 Slab BBS</h2><div class="element-items">${slabTags}</div>${slabHTML}</div>
                     <div class="summary-page">${globalHTML}</div>
                     <div class="print-footer">KAJAL · 9390396951 · designbykajal786@gmail.com<br>Generated ${new Date().toLocaleString()}</div>
@@ -972,7 +1062,7 @@
                 ${document.getElementById('globalSummaryBlock').outerHTML}
                 <h2>FOOTING BBS</h2>${footingTags}${footingHTML}
                 <h2>COLUMN BBS (Zone-A/Zone-B)</h2>${columnTags}${columnHTML}
-                <h2>BEAM BBS (L/4 & L/2 zones)</h2>${beamTags}${beamHTML}
+                <h2>BEAM BBS (full details)</h2>${beamTags}${beamHTML}
                 <h2>SLAB BBS</h2>${slabTags}${slabHTML}
                 <p>Contact: 9390396951 · designbykajal786@gmail.com</p></body></html>`;
             const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
