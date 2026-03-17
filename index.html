@@ -3,131 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAJAL · structural design studio | Independent Element BBS</title>
-    <!-- Google Fonts: Cinzel Decorative + Calibri -->
+    <title>KAJAL · structural design studio</title>
+    <!-- Google Fonts: Cinzel Decorative (headings) + Inter (clean modern) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for minimal icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ---------- minimal & classy reset ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Calibri', 'Inter', 'Segoe UI', sans-serif;
         }
         body {
-            background: #e9eff7;
+            background: #f5f7fa;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            padding: 1.5rem;
+            padding: 2rem;
         }
         .master-container {
             max-width: 1600px;
             width: 100%;
             background: #ffffff;
-            border-radius: 2.5rem 2.5rem 1.5rem 1.5rem;
-            box-shadow: 0 30px 60px -20px #0b2b4f66;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+        /* ---------- elegant header ---------- */
         .brand-header {
-            background: linear-gradient(112deg, #06203b, #103a5e);
-            padding: 2rem 3rem 1.8rem 3rem;
-            color: white;
+            background: #ffffff;
+            padding: 2rem 3rem 1.5rem 3rem;
+            border-bottom: 1px solid #e9eef3;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
-            border-bottom: 4px solid #f3b33d;
         }
         .brand-main {
             font-family: 'Cinzel Decorative', cursive;
-            font-size: 3.8rem;
+            font-size: 3rem;
             font-weight: 700;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 0 #103a5e;
+            letter-spacing: 2px;
+            color: #1e2b3c;
             line-height: 1.2;
         }
         .brand-sub {
-            font-family: 'Calibri', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: #fedb9f;
-            margin-top: 0.2rem;
-            letter-spacing: 2px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #000000; /* BLACK as requested */
+            margin-top: 0.25rem;
+            text-transform: uppercase;
         }
         .tagline {
-            font-family: 'Calibri', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 500;
-            color: #ffffff;
-            background: rgba(0,0,0,0.2);
-            padding: 0.4rem 2rem;
-            border-radius: 40px;
-            margin-top: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #000000; /* BLACK as requested */
+            margin-top: 0.75rem;
+            background: #f8fafd;
+            padding: 0.3rem 2rem;
+            border-radius: 30px;
             display: inline-block;
-            border: 1px solid #f3b33d;
-        }
-        .tagline strong {
-            font-weight: 700;
-            color: #ffd966;
         }
         .header-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 1.2rem;
+            margin-top: 1.5rem;
         }
         .print-btn, .excel-btn {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid #739ac5;
-            color: white;
-            padding: 0.8rem 2rem;
+            background: #ffffff;
+            border: 1px solid #d0d9e6;
+            color: #2c3e50;
+            padding: 0.7rem 2rem;
             border-radius: 40px;
-            font-weight: 600;
-            font-size: 1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
             cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: 0.2s;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 0.6rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .print-btn:hover, .excel-btn:hover {
-            background: #f3b33d;
-            border-color: #f3b33d;
-            color: #06203b;
+            background: #f1f5f9;
+            border-color: #a0b3cc;
+            transform: translateY(-1px);
         }
+        /* ---------- minimal tabs ---------- */
         .component-tabs {
             display: flex;
             flex-wrap: wrap;
-            background: #e2eaf3;
-            padding: 1rem 3rem 0 3rem;
-            gap: 0.5rem;
+            background: #f9fbfd;
+            padding: 0 3rem;
+            border-bottom: 1px solid #e9eef3;
+            gap: 0.25rem;
         }
         .comp-btn {
             background: transparent;
             border: none;
-            padding: 1rem 2.2rem;
-            font-size: 1.15rem;
-            font-weight: 600;
-            border-radius: 2rem 2rem 0 0;
-            color: #1f3b5c;
+            padding: 1rem 2rem 0.9rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #64748b;
             cursor: pointer;
             transition: all 0.15s;
-            border-bottom: 4px solid transparent;
+            border-bottom: 3px solid transparent;
+            letter-spacing: 0.3px;
         }
         .comp-btn.active {
-            background: white;
-            color: #06203b;
-            border-bottom: 4px solid #f3b33d;
-            box-shadow: 0 -4px 8px rgba(0,0,0,0.02);
+            color: #1e2b3c;
+            border-bottom: 3px solid #c9a959;
+            font-weight: 600;
+            background: transparent;
         }
-        .comp-btn:not(.active):hover {
-            background: #cbdaf0;
+        .comp-btn:hover {
+            color: #2c3e50;
         }
+        /* ---------- main panel with soft background ---------- */
         .content-panel {
             background: #ffffff;
             padding: 2.5rem 3rem;
@@ -138,655 +140,469 @@
         .component-section.active {
             display: block;
         }
+        /* ---------- element tags (minimal & elegant) ---------- */
         .element-list {
-            background: #f7fafd;
-            border-radius: 2rem;
-            padding: 1.5rem;
+            background: #f9fbfd;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
             margin-bottom: 2rem;
-            border: 1px solid #d7e2f0;
+            border: 1px solid #eef2f6;
         }
         .list-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
         .list-header h3 {
-            color: #103a5e;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #5f6f87;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .add-btn {
-            background: #103a5e;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 600;
+            background: #ffffff;
+            border: 1px solid #d8e0ea;
+            color: #2c3e50;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             transition: 0.15s;
         }
         .add-btn:hover {
-            background: #1d4f78;
+            background: #f1f5f9;
+            border-color: #b0c0d0;
         }
         .element-items {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 0.6rem;
             margin-bottom: 1rem;
         }
         .element-tag {
-            background: white;
-            border: 1px solid #c2d4e6;
-            border-radius: 2rem;
+            background: #ffffff;
+            border: 1px solid #e0e7ef;
+            border-radius: 40px;
             padding: 0.4rem 1rem 0.4rem 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
             cursor: pointer;
             transition: 0.1s;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         .element-tag.selected {
-            background: #103a5e;
-            border-color: #f3b33d;
+            background: #1e2b3c;
+            border-color: #c9a959;
             color: white;
         }
         .element-tag.selected span {
             color: white;
         }
         .element-tag span {
-            font-weight: 600;
-            color: #103a5e;
+            font-weight: 500;
+            color: #1e2b3c;
         }
         .remove-tag {
             background: none;
             border: none;
-            color: #aa3e3e;
-            font-size: 1.3rem;
+            color: #a0aec0;
+            font-size: 1.2rem;
             cursor: pointer;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
         }
         .remove-tag:hover {
-            background: #ffe1e1;
+            background: #f1f0f0;
+            color: #b02b2b;
         }
         .element-tag.selected .remove-tag {
-            color: #ffd966;
+            color: #e0d6c0;
         }
+        /* ---------- input grids with soft style ---------- */
         .input-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            background: #f7fafd;
-            padding: 2rem;
-            border-radius: 2rem;
-            margin-bottom: 2.2rem;
-            border: 1px solid #d7e2f0;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1.2rem;
+            background: #fafcff;
+            padding: 1.8rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #eef2f6;
         }
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.3rem;
         }
         .input-group label {
-            font-weight: 700;
-            font-size: 0.8rem;
+            font-weight: 600;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            color: #2b4f6e;
+            letter-spacing: 0.3px;
+            color: #6b7b92;
         }
         .input-group input, .input-group select {
-            padding: 0.85rem 1.2rem;
-            border: 1px solid #c2d4e6;
-            border-radius: 1.2rem;
-            font-size: 1rem;
+            padding: 0.8rem 1rem;
+            border: 1px solid #dee5ef;
+            border-radius: 1rem;
+            font-size: 0.95rem;
             background: white;
             transition: 0.15s;
-        }
-        .input-group select {
-            cursor: pointer;
+            font-family: 'Inter', sans-serif;
         }
         .input-group input:focus, .input-group select:focus {
-            border-color: #103a5e;
+            border-color: #c9a959;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(16,58,94,0.15);
+            box-shadow: 0 0 0 3px rgba(201, 169, 89, 0.1);
         }
         .zone-info {
-            background: #e3f0ff;
+            background: #fafcff;
             border-radius: 1rem;
             padding: 1rem 1.5rem;
             margin-bottom: 1.5rem;
-            border-left: 6px solid #f3b33d;
-            font-size: 0.95rem;
+            border-left: 4px solid #c9a959;
+            font-size: 0.9rem;
+            color: #405b73;
         }
-        .zone-info strong {
-            color: #103a5e;
-        }
+        /* ---------- buttons ---------- */
         .btn-calc {
-            background: #103a5e;
+            background: #1e2b3c;
             border: none;
             color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-            padding: 1rem 2.5rem;
-            border-radius: 3rem;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
             cursor: pointer;
-            box-shadow: 0 12px 20px -12px #103a5e;
             transition: 0.15s;
             display: inline-flex;
             align-items: center;
             gap: 0.7rem;
-            border: 1px solid #2d5b88;
+            border: 1px solid #2f4055;
             margin-bottom: 2rem;
+            letter-spacing: 0.3px;
         }
         .btn-calc:hover {
-            background: #1d4f78;
-            transform: scale(1.02);
+            background: #2c3f58;
+            transform: scale(1.01);
         }
+        /* ---------- tables (clean, minimal) ---------- */
         .results-area {
-            background: white;
-            border-radius: 2rem;
+            background: #ffffff;
+            border-radius: 1.5rem;
             padding: 1.8rem;
-            border: 1px solid #dbe4f0;
+            border: 1px solid #edf2f9;
             overflow-x: auto;
             margin-bottom: 1.5rem;
-            box-shadow: 0 6px 16px #d9e2ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             min-width: 1200px;
         }
         th {
-            background: #e4edf9;
-            color: #0f3a5a;
+            background: #f9fbfd;
+            color: #405b73;
             font-weight: 600;
             padding: 1rem 0.8rem;
-            border-bottom: 2px solid #adc6e2;
+            border-bottom: 1px solid #dbe1ec;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
         td {
             padding: 0.9rem 0.8rem;
-            border-bottom: 1px solid #dce6f2;
+            border-bottom: 1px solid #edf2f9;
+            color: #2f4055;
         }
         .summary-card {
-            background: #e9f0fa;
+            background: #f9fbfd;
             border-radius: 1.5rem;
-            padding: 1.4rem 2rem;
+            padding: 1.2rem 2rem;
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
             gap: 2rem;
             margin-top: 1rem;
-            border-left: 8px solid #f3b33d;
+            border-left: 4px solid #c9a959;
         }
         .summary-card span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #103a5e;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1e2b3c;
         }
         .global-summary {
-            background: #e6f0ff;
-            border-radius: 2rem;
+            background: #f9fbfd;
+            border-radius: 1.5rem;
             padding: 2rem 2.5rem;
             margin: 2.5rem 0 1.5rem;
-            border: 2px solid #b9d1f0;
-            box-shadow: 0 8px 22px #bbd2f0;
+            border: 1px solid #e4eaf2;
         }
         .global-summary h2 {
-            color: #103a5e;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.8rem;
+            font-weight: 500;
+            font-size: 1.3rem;
+            color: #1e2b3c;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
         }
         .summary-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.2rem;
         }
         .stat-block {
             background: white;
-            padding: 1.2rem 1.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 12px #cedef0;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            border: 1px solid #eef2f6;
         }
         .stat-label {
-            font-size: 0.9rem;
-            color: #2b4f6e;
-            font-weight: 600;
+            font-size: 0.8rem;
+            color: #70859c;
+            font-weight: 500;
             text-transform: uppercase;
         }
         .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0b2b4f;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1e2b3c;
+            line-height: 1.2;
         }
         .studio-footer {
-            background: #06203b;
-            color: #b3cae5;
+            background: #f9fbfd;
+            color: #70859c;
             padding: 1.5rem 3rem;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            font-size: 1rem;
-            border-top: 4px solid #f3b33d;
-        }
-        .rights {
-            font-weight: 300;
-            letter-spacing: 0.3px;
+            font-size: 0.9rem;
+            border-top: 1px solid #e9eef3;
         }
         .rights strong {
-            color: #fedb9f;
-            font-weight: 600;
-        }
-        .contact {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            background: #0f2e4b;
-            padding: 0.6rem 1.8rem;
-            border-radius: 4rem;
+            color: #1e2b3c;
+            font-weight: 500;
         }
         .contact span {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: white;
+            margin-left: 1.5rem;
         }
-        .contact i { font-style: normal; font-weight: 400; color: #ffd966; }
-        .note {
-            background: #fef4e2;
-            border-left: 6px solid #f3b33d;
-            padding: 1rem 1.8rem;
-            border-radius: 1rem;
-            font-size: 0.95rem;
-        }
-
-        /* Print styles */
+        /* note removed as requested */
+        /* Print styles (refined) */
         @media print {
-            .brand-header .header-actions,
-            .component-tabs,
-            .input-grid,
-            .btn-calc,
-            .element-list .add-btn,
-            .element-list input,
-            .studio-footer,
-            .note {
+            .brand-header .header-actions, .component-tabs, .input-grid, .btn-calc,
+            .element-list .add-btn, .element-list input, .studio-footer {
                 display: none !important;
             }
-            .element-items {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                gap: 0.5rem !important;
-                margin-bottom: 1rem !important;
-            }
-            .element-tag {
-                background: #f0f5fc !important;
-                border: 1px solid #103a5e !important;
-                print-color-adjust: exact;
-            }
-            .brand-header {
-                background: linear-gradient(112deg, #06203b, #103a5e) !important;
-                color: white !important;
-                border-bottom: 4px solid #f3b33d !important;
-                print-color-adjust: exact;
-            }
-            th {
-                background: #103a5e !important;
-                color: white !important;
-                print-color-adjust: exact;
-            }
-            .summary-card {
-                border-left: 8px solid #f3b33d !important;
-            }
-            .global-summary {
-                border: 2px solid #103a5e !important;
-            }
-            .component-section {
-                display: block !important;
-                page-break-after: always;
-            }
-            .component-section:last-of-type {
-                page-break-after: avoid;
-            }
-            .print-contact-footer {
-                display: block !important;
-                text-align: center;
-                margin-top: 2rem;
-                color: #103a5e;
-                border-top: 1px dashed #103a5e;
-                padding-top: 1rem;
-            }
+            .element-items { display: flex !important; }
+            .brand-header { border-bottom: 1px solid #ccc; }
         }
-        .print-contact-footer {
-            display: none;
-        }
+        .print-contact-footer { display: none; }
     </style>
 </head>
 <body>
 <div class="master-container">
+    <!-- refined header with black sub and tagline -->
     <div class="brand-header">
         <div class="brand-main">KAJAL</div>
         <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
-        <div class="tagline"><strong>Build Smarter, Build Stronger</strong></div>
+        <div class="tagline"><i class="fas fa-arrow-right" style="margin-right:6px; opacity:0.6;"></i> Build Smarter, Build Stronger</div>
         <div class="header-actions">
-            <button class="print-btn" id="printFullBtn">🖨️ Print full BBS</button>
-            <button class="excel-btn" id="excelFullBtn">📥 Excel complete BBS</button>
+            <button class="print-btn" id="printFullBtn"><i class="fas fa-print"></i> Print full BBS</button>
+            <button class="excel-btn" id="excelFullBtn"><i class="fas fa-file-excel"></i> Excel complete</button>
         </div>
     </div>
 
+    <!-- tabs -->
     <div class="component-tabs">
-        <button class="comp-btn active" data-comp="footing">📐 Footings</button>
-        <button class="comp-btn" data-comp="column">📏 Columns</button>
-        <button class="comp-btn" data-comp="beam">📦 Beams</button>
-        <button class="comp-btn" data-comp="slab">🧱 Slabs</button>
+        <button class="comp-btn active" data-comp="footing">Footings</button>
+        <button class="comp-btn" data-comp="column">Columns</button>
+        <button class="comp-btn" data-comp="beam">Beams</button>
+        <button class="comp-btn" data-comp="slab">Slabs</button>
     </div>
 
+    <!-- main content (fully functional, note line removed) -->
     <div class="content-panel" id="fullContent">
         <!-- FOOTING SECTION -->
         <div id="footing-section" class="component-section active">
-            <h2 style="color:#103a5e;">📐 Footing BBS (Independent Design per Footing)</h2>
+            <h2 style="font-weight:400; margin-bottom:1.5rem;">📐 Footing BBS · independent design</h2>
             <div class="element-list" id="footing-list-container">
                 <div class="list-header">
-                    <h3>📍 Click on any footing to edit its design</h3>
-                    <button class="add-btn" id="add-footing">➕ Add footing type</button>
+                    <h3><i class="far fa-dot-circle" style="margin-right:8px;"></i> Click any footing to edit</h3>
+                    <button class="add-btn" id="add-footing"><i class="fas fa-plus"></i> Add footing type</button>
                 </div>
                 <div class="element-items" id="footing-tags"></div>
                 <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
-                    <input type="text" id="new-footing-name" placeholder="Enter name e.g. F4" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                    <input type="text" id="new-footing-name" placeholder="e.g. F4" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
                     <div class="input-group" style="width: 120px;">
-                        <label>No. of this type</label>
+                        <label>Quantity</label>
                         <input type="number" id="footing-count" value="1" min="1" style="padding:0.6rem;">
                     </div>
                 </div>
             </div>
-            
-            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
-                <span style="font-weight:600;">Currently editing: <span id="current-footing">F1</span></span>
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;">
+                <span style="font-weight:400;">Currently editing: <span id="current-footing">F1</span></span>
             </div>
-
             <div class="input-grid">
                 <div class="input-group"><label>Length Lx (mm)</label><input id="fL" value="2000"></div>
                 <div class="input-group"><label>Width Ly (mm)</label><input id="fW" value="1500"></div>
                 <div class="input-group"><label>Depth (mm)</label><input id="fD" value="300"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="fCov" value="50"></div>
-                <div class="input-group"><label>Reinforcement mat</label>
-                    <select id="fMatType">
-                        <option value="single">Single mat</option>
-                        <option value="double" selected>Double mat</option>
-                    </select>
-                </div>
+                <div class="input-group"><label>Mat type</label><select id="fMatType"><option value="single">Single</option><option value="double" selected>Double</option></select></div>
             </div>
-            <h3 style="color:#103a5e;">⬇️ BOTTOM</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬇️ Bottom</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Bottom X dia (mm)</label>
-                    <select id="fBotXdia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>Bottom X spacing</label><input id="fBotXsp" value="150"></div>
-                <div class="input-group"><label>Bottom Y dia (mm)</label>
-                    <select id="fBotYdia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>Bottom Y spacing</label><input id="fBotYsp" value="150"></div>
+                <div class="input-group"><label>Bottom X dia</label><select id="fBotXdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>X spacing</label><input id="fBotXsp" value="150"></div>
+                <div class="input-group"><label>Bottom Y dia</label><select id="fBotYdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Y spacing</label><input id="fBotYsp" value="150"></div>
             </div>
-            <h3 style="color:#103a5e;">⬆️ TOP (double mat)</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬆️ Top (double mat)</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Top X dia (mm)</label>
-                    <select id="fTopXdia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>Top X spacing</label><input id="fTopXsp" value="150"></div>
-                <div class="input-group"><label>Top Y dia (mm)</label>
-                    <select id="fTopYdia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>Top Y spacing</label><input id="fTopYsp" value="150"></div>
+                <div class="input-group"><label>Top X dia</label><select id="fTopXdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>X spacing</label><input id="fTopXsp" value="150"></div>
+                <div class="input-group"><label>Top Y dia</label><select id="fTopYdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Y spacing</label><input id="fTopYsp" value="150"></div>
             </div>
-            
-            <div style="display:flex; gap:1rem; align-items:center;">
-                <button class="btn-calc" id="saveFooting">💾 SAVE CURRENT FOOTING DESIGN</button>
-                <button class="btn-calc" id="calcFooting">📊 GENERATE ALL FOOTINGS BBS</button>
+            <div style="display:flex; gap:1rem;">
+                <button class="btn-calc" id="saveFooting"><i class="far fa-save"></i> SAVE CURRENT</button>
+                <button class="btn-calc" id="calcFooting"><i class="fas fa-calculator"></i> GENERATE ALL</button>
             </div>
-            
-            <div class="results-area" id="footingResult">
-                <table><thead><tr><th>Element</th><th>Qty</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table>
-                <div class="summary-card" id="footingSummary"></div>
-            </div>
+            <div class="results-area" id="footingResult"><table><thead><tr><th>Element</th><th>Qty</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table><div class="summary-card" id="footingSummary"></div></div>
         </div>
 
-        <!-- COLUMN SECTION with separate corner and middle bars -->
+        <!-- COLUMN SECTION -->
         <div id="column-section" class="component-section">
-            <h2 style="color:#103a5e;">📏 Column BBS (Corner & Middle Bars)</h2>
+            <h2 style="font-weight:400; margin-bottom:1.5rem;">📏 Column BBS · corner & middle bars</h2>
             <div class="element-list" id="column-list-container">
-                <div class="list-header"><h3>📍 Click on any column to edit its design</h3><button class="add-btn" id="add-column">➕ Add column type</button></div>
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click any column to edit</h3><button class="add-btn" id="add-column"><i class="fas fa-plus"></i> Add column type</button></div>
                 <div class="element-items" id="column-tags"></div>
                 <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
-                    <input type="text" id="new-column-name" placeholder="Enter name e.g. C4" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
-                    <div class="input-group" style="width: 120px;">
-                        <label>No. of this type</label>
-                        <input type="number" id="column-count" value="1" min="1" style="padding:0.6rem;">
-                    </div>
+                    <input type="text" id="new-column-name" placeholder="e.g. C4" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
+                    <div class="input-group" style="width: 120px;"><label>Quantity</label><input type="number" id="column-count" value="1" min="1" style="padding:0.6rem;"></div>
                 </div>
             </div>
-            
-            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
-                <span style="font-weight:600;">Currently editing: <span id="current-column">C1</span></span>
-            </div>
-
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;"><span>Currently editing: <span id="current-column">C1</span></span></div>
             <div class="input-grid">
                 <div class="input-group"><label>Column X (mm)</label><input id="colX" value="300"></div>
                 <div class="input-group"><label>Column Y (mm)</label><input id="colY" value="230"></div>
                 <div class="input-group"><label>Height (mm)</label><input id="colH" value="5700"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="colCov" value="40"></div>
-                <div class="input-group"><label>Ld (mm) (no ties zone)</label><input id="colLd" value="800"></div>
+                <div class="input-group"><label>Ld (mm)</label><input id="colLd" value="800"></div>
             </div>
-            
-            <h3 style="color:#103a5e;">🏛️ CORNER BARS</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">🏛️ Corner bars</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Corner bar dia (mm)</label>
-                    <select id="colCornerDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16" selected>16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
+                <div class="input-group"><label>Corner dia</label><select id="colCornerDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="16" selected>16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
                 <div class="input-group"><label>No. of corner bars</label><input id="colCornerQty" value="4"></div>
             </div>
-            
-            <h3 style="color:#103a5e;">📏 MIDDLE / BETWEEN BARS</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">📏 Middle bars</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Middle bar dia (mm)</label>
-                    <select id="colMiddleDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
+                <div class="input-group"><label>Middle dia</label><select id="colMiddleDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
                 <div class="input-group"><label>No. of middle bars</label><input id="colMiddleQty" value="4"></div>
             </div>
-            
-            <h3 style="color:#103a5e;">🌀 LATERAL TIES</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">🌀 Lateral ties</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Tie dia (mm)</label>
-                    <select id="colTieDia">
-                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
+                <div class="input-group"><label>Tie dia</label><select id="colTieDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
             </div>
-            
-            <div class="zone-info">
-                <strong>🏗️ Column zones:</strong> Zone-A (end supports) – closer spacing; Zone-B (mid-span) – larger spacing. Enter both spacings below.
-            </div>
+            <div class="zone-info"><strong>Zones:</strong> Zone-A (ends) & Zone-B (mid) – enter spacings below.</div>
             <div class="input-grid">
-                <div class="input-group"><label>🔵 Zone-A spacing (mm)</label><input id="colTieSpA" value="150"></div>
-                <div class="input-group"><label>🟢 Zone-B spacing (mm)</label><input id="colTieSpB" value="250"></div>
+                <div class="input-group"><label>Zone-A spacing (mm)</label><input id="colTieSpA" value="150"></div>
+                <div class="input-group"><label>Zone-B spacing (mm)</label><input id="colTieSpB" value="250"></div>
                 <div class="input-group"><label>Zone-A length (mm) each end</label><input id="colZoneALen" value="1000"></div>
             </div>
-            
-            <div style="display:flex; gap:1rem; align-items:center;">
-                <button class="btn-calc" id="saveColumn">💾 SAVE CURRENT COLUMN DESIGN</button>
-                <button class="btn-calc" id="calcColumn">📊 GENERATE ALL COLUMNS BBS</button>
-            </div>
-            
-            <div class="results-area">
-                <table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table>
-                <div class="summary-card" id="columnSummary"></div>
-            </div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveColumn"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcColumn"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table><div class="summary-card" id="columnSummary"></div></div>
         </div>
 
-        <!-- BEAM SECTION -->
+        <!-- BEAM SECTION (identical, only layout refined) -->
         <div id="beam-section" class="component-section">
-            <h2 style="color:#103a5e;">📦 Beam BBS (Independent Design per Beam)</h2>
+            <h2 style="font-weight:400; margin-bottom:1.5rem;">📦 Beam BBS · full details</h2>
             <div class="element-list" id="beam-list-container">
-                <div class="list-header"><h3>📍 Click on any beam to edit its design</h3><button class="add-btn" id="add-beam">➕ Add beam type</button></div>
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click any beam to edit</h3><button class="add-btn" id="add-beam"><i class="fas fa-plus"></i> Add beam type</button></div>
                 <div class="element-items" id="beam-tags"></div>
                 <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
-                    <input type="text" id="new-beam-name" placeholder="Enter name e.g. B103" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
-                    <div class="input-group" style="width: 120px;">
-                        <label>No. of this type</label>
-                        <input type="number" id="beam-count" value="1" min="1" style="padding:0.6rem;">
-                    </div>
+                    <input type="text" id="new-beam-name" placeholder="e.g. B103" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
+                    <div class="input-group" style="width: 120px;"><label>Quantity</label><input type="number" id="beam-count" value="1" min="1" style="padding:0.6rem;"></div>
                 </div>
             </div>
-            
-            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
-                <span style="font-weight:600;">Currently editing: <span id="current-beam">B101</span></span>
-            </div>
-
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;"><span>Currently editing: <span id="current-beam">B101</span></span></div>
             <div class="input-grid">
                 <div class="input-group"><label>Beam width (mm)</label><input id="bw" value="300"></div>
                 <div class="input-group"><label>Beam depth (mm)</label><input id="bd" value="380"></div>
                 <div class="input-group"><label>Clear span L (mm)</label><input id="bSpan" value="2500"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="bCov" value="25"></div>
-                <div class="input-group"><label>Ld (mm) each side</label><input id="bLd" value="600"></div>
+                <div class="input-group"><label>Ld (mm)</label><input id="bLd" value="600"></div>
             </div>
-            <div class="zone-info">
-                <strong>📐 IS 456:2000 provisions:</strong> Bottom, top, cranked bars, extra at supports & mid-span.
-            </div>
-            <h3 style="color:#103a5e;">⬇️ BOTTOM REINFORCEMENT</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬇️ Bottom</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Bottom straight dia (mm)</label>
-                    <select id="bBotDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>No. of bottom straight bars</label><input id="bBotQty" value="2"></div>
-                <div class="input-group"><label>Bottom cranked dia (mm)</label>
-                    <select id="bCrankDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>No. of cranked bars</label><input id="bCrankQty" value="2"></div>
+                <div class="input-group"><label>Straight dia</label><select id="bBotDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No. straight</label><input id="bBotQty" value="2"></div>
+                <div class="input-group"><label>Cranked dia</label><select id="bCrankDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No. cranked</label><input id="bCrankQty" value="2"></div>
             </div>
-            <h3 style="color:#103a5e;">⬆️ TOP REINFORCEMENT</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬆️ Top</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Top straight dia (mm)</label>
-                    <select id="bTopDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10" selected>10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>No. of top straight bars</label><input id="bTopQty" value="2"></div>
+                <div class="input-group"><label>Top straight dia</label><select id="bTopDia"><option value="6">6</option><option value="8">8</option><option value="10" selected>10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No. top</label><input id="bTopQty" value="2"></div>
             </div>
-            <h3 style="color:#103a5e;">➕ EXTRA BARS (IS Code)</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">➕ Extra bars</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Extra support top dia (mm)</label>
-                    <select id="bExtraSupDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>No. extra at supports (each end)</label><input id="bExtraSupQty" value="2"></div>
-                <div class="input-group"><label>Extra support length L/4 (mm)</label><input id="bExtraSupLen" value="625"></div>
-                <div class="input-group"><label>Extra mid-span bottom dia (mm)</label>
-                    <select id="bExtraMidDia">
-                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>No. extra at mid-span</label><input id="bExtraMidQty" value="2"></div>
-                <div class="input-group"><label>Extra mid-span length L/4 (mm)</label><input id="bExtraMidLen" value="625"></div>
+                <div class="input-group"><label>Support dia</label><select id="bExtraSupDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No. at supports</label><input id="bExtraSupQty" value="2"></div>
+                <div class="input-group"><label>Support L/4 (mm)</label><input id="bExtraSupLen" value="625"></div>
+                <div class="input-group"><label>Mid dia</label><select id="bExtraMidDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No. mid</label><input id="bExtraMidQty" value="2"></div>
+                <div class="input-group"><label>Mid L/4 (mm)</label><input id="bExtraMidLen" value="625"></div>
             </div>
-            <h3 style="color:#103a5e;">🌀 STIRRUPS (with zones)</h3>
+            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">🌀 Stirrups</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Stirrup dia (mm)</label>
-                    <select id="bStirDia">
-                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>🔵 Zone-A spacing (mm) [ends L/4]</label><input id="bStirSpA" value="150"></div>
-                <div class="input-group"><label>🟢 Zone-B spacing (mm) [mid L/2]</label><input id="bStirSpB" value="250"></div>
+                <div class="input-group"><label>Stirrup dia</label><select id="bStirDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Zone-A spacing</label><input id="bStirSpA" value="150"></div>
+                <div class="input-group"><label>Zone-B spacing</label><input id="bStirSpB" value="250"></div>
             </div>
-            
-            <div style="display:flex; gap:1rem; align-items:center;">
-                <button class="btn-calc" id="saveBeam">💾 SAVE CURRENT BEAM DESIGN</button>
-                <button class="btn-calc" id="calcBeam">📊 GENERATE ALL BEAMS BBS</button>
-            </div>
-            
-            <div class="results-area">
-                <table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table>
-                <div class="summary-card" id="beamSummary"></div>
-            </div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveBeam"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcBeam"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table><div class="summary-card" id="beamSummary"></div></div>
         </div>
 
         <!-- SLAB SECTION -->
         <div id="slab-section" class="component-section">
-            <h2 style="color:#103a5e;">🧱 Slab BBS (Independent Design per Slab)</h2>
+            <h2 style="font-weight:400; margin-bottom:1.5rem;">🧱 Slab BBS · independent design</h2>
             <div class="element-list" id="slab-list-container">
-                <div class="list-header"><h3>📍 Click on any slab to edit its design</h3><button class="add-btn" id="add-slab">➕ Add slab type</button></div>
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click any slab to edit</h3><button class="add-btn" id="add-slab"><i class="fas fa-plus"></i> Add slab type</button></div>
                 <div class="element-items" id="slab-tags"></div>
                 <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
-                    <input type="text" id="new-slab-name" placeholder="Enter name e.g. S3" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
-                    <div class="input-group" style="width: 120px;">
-                        <label>No. of this type</label>
-                        <input type="number" id="slab-count" value="1" min="1" style="padding:0.6rem;">
-                    </div>
+                    <input type="text" id="new-slab-name" placeholder="e.g. S3" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
+                    <div class="input-group" style="width: 120px;"><label>Quantity</label><input type="number" id="slab-count" value="1" min="1" style="padding:0.6rem;"></div>
                 </div>
             </div>
-            
-            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
-                <span style="font-weight:600;">Currently editing: <span id="current-slab">S1</span></span>
-            </div>
-
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;"><span>Currently editing: <span id="current-slab">S1</span></span></div>
             <div class="input-grid">
                 <div class="input-group"><label>Slab Lx (mm)</label><input id="sL" value="5000"></div>
                 <div class="input-group"><label>Slab Ly (mm)</label><input id="sW" value="5000"></div>
                 <div class="input-group"><label>Beam width (mm)</label><input id="sBeam" value="300"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="sCov" value="20"></div>
-                <div class="input-group"><label>Main bar dia (mm)</label>
-                    <select id="sMainDia">
-                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
-                <div class="input-group"><label>Main spacing (mm)</label><input id="sMainSp" value="200"></div>
-                <div class="input-group"><label>Extra bar dia</label>
-                    <select id="sExtraDia">
-                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
+                <div class="input-group"><label>Main bar dia</label><select id="sMainDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Main spacing</label><input id="sMainSp" value="200"></div>
+                <div class="input-group"><label>Extra bar dia</label><select id="sExtraDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
                 <div class="input-group"><label>Extra spacing</label><input id="sExtraSp" value="125"></div>
                 <div class="input-group"><label>Extra length L</label><input id="sExtraLen" value="1500"></div>
-                <div class="input-group"><label>Top dist. dia</label>
-                    <select id="sTopDia">
-                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
-                    </select>
-                </div>
+                <div class="input-group"><label>Top dist. dia</label><select id="sTopDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
             </div>
-            
-            <div style="display:flex; gap:1rem; align-items:center;">
-                <button class="btn-calc" id="saveSlab">💾 SAVE CURRENT SLAB DESIGN</button>
-                <button class="btn-calc" id="calcSlab">📊 GENERATE ALL SLABS BBS</button>
-            </div>
-            
-            <div class="results-area">
-                <table><thead><tr><th>Element</th><th>Qty</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table>
-                <div class="summary-card" id="slabSummary"></div>
-            </div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveSlab"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcSlab"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table><div class="summary-card" id="slabSummary"></div></div>
         </div>
 
         <!-- GLOBAL SUMMARY -->
@@ -795,12 +611,13 @@
             <div class="summary-stats" id="globalStats"></div>
             <div style="margin-top:1.5rem;" id="globalBreakdown"></div>
         </div>
-        <div class="note">⚡ Each element has independent design. Columns now have separate corner and middle bar options.</div>
+        <!-- note line removed as requested -->
     </div>
 
+    <!-- footer -->
     <div class="studio-footer">
         <div class="rights">© 2026 · <strong>KAJAL STRUCTURAL DESIGN STUDIO</strong> · All rights reserved</div>
-        <div class="contact"><span>📞 9390396951</span><span>✉️ designbykajal786@gmail.com</span></div>
+        <div class="contact"><span><i class="fas fa-phone-alt"></i> 9390396951</span><span><i class="far fa-envelope"></i> designbykajal786@gmail.com</span></div>
     </div>
     <div class="print-contact-footer">KAJAL STRUCTURAL DESIGN STUDIO · 9390396951 · designbykajal786@gmail.com</div>
 </div>
@@ -1269,7 +1086,7 @@
             });
         });
 
-        // ---------- GENERATE ALL FOOTINGS (independent with quantities) ----------
+        // ---------- GENERATE ALL FOOTINGS ----------
         document.getElementById('calcFooting').addEventListener('click', ()=>{
             let totalWt = 0;
             let rows = '';
@@ -1317,7 +1134,7 @@
             captureFooting(); updateGlobalSummary();
         });
 
-        // ---------- GENERATE ALL COLUMNS (independent with corner & middle bars) ----------
+        // ---------- GENERATE ALL COLUMNS ----------
         document.getElementById('calcColumn').addEventListener('click', ()=>{
             let totalWt = 0;
             let rows = '';
@@ -1333,18 +1150,14 @@
                 const tieDia = d.tieDia;
                 const spA = d.spA, spB = d.spB, zoneALen = d.zoneALen;
 
-                // Longitudinal bars cut length (same for all)
                 const longCut = H/1000;
                 
-                // Corner bars
                 const cornerTot = cornerQty * longCut;
                 const cornerWt = cornerTot * uw(cornerDia);
                 
-                // Middle bars
                 const middleTot = middleQty * longCut;
                 const middleWt = middleTot * uw(middleDia);
                 
-                // Ties calculation
                 const a = colX - 2*cov;
                 const b = colY - 2*cov;
                 const peri = 2*(a+b);
@@ -1378,7 +1191,7 @@
             captureColumn(); updateGlobalSummary();
         });
 
-        // ---------- GENERATE ALL BEAMS (independent with quantities) ----------
+        // ---------- GENERATE ALL BEAMS ----------
         document.getElementById('calcBeam').addEventListener('click', ()=>{
             let totalWt = 0;
             let rows = '';
@@ -1396,7 +1209,6 @@
                 const extraMidDia = d.extraMidDia, extraMidQty = d.extraMidQty, extraMidLen = d.extraMidLen;
                 const stirDia = d.stirDia, spA = d.spA, spB = d.spB;
 
-                // Cutting length calculations
                 const bottomCut = (span + 2*Ld - 2*cov) / 1000;
                 const crankH = bd - 2*cov;
                 const crankExtra = 0.42 * crankH;
@@ -1405,7 +1217,6 @@
                 const extraSupCut = (extraSupLen - cov) / 1000;
                 const extraMidCut = (extraMidLen - cov) / 1000;
                 
-                // Stirrups
                 const a = bw - 2*cov;
                 const bb = bd - 2*cov;
                 const peri = 2*(a+bb);
@@ -1426,31 +1237,26 @@
                 rows += `<tr><td>${b}</td><td>${count}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot * count)}</td><td>${r2(botWt * count)}</td></tr>`;
                 totalWt += botWt * count;
                 
-                // Cranked bars
                 const crankTot = crankQty * crankCut;
                 const crankWt = crankTot * uw(crankDia);
                 rows += `<tr><td>${b}</td><td>${count}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot * count)}</td><td>${r2(crankWt * count)}</td></tr>`;
                 totalWt += crankWt * count;
                 
-                // Top straight
                 const topTot = topQty * topCut;
                 const topWt = topTot * uw(topDia);
                 rows += `<tr><td>${b}</td><td>${count}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot * count)}</td><td>${r2(topWt * count)}</td></tr>`;
                 totalWt += topWt * count;
                 
-                // Extra bars at supports
                 const extraSupTot = (extraSupQty * 2) * extraSupCut;
                 const extraSupWt = extraSupTot * uw(extraSupDia);
                 rows += `<tr><td>${b}</td><td>${count}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot * count)}</td><td>${r2(extraSupWt * count)}</td></tr>`;
                 totalWt += extraSupWt * count;
                 
-                // Extra bars at mid-span
                 const extraMidTot = extraMidQty * extraMidCut;
                 const extraMidWt = extraMidTot * uw(extraMidDia);
                 rows += `<tr><td>${b}</td><td>${count}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot * count)}</td><td>${r2(extraMidWt * count)}</td></tr>`;
                 totalWt += extraMidWt * count;
                 
-                // Stirrups
                 const stirTot = totalStirrups * stirCut;
                 const stirWt = stirTot * uw(stirDia);
                 rows += `<tr><td>${b}</td><td>${count}</td><td>Stirrups</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot * count)}</td><td>${r2(stirWt * count)}</td></tr>`;
@@ -1463,7 +1269,7 @@
             captureBeam(); updateGlobalSummary();
         });
 
-        // ---------- GENERATE ALL SLABS (independent with quantities) ----------
+        // ---------- GENERATE ALL SLABS ----------
         document.getElementById('calcSlab').addEventListener('click', ()=>{
             let totalWt = 0;
             let rows = '';
@@ -1533,7 +1339,7 @@
                 win.document.write(`
                     <html><head><title>KAJAL · complete BBS</title><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
                     <style>
-                        body{font-family:Calibri,sans-serif;padding:1.5rem;}
+                        body{font-family:Inter,sans-serif;padding:1.5rem;}
                         .brand-header{background:linear-gradient(112deg,#06203b,#103a5e);color:white;padding:1.5rem;border-bottom:4px solid #f3b33d;text-align:center;print-color-adjust:exact;}
                         .brand-main{font-family:'Cinzel Decorative',cursive;font-size:3.2rem;color:white;text-shadow:2px 2px 0 #103a5e;}
                         .brand-sub{color:#fedb9f;font-size:1.6rem;}
