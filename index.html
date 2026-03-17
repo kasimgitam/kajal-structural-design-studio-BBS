@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAJAL · structural design studio | Advanced BBS with full beam details</title>
+    <title>KAJAL · structural design studio | Independent Element BBS</title>
     <!-- Google Fonts: Cinzel Decorative + Calibri -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -175,6 +175,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
+            margin-bottom: 1rem;
         }
         .element-tag {
             background: white;
@@ -184,6 +185,16 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .element-tag.selected {
+            background: #103a5e;
+            border-color: #f3b33d;
+            color: white;
+        }
+        .element-tag.selected span {
+            color: white;
         }
         .element-tag span {
             font-weight: 600;
@@ -204,6 +215,9 @@
         }
         .remove-tag:hover {
             background: #ffe1e1;
+        }
+        .element-tag.selected .remove-tag {
+            color: #ffd966;
         }
         .input-grid {
             display: grid;
@@ -476,63 +490,138 @@
     </div>
 
     <div class="content-panel" id="fullContent">
-        <!-- FOOTING SECTION (final) -->
+        <!-- FOOTING SECTION -->
         <div id="footing-section" class="component-section active">
-            <h2 style="color:#103a5e;">📐 Footing BBS</h2>
+            <h2 style="color:#103a5e;">📐 Footing BBS (Independent Design per Footing)</h2>
             <div class="element-list" id="footing-list-container">
                 <div class="list-header">
-                    <h3>📍 Footing tags (e.g., F1, F2, F3)</h3>
-                    <button class="add-btn" id="add-footing">➕ Add footing</button>
+                    <h3>📍 Click on any footing to edit its design</h3>
+                    <button class="add-btn" id="add-footing">➕ Add footing type</button>
                 </div>
                 <div class="element-items" id="footing-tags"></div>
-                <input type="text" id="new-footing-name" placeholder="Enter name e.g. F4" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <input type="text" id="new-footing-name" placeholder="Enter name e.g. F4" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                    <div class="input-group" style="width: 120px;">
+                        <label>No. of this type</label>
+                        <input type="number" id="footing-count" value="1" min="1" style="padding:0.6rem;">
+                    </div>
+                </div>
             </div>
+            
+            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
+                <span style="font-weight:600;">Currently editing: <span id="current-footing">F1</span></span>
+            </div>
+
             <div class="input-grid">
                 <div class="input-group"><label>Length Lx (mm)</label><input id="fL" value="2000"></div>
                 <div class="input-group"><label>Width Ly (mm)</label><input id="fW" value="1500"></div>
                 <div class="input-group"><label>Depth (mm)</label><input id="fD" value="300"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="fCov" value="50"></div>
-                <div class="input-group"><label>Reinforcement mat</label><select id="fMatType"><option value="single">Single mat</option><option value="double" selected>Double mat</option></select></div>
+                <div class="input-group"><label>Reinforcement mat</label>
+                    <select id="fMatType">
+                        <option value="single">Single mat</option>
+                        <option value="double" selected>Double mat</option>
+                    </select>
+                </div>
             </div>
             <h3 style="color:#103a5e;">⬇️ BOTTOM</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Bottom X dia (mm)</label><input id="fBotXdia" value="12"></div>
+                <div class="input-group"><label>Bottom X dia (mm)</label>
+                    <select id="fBotXdia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>Bottom X spacing</label><input id="fBotXsp" value="150"></div>
-                <div class="input-group"><label>Bottom Y dia (mm)</label><input id="fBotYdia" value="12"></div>
+                <div class="input-group"><label>Bottom Y dia (mm)</label>
+                    <select id="fBotYdia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>Bottom Y spacing</label><input id="fBotYsp" value="150"></div>
             </div>
             <h3 style="color:#103a5e;">⬆️ TOP (double mat)</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Top X dia (mm)</label><input id="fTopXdia" value="12"></div>
+                <div class="input-group"><label>Top X dia (mm)</label>
+                    <select id="fTopXdia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>Top X spacing</label><input id="fTopXsp" value="150"></div>
-                <div class="input-group"><label>Top Y dia (mm)</label><input id="fTopYdia" value="12"></div>
+                <div class="input-group"><label>Top Y dia (mm)</label>
+                    <select id="fTopYdia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>Top Y spacing</label><input id="fTopYsp" value="150"></div>
             </div>
-            <button class="btn-calc" id="calcFooting">📊 GENERATE FOOTING BBS</button>
+            
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <button class="btn-calc" id="saveFooting">💾 SAVE CURRENT FOOTING DESIGN</button>
+                <button class="btn-calc" id="calcFooting">📊 GENERATE ALL FOOTINGS BBS</button>
+            </div>
+            
             <div class="results-area" id="footingResult">
-                <table><thead><tr><th>Element</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table>
+                <table><thead><tr><th>Element</th><th>Qty</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table>
                 <div class="summary-card" id="footingSummary"></div>
             </div>
         </div>
 
-        <!-- COLUMN SECTION with Zone-A and Zone-B (final) -->
+        <!-- COLUMN SECTION with separate corner and middle bars -->
         <div id="column-section" class="component-section">
-            <h2 style="color:#103a5e;">📏 Column BBS (Zone-A & Zone-B)</h2>
+            <h2 style="color:#103a5e;">📏 Column BBS (Corner & Middle Bars)</h2>
             <div class="element-list" id="column-list-container">
-                <div class="list-header"><h3>📍 Column tags (e.g., C1, C2)</h3><button class="add-btn" id="add-column">➕ Add column</button></div>
+                <div class="list-header"><h3>📍 Click on any column to edit its design</h3><button class="add-btn" id="add-column">➕ Add column type</button></div>
                 <div class="element-items" id="column-tags"></div>
-                <input type="text" id="new-column-name" placeholder="Enter name e.g. C4" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <input type="text" id="new-column-name" placeholder="Enter name e.g. C4" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                    <div class="input-group" style="width: 120px;">
+                        <label>No. of this type</label>
+                        <input type="number" id="column-count" value="1" min="1" style="padding:0.6rem;">
+                    </div>
+                </div>
             </div>
+            
+            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
+                <span style="font-weight:600;">Currently editing: <span id="current-column">C1</span></span>
+            </div>
+
             <div class="input-grid">
                 <div class="input-group"><label>Column X (mm)</label><input id="colX" value="300"></div>
                 <div class="input-group"><label>Column Y (mm)</label><input id="colY" value="230"></div>
                 <div class="input-group"><label>Height (mm)</label><input id="colH" value="5700"></div>
-                <div class="input-group"><label>Long. dia (mm)</label><input id="colLongDia" value="16"></div>
-                <div class="input-group"><label>No. long. bars</label><input id="colLongQty" value="4"></div>
-                <div class="input-group"><label>Tie dia (mm)</label><input id="colTieDia" value="8"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="colCov" value="40"></div>
                 <div class="input-group"><label>Ld (mm) (no ties zone)</label><input id="colLd" value="800"></div>
             </div>
+            
+            <h3 style="color:#103a5e;">🏛️ CORNER BARS</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Corner bar dia (mm)</label>
+                    <select id="colCornerDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16" selected>16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
+                <div class="input-group"><label>No. of corner bars</label><input id="colCornerQty" value="4"></div>
+            </div>
+            
+            <h3 style="color:#103a5e;">📏 MIDDLE / BETWEEN BARS</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Middle bar dia (mm)</label>
+                    <select id="colMiddleDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
+                <div class="input-group"><label>No. of middle bars</label><input id="colMiddleQty" value="4"></div>
+            </div>
+            
+            <h3 style="color:#103a5e;">🌀 LATERAL TIES</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>Tie dia (mm)</label>
+                    <select id="colTieDia">
+                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
+            </div>
+            
             <div class="zone-info">
                 <strong>🏗️ Column zones:</strong> Zone-A (end supports) – closer spacing; Zone-B (mid-span) – larger spacing. Enter both spacings below.
             </div>
@@ -541,21 +630,37 @@
                 <div class="input-group"><label>🟢 Zone-B spacing (mm)</label><input id="colTieSpB" value="250"></div>
                 <div class="input-group"><label>Zone-A length (mm) each end</label><input id="colZoneALen" value="1000"></div>
             </div>
-            <button class="btn-calc" id="calcColumn">📊 GENERATE COLUMN BBS</button>
+            
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <button class="btn-calc" id="saveColumn">💾 SAVE CURRENT COLUMN DESIGN</button>
+                <button class="btn-calc" id="calcColumn">📊 GENERATE ALL COLUMNS BBS</button>
+            </div>
+            
             <div class="results-area">
-                <table><thead><tr><th>Element</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table>
+                <table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table>
                 <div class="summary-card" id="columnSummary"></div>
             </div>
         </div>
 
-        <!-- BEAM SECTION with full details: top, bottom, crank, extra bars at supports & mid-span -->
+        <!-- BEAM SECTION -->
         <div id="beam-section" class="component-section">
-            <h2 style="color:#103a5e;">📦 Beam BBS (IS Code: top, bottom, crank, extra bars)</h2>
+            <h2 style="color:#103a5e;">📦 Beam BBS (Independent Design per Beam)</h2>
             <div class="element-list" id="beam-list-container">
-                <div class="list-header"><h3>📍 Beam tags (e.g., B101)</h3><button class="add-btn" id="add-beam">➕ Add beam</button></div>
+                <div class="list-header"><h3>📍 Click on any beam to edit its design</h3><button class="add-btn" id="add-beam">➕ Add beam type</button></div>
                 <div class="element-items" id="beam-tags"></div>
-                <input type="text" id="new-beam-name" placeholder="Enter name e.g. B103" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <input type="text" id="new-beam-name" placeholder="Enter name e.g. B103" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                    <div class="input-group" style="width: 120px;">
+                        <label>No. of this type</label>
+                        <input type="number" id="beam-count" value="1" min="1" style="padding:0.6rem;">
+                    </div>
+                </div>
             </div>
+            
+            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
+                <span style="font-weight:600;">Currently editing: <span id="current-beam">B101</span></span>
+            </div>
+
             <div class="input-grid">
                 <div class="input-group"><label>Beam width (mm)</label><input id="bw" value="300"></div>
                 <div class="input-group"><label>Beam depth (mm)</label><input id="bd" value="380"></div>
@@ -564,71 +669,124 @@
                 <div class="input-group"><label>Ld (mm) each side</label><input id="bLd" value="600"></div>
             </div>
             <div class="zone-info">
-                <strong>📐 IS 456:2000 provisions:</strong> 
-                <ul style="margin-top:0.5rem; margin-left:1.5rem;">
-                    <li>Bottom reinforcement (main)</li>
-                    <li>Top reinforcement (holding bars)</li>
-                    <li>Cranked bars (0.42H extra length)</li>
-                    <li>Extra bars at supports (top)</li>
-                    <li>Extra bars at mid-span (bottom)</li>
-                </ul>
+                <strong>📐 IS 456:2000 provisions:</strong> Bottom, top, cranked bars, extra at supports & mid-span.
             </div>
             <h3 style="color:#103a5e;">⬇️ BOTTOM REINFORCEMENT</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Bottom straight dia (mm)</label><input id="bBotDia" value="12"></div>
+                <div class="input-group"><label>Bottom straight dia (mm)</label>
+                    <select id="bBotDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>No. of bottom straight bars</label><input id="bBotQty" value="2"></div>
-                <div class="input-group"><label>Bottom cranked dia (mm)</label><input id="bCrankDia" value="12"></div>
+                <div class="input-group"><label>Bottom cranked dia (mm)</label>
+                    <select id="bCrankDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>No. of cranked bars</label><input id="bCrankQty" value="2"></div>
             </div>
             <h3 style="color:#103a5e;">⬆️ TOP REINFORCEMENT</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Top straight dia (mm)</label><input id="bTopDia" value="10"></div>
+                <div class="input-group"><label>Top straight dia (mm)</label>
+                    <select id="bTopDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10" selected>10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>No. of top straight bars</label><input id="bTopQty" value="2"></div>
             </div>
             <h3 style="color:#103a5e;">➕ EXTRA BARS (IS Code)</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Extra support top dia (mm)</label><input id="bExtraSupDia" value="12"></div>
+                <div class="input-group"><label>Extra support top dia (mm)</label>
+                    <select id="bExtraSupDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>No. extra at supports (each end)</label><input id="bExtraSupQty" value="2"></div>
                 <div class="input-group"><label>Extra support length L/4 (mm)</label><input id="bExtraSupLen" value="625"></div>
-                <div class="input-group"><label>Extra mid-span bottom dia (mm)</label><input id="bExtraMidDia" value="12"></div>
+                <div class="input-group"><label>Extra mid-span bottom dia (mm)</label>
+                    <select id="bExtraMidDia">
+                        <option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option><option value="12" selected>12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>No. extra at mid-span</label><input id="bExtraMidQty" value="2"></div>
                 <div class="input-group"><label>Extra mid-span length L/4 (mm)</label><input id="bExtraMidLen" value="625"></div>
             </div>
             <h3 style="color:#103a5e;">🌀 STIRRUPS (with zones)</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Stirrup dia (mm)</label><input id="bStirDia" value="8"></div>
+                <div class="input-group"><label>Stirrup dia (mm)</label>
+                    <select id="bStirDia">
+                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>🔵 Zone-A spacing (mm) [ends L/4]</label><input id="bStirSpA" value="150"></div>
                 <div class="input-group"><label>🟢 Zone-B spacing (mm) [mid L/2]</label><input id="bStirSpB" value="250"></div>
             </div>
-            <button class="btn-calc" id="calcBeam">📊 GENERATE BEAM BBS</button>
+            
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <button class="btn-calc" id="saveBeam">💾 SAVE CURRENT BEAM DESIGN</button>
+                <button class="btn-calc" id="calcBeam">📊 GENERATE ALL BEAMS BBS</button>
+            </div>
+            
             <div class="results-area">
-                <table><thead><tr><th>Element</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table>
+                <table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table>
                 <div class="summary-card" id="beamSummary"></div>
             </div>
         </div>
 
-        <!-- SLAB SECTION (simplified) -->
+        <!-- SLAB SECTION -->
         <div id="slab-section" class="component-section">
-            <h2 style="color:#103a5e;">🧱 Slab BBS</h2>
+            <h2 style="color:#103a5e;">🧱 Slab BBS (Independent Design per Slab)</h2>
             <div class="element-list" id="slab-list-container">
-                <div class="list-header"><h3>📍 Slab tags (e.g., S1)</h3><button class="add-btn" id="add-slab">➕ Add slab</button></div>
+                <div class="list-header"><h3>📍 Click on any slab to edit its design</h3><button class="add-btn" id="add-slab">➕ Add slab type</button></div>
                 <div class="element-items" id="slab-tags"></div>
-                <input type="text" id="new-slab-name" placeholder="Enter name e.g. S3" style="margin-top:1rem; padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <input type="text" id="new-slab-name" placeholder="Enter name e.g. S3" style="padding:0.6rem; border-radius:2rem; border:1px solid #c2d4e6; width:200px;">
+                    <div class="input-group" style="width: 120px;">
+                        <label>No. of this type</label>
+                        <input type="number" id="slab-count" value="1" min="1" style="padding:0.6rem;">
+                    </div>
+                </div>
             </div>
+            
+            <div style="background:#e3f0ff; padding:0.8rem 1.5rem; border-radius:2rem; margin-bottom:1rem;">
+                <span style="font-weight:600;">Currently editing: <span id="current-slab">S1</span></span>
+            </div>
+
             <div class="input-grid">
                 <div class="input-group"><label>Slab Lx (mm)</label><input id="sL" value="5000"></div>
                 <div class="input-group"><label>Slab Ly (mm)</label><input id="sW" value="5000"></div>
                 <div class="input-group"><label>Beam width (mm)</label><input id="sBeam" value="300"></div>
                 <div class="input-group"><label>Cover (mm)</label><input id="sCov" value="20"></div>
-                <div class="input-group"><label>Main bar dia (mm)</label><input id="sMainDia" value="8"></div>
+                <div class="input-group"><label>Main bar dia (mm)</label>
+                    <select id="sMainDia">
+                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>Main spacing (mm)</label><input id="sMainSp" value="200"></div>
-                <div class="input-group"><label>Extra bar dia</label><input id="sExtraDia" value="8"></div>
+                <div class="input-group"><label>Extra bar dia</label>
+                    <select id="sExtraDia">
+                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
                 <div class="input-group"><label>Extra spacing</label><input id="sExtraSp" value="125"></div>
                 <div class="input-group"><label>Extra length L</label><input id="sExtraLen" value="1500"></div>
-                <div class="input-group"><label>Top dist. dia</label><input id="sTopDia" value="8"></div>
+                <div class="input-group"><label>Top dist. dia</label>
+                    <select id="sTopDia">
+                        <option value="6">6 mm</option><option value="8" selected>8 mm</option><option value="10">10 mm</option><option value="12">12 mm</option><option value="16">16 mm</option><option value="20">20 mm</option><option value="25">25 mm</option><option value="32">32 mm</option>
+                    </select>
+                </div>
             </div>
-            <button class="btn-calc" id="calcSlab">📊 GENERATE SLAB BBS</button>
-            <div class="results-area"><table><thead><tr><th>Element</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table><div class="summary-card" id="slabSummary"></div></div>
+            
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <button class="btn-calc" id="saveSlab">💾 SAVE CURRENT SLAB DESIGN</button>
+                <button class="btn-calc" id="calcSlab">📊 GENERATE ALL SLABS BBS</button>
+            </div>
+            
+            <div class="results-area">
+                <table><thead><tr><th>Element</th><th>Qty</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table>
+                <div class="summary-card" id="slabSummary"></div>
+            </div>
         </div>
 
         <!-- GLOBAL SUMMARY -->
@@ -637,7 +795,7 @@
             <div class="summary-stats" id="globalStats"></div>
             <div style="margin-top:1.5rem;" id="globalBreakdown"></div>
         </div>
-        <div class="note">⚡ Beam includes top, bottom, cranked bars, extra at supports & mid-span as per IS 456.</div>
+        <div class="note">⚡ Each element has independent design. Columns now have separate corner and middle bar options.</div>
     </div>
 
     <div class="studio-footer">
@@ -649,54 +807,437 @@
 
 <script>
     (function() {
-        // ---------- element tag management ----------
-        const footings = ['F1'];
-        const columns = ['C1'];
-        const beams = ['B101'];
-        const slabs = ['S1'];
+        // ---------- Data structures for independent designs ----------
+        // Each element stores its own complete set of design parameters and quantity
+        
+        // Footings data
+        let footingDesigns = {
+            'F1': {
+                L: 2000, W: 1500, D: 300, cov: 50, matType: 'double',
+                botXdia: 12, botXsp: 150, botYdia: 12, botYsp: 150,
+                topXdia: 12, topXsp: 150, topYdia: 12, topYsp: 150,
+                count: 1
+            }
+        };
+        
+        // Columns data - with corner and middle bars
+        let columnDesigns = {
+            'C1': {
+                colX: 300, colY: 230, H: 5700, cov: 40, Ld: 800,
+                cornerDia: 16, cornerQty: 4,
+                middleDia: 12, middleQty: 4,
+                tieDia: 8, spA: 150, spB: 250, zoneALen: 1000,
+                count: 1
+            }
+        };
+        
+        // Beams data
+        let beamDesigns = {
+            'B101': {
+                bw: 300, bd: 380, span: 2500, cov: 25, Ld: 600,
+                botDia: 12, botQty: 2, crankDia: 12, crankQty: 2,
+                topDia: 10, topQty: 2,
+                extraSupDia: 12, extraSupQty: 2, extraSupLen: 625,
+                extraMidDia: 12, extraMidQty: 2, extraMidLen: 625,
+                stirDia: 8, spA: 150, spB: 250,
+                count: 1
+            }
+        };
+        
+        // Slabs data
+        let slabDesigns = {
+            'S1': {
+                L: 5000, W: 5000, beam: 300, cov: 20,
+                mainDia: 8, mainSp: 200,
+                extraDia: 8, extraSp: 125, extraLen: 1500,
+                topDia: 8,
+                count: 1
+            }
+        };
 
-        function renderTags() {
-            document.getElementById('footing-tags').innerHTML = footings.map(f => `<div class="element-tag"><span>${f}</span><button class="remove-tag" data-type="footing" data-value="${f}">✕</button></div>`).join('');
-            document.getElementById('column-tags').innerHTML = columns.map(c => `<div class="element-tag"><span>${c}</span><button class="remove-tag" data-type="column" data-value="${c}">✕</button></div>`).join('');
-            document.getElementById('beam-tags').innerHTML = beams.map(b => `<div class="element-tag"><span>${b}</span><button class="remove-tag" data-type="beam" data-value="${b}">✕</button></div>`).join('');
-            document.getElementById('slab-tags').innerHTML = slabs.map(s => `<div class="element-tag"><span>${s}</span><button class="remove-tag" data-type="slab" data-value="${s}">✕</button></div>`).join('');
+        // Track currently selected element
+        let currentFooting = 'F1';
+        let currentColumn = 'C1';
+        let currentBeam = 'B101';
+        let currentSlab = 'S1';
+
+        // List of tags (order maintained)
+        let footings = ['F1'];
+        let columns = ['C1'];
+        let beams = ['B101'];
+        let slabs = ['S1'];
+
+        // Helper functions to load design into inputs
+        function loadFootingDesign(name) {
+            if (!footingDesigns[name]) {
+                footingDesigns[name] = { ...footingDesigns['F1'] };
+            }
+            const d = footingDesigns[name];
+            document.getElementById('fL').value = d.L;
+            document.getElementById('fW').value = d.W;
+            document.getElementById('fD').value = d.D;
+            document.getElementById('fCov').value = d.cov;
+            document.getElementById('fMatType').value = d.matType;
+            document.getElementById('fBotXdia').value = d.botXdia;
+            document.getElementById('fBotXsp').value = d.botXsp;
+            document.getElementById('fBotYdia').value = d.botYdia;
+            document.getElementById('fBotYsp').value = d.botYsp;
+            document.getElementById('fTopXdia').value = d.topXdia;
+            document.getElementById('fTopXsp').value = d.topXsp;
+            document.getElementById('fTopYdia').value = d.topYdia;
+            document.getElementById('fTopYsp').value = d.topYsp;
+            document.getElementById('footing-count').value = d.count || 1;
+            document.getElementById('current-footing').textContent = name;
         }
 
+        function loadColumnDesign(name) {
+            if (!columnDesigns[name]) {
+                columnDesigns[name] = { ...columnDesigns['C1'] };
+            }
+            const d = columnDesigns[name];
+            document.getElementById('colX').value = d.colX;
+            document.getElementById('colY').value = d.colY;
+            document.getElementById('colH').value = d.H;
+            document.getElementById('colCov').value = d.cov;
+            document.getElementById('colLd').value = d.Ld;
+            document.getElementById('colCornerDia').value = d.cornerDia;
+            document.getElementById('colCornerQty').value = d.cornerQty;
+            document.getElementById('colMiddleDia').value = d.middleDia;
+            document.getElementById('colMiddleQty').value = d.middleQty;
+            document.getElementById('colTieDia').value = d.tieDia;
+            document.getElementById('colTieSpA').value = d.spA;
+            document.getElementById('colTieSpB').value = d.spB;
+            document.getElementById('colZoneALen').value = d.zoneALen;
+            document.getElementById('column-count').value = d.count || 1;
+            document.getElementById('current-column').textContent = name;
+        }
+
+        function loadBeamDesign(name) {
+            if (!beamDesigns[name]) {
+                beamDesigns[name] = { ...beamDesigns['B101'] };
+            }
+            const d = beamDesigns[name];
+            document.getElementById('bw').value = d.bw;
+            document.getElementById('bd').value = d.bd;
+            document.getElementById('bSpan').value = d.span;
+            document.getElementById('bCov').value = d.cov;
+            document.getElementById('bLd').value = d.Ld;
+            document.getElementById('bBotDia').value = d.botDia;
+            document.getElementById('bBotQty').value = d.botQty;
+            document.getElementById('bCrankDia').value = d.crankDia;
+            document.getElementById('bCrankQty').value = d.crankQty;
+            document.getElementById('bTopDia').value = d.topDia;
+            document.getElementById('bTopQty').value = d.topQty;
+            document.getElementById('bExtraSupDia').value = d.extraSupDia;
+            document.getElementById('bExtraSupQty').value = d.extraSupQty;
+            document.getElementById('bExtraSupLen').value = d.extraSupLen;
+            document.getElementById('bExtraMidDia').value = d.extraMidDia;
+            document.getElementById('bExtraMidQty').value = d.extraMidQty;
+            document.getElementById('bExtraMidLen').value = d.extraMidLen;
+            document.getElementById('bStirDia').value = d.stirDia;
+            document.getElementById('bStirSpA').value = d.spA;
+            document.getElementById('bStirSpB').value = d.spB;
+            document.getElementById('beam-count').value = d.count || 1;
+            document.getElementById('current-beam').textContent = name;
+        }
+
+        function loadSlabDesign(name) {
+            if (!slabDesigns[name]) {
+                slabDesigns[name] = { ...slabDesigns['S1'] };
+            }
+            const d = slabDesigns[name];
+            document.getElementById('sL').value = d.L;
+            document.getElementById('sW').value = d.W;
+            document.getElementById('sBeam').value = d.beam;
+            document.getElementById('sCov').value = d.cov;
+            document.getElementById('sMainDia').value = d.mainDia;
+            document.getElementById('sMainSp').value = d.mainSp;
+            document.getElementById('sExtraDia').value = d.extraDia;
+            document.getElementById('sExtraSp').value = d.extraSp;
+            document.getElementById('sExtraLen').value = d.extraLen;
+            document.getElementById('sTopDia').value = d.topDia;
+            document.getElementById('slab-count').value = d.count || 1;
+            document.getElementById('current-slab').textContent = name;
+        }
+
+        // Save current design including quantity
+        function saveCurrentFooting() {
+            const name = currentFooting;
+            footingDesigns[name] = {
+                L: +document.getElementById('fL').value,
+                W: +document.getElementById('fW').value,
+                D: +document.getElementById('fD').value,
+                cov: +document.getElementById('fCov').value,
+                matType: document.getElementById('fMatType').value,
+                botXdia: +document.getElementById('fBotXdia').value,
+                botXsp: +document.getElementById('fBotXsp').value,
+                botYdia: +document.getElementById('fBotYdia').value,
+                botYsp: +document.getElementById('fBotYsp').value,
+                topXdia: +document.getElementById('fTopXdia').value,
+                topXsp: +document.getElementById('fTopXsp').value,
+                topYdia: +document.getElementById('fTopYdia').value,
+                topYsp: +document.getElementById('fTopYsp').value,
+                count: +document.getElementById('footing-count').value
+            };
+            alert(`Footing ${name} design saved with quantity ${footingDesigns[name].count}`);
+        }
+
+        function saveCurrentColumn() {
+            const name = currentColumn;
+            columnDesigns[name] = {
+                colX: +document.getElementById('colX').value,
+                colY: +document.getElementById('colY').value,
+                H: +document.getElementById('colH').value,
+                cov: +document.getElementById('colCov').value,
+                Ld: +document.getElementById('colLd').value,
+                cornerDia: +document.getElementById('colCornerDia').value,
+                cornerQty: +document.getElementById('colCornerQty').value,
+                middleDia: +document.getElementById('colMiddleDia').value,
+                middleQty: +document.getElementById('colMiddleQty').value,
+                tieDia: +document.getElementById('colTieDia').value,
+                spA: +document.getElementById('colTieSpA').value,
+                spB: +document.getElementById('colTieSpB').value,
+                zoneALen: +document.getElementById('colZoneALen').value,
+                count: +document.getElementById('column-count').value
+            };
+            alert(`Column ${name} design saved with quantity ${columnDesigns[name].count}`);
+        }
+
+        function saveCurrentBeam() {
+            const name = currentBeam;
+            beamDesigns[name] = {
+                bw: +document.getElementById('bw').value,
+                bd: +document.getElementById('bd').value,
+                span: +document.getElementById('bSpan').value,
+                cov: +document.getElementById('bCov').value,
+                Ld: +document.getElementById('bLd').value,
+                botDia: +document.getElementById('bBotDia').value,
+                botQty: +document.getElementById('bBotQty').value,
+                crankDia: +document.getElementById('bCrankDia').value,
+                crankQty: +document.getElementById('bCrankQty').value,
+                topDia: +document.getElementById('bTopDia').value,
+                topQty: +document.getElementById('bTopQty').value,
+                extraSupDia: +document.getElementById('bExtraSupDia').value,
+                extraSupQty: +document.getElementById('bExtraSupQty').value,
+                extraSupLen: +document.getElementById('bExtraSupLen').value,
+                extraMidDia: +document.getElementById('bExtraMidDia').value,
+                extraMidQty: +document.getElementById('bExtraMidQty').value,
+                extraMidLen: +document.getElementById('bExtraMidLen').value,
+                stirDia: +document.getElementById('bStirDia').value,
+                spA: +document.getElementById('bStirSpA').value,
+                spB: +document.getElementById('bStirSpB').value,
+                count: +document.getElementById('beam-count').value
+            };
+            alert(`Beam ${name} design saved with quantity ${beamDesigns[name].count}`);
+        }
+
+        function saveCurrentSlab() {
+            const name = currentSlab;
+            slabDesigns[name] = {
+                L: +document.getElementById('sL').value,
+                W: +document.getElementById('sW').value,
+                beam: +document.getElementById('sBeam').value,
+                cov: +document.getElementById('sCov').value,
+                mainDia: +document.getElementById('sMainDia').value,
+                mainSp: +document.getElementById('sMainSp').value,
+                extraDia: +document.getElementById('sExtraDia').value,
+                extraSp: +document.getElementById('sExtraSp').value,
+                extraLen: +document.getElementById('sExtraLen').value,
+                topDia: +document.getElementById('sTopDia').value,
+                count: +document.getElementById('slab-count').value
+            };
+            alert(`Slab ${name} design saved with quantity ${slabDesigns[name].count}`);
+        }
+
+        // Render tags with click handlers
+        function renderTags() {
+            // Footing tags
+            let ftHtml = '';
+            footings.forEach(f => {
+                ftHtml += `<div class="element-tag ${f === currentFooting ? 'selected' : ''}" data-footing="${f}"><span>${f}</span><button class="remove-tag" data-type="footing" data-value="${f}">✕</button></div>`;
+            });
+            document.getElementById('footing-tags').innerHTML = ftHtml;
+            
+            // Column tags
+            let colHtml = '';
+            columns.forEach(c => {
+                colHtml += `<div class="element-tag ${c === currentColumn ? 'selected' : ''}" data-column="${c}"><span>${c}</span><button class="remove-tag" data-type="column" data-value="${c}">✕</button></div>`;
+            });
+            document.getElementById('column-tags').innerHTML = colHtml;
+            
+            // Beam tags
+            let beamHtml = '';
+            beams.forEach(b => {
+                beamHtml += `<div class="element-tag ${b === currentBeam ? 'selected' : ''}" data-beam="${b}"><span>${b}</span><button class="remove-tag" data-type="beam" data-value="${b}">✕</button></div>`;
+            });
+            document.getElementById('beam-tags').innerHTML = beamHtml;
+            
+            // Slab tags
+            let slabHtml = '';
+            slabs.forEach(s => {
+                slabHtml += `<div class="element-tag ${s === currentSlab ? 'selected' : ''}" data-slab="${s}"><span>${s}</span><button class="remove-tag" data-type="slab" data-value="${s}">✕</button></div>`;
+            });
+            document.getElementById('slab-tags').innerHTML = slabHtml;
+        }
+
+        // Add new tags with quantity
         document.getElementById('add-footing').addEventListener('click', ()=>{
             const inp = document.getElementById('new-footing-name');
-            if(inp.value.trim()) { footings.push(inp.value.trim()); inp.value = ''; renderTags(); }
+            if(inp.value.trim()) { 
+                const name = inp.value.trim();
+                footings.push(name);
+                footingDesigns[name] = { ...footingDesigns['F1'], count: 1 };
+                inp.value = ''; 
+                renderTags();
+                currentFooting = name;
+                loadFootingDesign(name);
+                renderTags();
+            }
         });
+        
         document.getElementById('add-column').addEventListener('click', ()=>{
             const inp = document.getElementById('new-column-name');
-            if(inp.value.trim()) { columns.push(inp.value.trim()); inp.value = ''; renderTags(); }
+            if(inp.value.trim()) { 
+                const name = inp.value.trim();
+                columns.push(name);
+                columnDesigns[name] = { ...columnDesigns['C1'], count: 1 };
+                inp.value = ''; 
+                renderTags();
+                currentColumn = name;
+                loadColumnDesign(name);
+                renderTags();
+            }
         });
+        
         document.getElementById('add-beam').addEventListener('click', ()=>{
             const inp = document.getElementById('new-beam-name');
-            if(inp.value.trim()) { beams.push(inp.value.trim()); inp.value = ''; renderTags(); }
+            if(inp.value.trim()) { 
+                const name = inp.value.trim();
+                beams.push(name);
+                beamDesigns[name] = { ...beamDesigns['B101'], count: 1 };
+                inp.value = ''; 
+                renderTags();
+                currentBeam = name;
+                loadBeamDesign(name);
+                renderTags();
+            }
         });
+        
         document.getElementById('add-slab').addEventListener('click', ()=>{
             const inp = document.getElementById('new-slab-name');
-            if(inp.value.trim()) { slabs.push(inp.value.trim()); inp.value = ''; renderTags(); }
-        });
-
-        document.addEventListener('click', (e)=>{
-            if(e.target.classList.contains('remove-tag')){
-                const type = e.target.dataset.type, val = e.target.dataset.value;
-                if(type === 'footing') { const idx = footings.indexOf(val); if(idx>-1) footings.splice(idx,1); }
-                if(type === 'column') { const idx = columns.indexOf(val); if(idx>-1) columns.splice(idx,1); }
-                if(type === 'beam') { const idx = beams.indexOf(val); if(idx>-1) beams.splice(idx,1); }
-                if(type === 'slab') { const idx = slabs.indexOf(val); if(idx>-1) slabs.splice(idx,1); }
+            if(inp.value.trim()) { 
+                const name = inp.value.trim();
+                slabs.push(name);
+                slabDesigns[name] = { ...slabDesigns['S1'], count: 1 };
+                inp.value = ''; 
+                renderTags();
+                currentSlab = name;
+                loadSlabDesign(name);
                 renderTags();
             }
         });
 
-        // state
-        let footingWt = 0, columnWt = 0, beamWt = 0, slabWt = 0;
-        let footingHTML = '', columnHTML = '', beamHTML = '', slabHTML = '';
+        // Tag click selection (delegation)
+        document.addEventListener('click', (e)=>{
+            // Footing tag click
+            if (e.target.closest('[data-footing]')) {
+                const tag = e.target.closest('[data-footing]');
+                const name = tag.dataset.footing;
+                currentFooting = name;
+                loadFootingDesign(name);
+                renderTags();
+            }
+            // Column tag click
+            if (e.target.closest('[data-column]')) {
+                const tag = e.target.closest('[data-column]');
+                const name = tag.dataset.column;
+                currentColumn = name;
+                loadColumnDesign(name);
+                renderTags();
+            }
+            // Beam tag click
+            if (e.target.closest('[data-beam]')) {
+                const tag = e.target.closest('[data-beam]');
+                const name = tag.dataset.beam;
+                currentBeam = name;
+                loadBeamDesign(name);
+                renderTags();
+            }
+            // Slab tag click
+            if (e.target.closest('[data-slab]')) {
+                const tag = e.target.closest('[data-slab]');
+                const name = tag.dataset.slab;
+                currentSlab = name;
+                loadSlabDesign(name);
+                renderTags();
+            }
 
+            // Remove tag
+            if(e.target.classList.contains('remove-tag')){
+                e.stopPropagation();
+                const type = e.target.dataset.type;
+                const val = e.target.dataset.value;
+                if(type === 'footing') { 
+                    const idx = footings.indexOf(val); 
+                    if(idx>-1) {
+                        footings.splice(idx,1);
+                        delete footingDesigns[val];
+                        if (currentFooting === val) {
+                            currentFooting = footings[0] || 'F1';
+                            if (footings.length > 0) loadFootingDesign(currentFooting);
+                        }
+                    }
+                }
+                if(type === 'column') { 
+                    const idx = columns.indexOf(val); 
+                    if(idx>-1) {
+                        columns.splice(idx,1);
+                        delete columnDesigns[val];
+                        if (currentColumn === val) {
+                            currentColumn = columns[0] || 'C1';
+                            if (columns.length > 0) loadColumnDesign(currentColumn);
+                        }
+                    }
+                }
+                if(type === 'beam') { 
+                    const idx = beams.indexOf(val); 
+                    if(idx>-1) {
+                        beams.splice(idx,1);
+                        delete beamDesigns[val];
+                        if (currentBeam === val) {
+                            currentBeam = beams[0] || 'B101';
+                            if (beams.length > 0) loadBeamDesign(currentBeam);
+                        }
+                    }
+                }
+                if(type === 'slab') { 
+                    const idx = slabs.indexOf(val); 
+                    if(idx>-1) {
+                        slabs.splice(idx,1);
+                        delete slabDesigns[val];
+                        if (currentSlab === val) {
+                            currentSlab = slabs[0] || 'S1';
+                            if (slabs.length > 0) loadSlabDesign(currentSlab);
+                        }
+                    }
+                }
+                renderTags();
+            }
+        });
+
+        // Save buttons
+        document.getElementById('saveFooting').addEventListener('click', saveCurrentFooting);
+        document.getElementById('saveColumn').addEventListener('click', saveCurrentColumn);
+        document.getElementById('saveBeam').addEventListener('click', saveCurrentBeam);
+        document.getElementById('saveSlab').addEventListener('click', saveCurrentSlab);
+
+        // Utility functions
         const uw = (dia) => (dia * dia) / 162;
         const r2 = (v) => Math.round(v * 100) / 100;
         const r3 = (v) => Math.round(v * 1000) / 1000;
+
+        let footingHTML = '', columnHTML = '', beamHTML = '', slabHTML = '';
+        let footingWt = 0, columnWt = 0, beamWt = 0, slabWt = 0;
 
         function captureFooting() { footingHTML = document.getElementById('footingResult').innerHTML; }
         function captureColumn() { columnHTML = document.querySelector('#column-section .results-area').innerHTML; }
@@ -728,348 +1269,342 @@
             });
         });
 
-        // footing calc (final)
+        // ---------- GENERATE ALL FOOTINGS (independent with quantities) ----------
         document.getElementById('calcFooting').addEventListener('click', ()=>{
-            const L = +document.getElementById('fL').value || 2000;
-            const W = +document.getElementById('fW').value || 1500;
-            const D = +document.getElementById('fD').value || 300;
-            const cov = +document.getElementById('fCov').value || 50;
-            const matType = document.getElementById('fMatType').value;
-
-            const botXdia = +document.getElementById('fBotXdia').value || 12;
-            const botXsp = +document.getElementById('fBotXsp').value || 150;
-            const botYdia = +document.getElementById('fBotYdia').value || 12;
-            const botYsp = +document.getElementById('fBotYsp').value || 150;
-            const topXdia = +document.getElementById('fTopXdia').value || 12;
-            const topXsp = +document.getElementById('fTopXsp').value || 150;
-            const topYdia = +document.getElementById('fTopYdia').value || 12;
-            const topYsp = +document.getElementById('fTopYsp').value || 150;
-
-            function calcDir(len, perpDim, dia, sp) {
-                const barLen = len - 2*cov;
-                const bend = 2 * (D - 2*cov);
-                const cut = (barLen + bend - 2*2*dia) / 1000;
-                const nos = Math.floor((perpDim - 2*cov) / sp) + 1;
-                const total = nos * cut;
-                const wt = total * uw(dia);
-                return { cut, nos, total, wt };
-            }
-
-            const botX = calcDir(L, W, botXdia, botXsp);
-            const botY = calcDir(W, L, botYdia, botYsp);
-
-            let totalWtFooting = 0;
+            let totalWt = 0;
             let rows = '';
 
             footings.forEach(f => {
-                rows += `<tr><td>${f}</td><td>Bottom</td><td>X</td><td>${botXdia}</td><td>${botX.nos}</td><td>${r3(botX.cut)}</td><td>${r3(botX.total)}</td><td>${r2(botX.wt)}</td></tr>`;
-                rows += `<tr><td>${f}</td><td>Bottom</td><td>Y</td><td>${botYdia}</td><td>${botY.nos}</td><td>${r3(botY.cut)}</td><td>${r3(botY.total)}</td><td>${r2(botY.wt)}</td></tr>`;
-                totalWtFooting += botX.wt + botY.wt;
+                const d = footingDesigns[f];
+                if (!d) return;
+                
+                const count = d.count || 1;
+                const L = d.L, W = d.W, D = d.D, cov = d.cov, matType = d.matType;
+                const botXdia = d.botXdia, botXsp = d.botXsp;
+                const botYdia = d.botYdia, botYsp = d.botYsp;
+                const topXdia = d.topXdia, topXsp = d.topXsp;
+                const topYdia = d.topYdia, topYsp = d.topYsp;
+
+                function calcDir(len, perpDim, dia, sp) {
+                    const barLen = len - 2*cov;
+                    const bend = 2 * (D - 2*cov);
+                    const cut = (barLen + bend - 2*2*dia) / 1000;
+                    const nos = Math.floor((perpDim - 2*cov) / sp) + 1;
+                    const total = nos * cut;
+                    const wt = total * uw(dia);
+                    return { cut, nos, total, wt };
+                }
+
+                const botX = calcDir(L, W, botXdia, botXsp);
+                const botY = calcDir(W, L, botYdia, botYsp);
+
+                rows += `<tr><td>${f}</td><td>${count}</td><td>Bottom</td><td>X</td><td>${botXdia}</td><td>${botX.nos}</td><td>${r3(botX.cut)}</td><td>${r3(botX.total * count)}</td><td>${r2(botX.wt * count)}</td></tr>`;
+                rows += `<tr><td>${f}</td><td>${count}</td><td>Bottom</td><td>Y</td><td>${botYdia}</td><td>${botY.nos}</td><td>${r3(botY.cut)}</td><td>${r3(botY.total * count)}</td><td>${r2(botY.wt * count)}</td></tr>`;
+                totalWt += (botX.wt + botY.wt) * count;
 
                 if (matType === 'double') {
                     const topX = calcDir(L, W, topXdia, topXsp);
                     const topY = calcDir(W, L, topYdia, topYsp);
-                    rows += `<tr><td>${f}</td><td>Top</td><td>X</td><td>${topXdia}</td><td>${topX.nos}</td><td>${r3(topX.cut)}</td><td>${r3(topX.total)}</td><td>${r2(topX.wt)}</td></tr>`;
-                    rows += `<tr><td>${f}</td><td>Top</td><td>Y</td><td>${topYdia}</td><td>${topY.nos}</td><td>${r3(topY.cut)}</td><td>${r3(topY.total)}</td><td>${r2(topY.wt)}</td></tr>`;
-                    totalWtFooting += topX.wt + topY.wt;
+                    rows += `<tr><td>${f}</td><td>${count}</td><td>Top</td><td>X</td><td>${topXdia}</td><td>${topX.nos}</td><td>${r3(topX.cut)}</td><td>${r3(topX.total * count)}</td><td>${r2(topX.wt * count)}</td></tr>`;
+                    rows += `<tr><td>${f}</td><td>${count}</td><td>Top</td><td>Y</td><td>${topYdia}</td><td>${topY.nos}</td><td>${r3(topY.cut)}</td><td>${r3(topY.total * count)}</td><td>${r2(topY.wt * count)}</td></tr>`;
+                    totalWt += (topX.wt + topY.wt) * count;
                 }
             });
 
-            footingWt = totalWtFooting;
+            footingWt = totalWt;
             document.getElementById('footingBody').innerHTML = rows;
-            document.getElementById('footingSummary').innerHTML = `<span>🧾 Total footing steel (${footings.length} elements, ${matType==='double'?'double':'single'} mat): ${r2(footingWt)} kg</span>`;
+            document.getElementById('footingSummary').innerHTML = `<span>🧾 Total footing steel (${footings.length} types): ${r2(footingWt)} kg</span>`;
             captureFooting(); updateGlobalSummary();
         });
 
-        // column calc with Zone-A and Zone-B (final)
+        // ---------- GENERATE ALL COLUMNS (independent with corner & middle bars) ----------
         document.getElementById('calcColumn').addEventListener('click', ()=>{
-            const H = +document.getElementById('colH').value || 5700;
-            const longDia = +document.getElementById('colLongDia').value || 16;
-            const longQty = +document.getElementById('colLongQty').value || 4;
-            const tieDia = +document.getElementById('colTieDia').value || 8;
-            const cov = +document.getElementById('colCov').value || 40;
-            const Ld = +document.getElementById('colLd').value || 800;
-            const colX = +document.getElementById('colX').value || 300;
-            const colY = +document.getElementById('colY').value || 230;
-            const spA = +document.getElementById('colTieSpA').value || 150;
-            const spB = +document.getElementById('colTieSpB').value || 250;
-            const zoneALen = +document.getElementById('colZoneALen').value || 1000;
-
-            const longCut = H/1000;
-            const longTot = longQty * longCut;
-            const longWt = longTot * uw(longDia);
-
-            const a = colX - 2*cov;
-            const b = colY - 2*cov;
-            const peri = 2*(a+b);
-            const hook = 2*12*tieDia;
-            const bend = 3*2*tieDia + 2*3*tieDia;
-            const tieCut = (peri + hook - bend)/1000;
-
-            const effZoneA = Math.min(zoneALen, H/3);
-            const zoneACount = Math.floor(effZoneA / spA) + 1;
-            const zoneBLength = H - 2 * effZoneA;
-            let zoneBCount = 0;
-            if (zoneBLength > 0) {
-                zoneBCount = Math.floor(zoneBLength / spB) - 1;
-                if (zoneBCount < 0) zoneBCount = 0;
-            }
-            const totalTieNos = (zoneACount * 2) + zoneBCount;
-            const tieTot = totalTieNos * tieCut;
-            const tieWt = tieTot * uw(tieDia);
-
-            columnWt = (longWt + tieWt) * columns.length;
-
+            let totalWt = 0;
             let rows = '';
+
             columns.forEach(c => {
-                rows += `<tr><td>${c}</td><td>Longitudinal</td><td>${longDia}</td><td>${longQty}</td><td>${r3(longCut)}</td><td>${r3(longTot)}</td><td>${r2(longWt)}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>Ties (Zone-A)</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia))}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>Ties (Zone-B)</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia))}</td></tr>`;
+                const d = columnDesigns[c];
+                if (!d) return;
+                
+                const count = d.count || 1;
+                const H = d.H, cov = d.cov, Ld = d.Ld, colX = d.colX, colY = d.colY;
+                const cornerDia = d.cornerDia, cornerQty = d.cornerQty;
+                const middleDia = d.middleDia, middleQty = d.middleQty;
+                const tieDia = d.tieDia;
+                const spA = d.spA, spB = d.spB, zoneALen = d.zoneALen;
+
+                // Longitudinal bars cut length (same for all)
+                const longCut = H/1000;
+                
+                // Corner bars
+                const cornerTot = cornerQty * longCut;
+                const cornerWt = cornerTot * uw(cornerDia);
+                
+                // Middle bars
+                const middleTot = middleQty * longCut;
+                const middleWt = middleTot * uw(middleDia);
+                
+                // Ties calculation
+                const a = colX - 2*cov;
+                const b = colY - 2*cov;
+                const peri = 2*(a+b);
+                const hook = 2*12*tieDia;
+                const bend = 3*2*tieDia + 2*3*tieDia;
+                const tieCut = (peri + hook - bend)/1000;
+
+                const effZoneA = Math.min(zoneALen, H/3);
+                const zoneACount = Math.floor(effZoneA / spA) + 1;
+                const zoneBLength = H - 2 * effZoneA;
+                let zoneBCount = 0;
+                if (zoneBLength > 0) {
+                    zoneBCount = Math.floor(zoneBLength / spB) - 1;
+                    if (zoneBCount < 0) zoneBCount = 0;
+                }
+                const totalTieNos = (zoneACount * 2) + zoneBCount;
+                const tieTot = totalTieNos * tieCut;
+                const tieWt = tieTot * uw(tieDia);
+
+                totalWt += (cornerWt + middleWt + tieWt) * count;
+
+                rows += `<tr><td>${c}</td><td>${count}</td><td>Corner bars</td><td>—</td><td>${cornerDia}</td><td>${cornerQty}</td><td>${r3(longCut)}</td><td>${r3(cornerTot * count)}</td><td>${r2(cornerWt * count)}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>${count}</td><td>Middle bars</td><td>—</td><td>${middleDia}</td><td>${middleQty}</td><td>${r3(longCut)}</td><td>${r3(middleTot * count)}</td><td>${r2(middleWt * count)}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>${count}</td><td>Ties (Zone-A)</td><td>A</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut * count)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia) * count)}</td></tr>`;
+                rows += `<tr><td>${c}</td><td>${count}</td><td>Ties (Zone-B)</td><td>B</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut * count)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia) * count)}</td></tr>`;
             });
 
+            columnWt = totalWt;
             document.getElementById('columnBody').innerHTML = rows;
-            document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} elements): ${r2(columnWt)} kg</span>`;
+            document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} types): ${r2(columnWt)} kg</span>`;
             captureColumn(); updateGlobalSummary();
         });
 
-        // beam calc with full details
+        // ---------- GENERATE ALL BEAMS (independent with quantities) ----------
         document.getElementById('calcBeam').addEventListener('click', ()=>{
-            const bw = +document.getElementById('bw').value || 300;
-            const bd = +document.getElementById('bd').value || 380;
-            const span = +document.getElementById('bSpan').value || 2500;
-            const cov = +document.getElementById('bCov').value || 25;
-            const Ld = +document.getElementById('bLd').value || 600;
-            
-            // Bottom reinforcement
-            const botDia = +document.getElementById('bBotDia').value || 12;
-            const botQty = +document.getElementById('bBotQty').value || 2;
-            
-            // Cranked bars
-            const crankDia = +document.getElementById('bCrankDia').value || 12;
-            const crankQty = +document.getElementById('bCrankQty').value || 2;
-            
-            // Top reinforcement
-            const topDia = +document.getElementById('bTopDia').value || 10;
-            const topQty = +document.getElementById('bTopQty').value || 2;
-            
-            // Extra bars at supports (top)
-            const extraSupDia = +document.getElementById('bExtraSupDia').value || 12;
-            const extraSupQty = +document.getElementById('bExtraSupQty').value || 2;
-            const extraSupLen = +document.getElementById('bExtraSupLen').value || 625; // L/4
-            
-            // Extra bars at mid-span (bottom)
-            const extraMidDia = +document.getElementById('bExtraMidDia').value || 12;
-            const extraMidQty = +document.getElementById('bExtraMidQty').value || 2;
-            const extraMidLen = +document.getElementById('bExtraMidLen').value || 625; // L/4
-            
-            // Stirrups
-            const stirDia = +document.getElementById('bStirDia').value || 8;
-            const spA = +document.getElementById('bStirSpA').value || 150;   // Zone-A (ends)
-            const spB = +document.getElementById('bStirSpB').value || 250;   // Zone-B (mid)
-
-            // Cutting length calculations
-            const clearSpan = span; // in mm
-            
-            // 1. Bottom straight bars (extend into supports with Ld)
-            const bottomCut = (clearSpan + 2*Ld - 2*cov) / 1000;
-            
-            // 2. Cranked bars (with 0.42D extra for crank)
-            const crankH = bd - 2*cov; // approximate
-            const crankExtra = 0.42 * crankH; // extra length per crank
-            const crankCut = (clearSpan + 2*Ld - 2*cov + 2*crankExtra) / 1000;
-            
-            // 3. Top straight bars (usually full length)
-            const topCut = (clearSpan + 2*Ld - 2*cov) / 1000;
-            
-            // 4. Extra bars at supports (L/4 length each)
-            const extraSupCut = (extraSupLen - cov) / 1000;
-            
-            // 5. Extra bars at mid-span (L/4 length each)
-            const extraMidCut = (extraMidLen - cov) / 1000;
-            
-            // 6. Stirrups - cutting length
-            const a = bw - 2*cov;
-            const bb = bd - 2*cov;
-            const peri = 2*(a+bb);
-            const hook = 2*12*stirDia;
-            const bend = 3*2*stirDia + 2*3*stirDia;
-            const stirCut = (peri + hook - bend)/1000;
-            
-            // Stirrup quantities based on zones
-            const zoneALen = span / 4; // each end
-            const zoneBLen = span / 2;
-            const zoneACount = Math.floor(zoneALen / spA) + 1;
-            const zoneBCount = Math.floor(zoneBLen / spB) - 1;
-            const totalStirrups = (zoneACount * 2) + (zoneBCount > 0 ? zoneBCount : 0);
-
-            let totalWtBeam = 0;
+            let totalWt = 0;
             let rows = '';
 
             beams.forEach(b => {
+                const d = beamDesigns[b];
+                if (!d) return;
+                
+                const count = d.count || 1;
+                const bw = d.bw, bd = d.bd, span = d.span, cov = d.cov, Ld = d.Ld;
+                const botDia = d.botDia, botQty = d.botQty;
+                const crankDia = d.crankDia, crankQty = d.crankQty;
+                const topDia = d.topDia, topQty = d.topQty;
+                const extraSupDia = d.extraSupDia, extraSupQty = d.extraSupQty, extraSupLen = d.extraSupLen;
+                const extraMidDia = d.extraMidDia, extraMidQty = d.extraMidQty, extraMidLen = d.extraMidLen;
+                const stirDia = d.stirDia, spA = d.spA, spB = d.spB;
+
+                // Cutting length calculations
+                const bottomCut = (span + 2*Ld - 2*cov) / 1000;
+                const crankH = bd - 2*cov;
+                const crankExtra = 0.42 * crankH;
+                const crankCut = (span + 2*Ld - 2*cov + 2*crankExtra) / 1000;
+                const topCut = (span + 2*Ld - 2*cov) / 1000;
+                const extraSupCut = (extraSupLen - cov) / 1000;
+                const extraMidCut = (extraMidLen - cov) / 1000;
+                
+                // Stirrups
+                const a = bw - 2*cov;
+                const bb = bd - 2*cov;
+                const peri = 2*(a+bb);
+                const hook = 2*12*stirDia;
+                const bend = 3*2*stirDia + 2*3*stirDia;
+                const stirCut = (peri + hook - bend)/1000;
+                
+                const zoneALen = span / 4;
+                const zoneBLen = span / 2;
+                const zoneACount = Math.floor(zoneALen / spA) + 1;
+                let zoneBCount = Math.floor(zoneBLen / spB) - 1;
+                if (zoneBCount < 0) zoneBCount = 0;
+                const totalStirrups = (zoneACount * 2) + zoneBCount;
+
                 // Bottom straight
                 const botTot = botQty * bottomCut;
                 const botWt = botTot * uw(botDia);
-                rows += `<tr><td>${b}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot)}</td><td>${r2(botWt)}</td></tr>`;
-                totalWtBeam += botWt;
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot * count)}</td><td>${r2(botWt * count)}</td></tr>`;
+                totalWt += botWt * count;
                 
                 // Cranked bars
                 const crankTot = crankQty * crankCut;
                 const crankWt = crankTot * uw(crankDia);
-                rows += `<tr><td>${b}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot)}</td><td>${r2(crankWt)}</td></tr>`;
-                totalWtBeam += crankWt;
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot * count)}</td><td>${r2(crankWt * count)}</td></tr>`;
+                totalWt += crankWt * count;
                 
                 // Top straight
                 const topTot = topQty * topCut;
                 const topWt = topTot * uw(topDia);
-                rows += `<tr><td>${b}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot)}</td><td>${r2(topWt)}</td></tr>`;
-                totalWtBeam += topWt;
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot * count)}</td><td>${r2(topWt * count)}</td></tr>`;
+                totalWt += topWt * count;
                 
-                // Extra bars at supports (two ends)
+                // Extra bars at supports
                 const extraSupTot = (extraSupQty * 2) * extraSupCut;
                 const extraSupWt = extraSupTot * uw(extraSupDia);
-                rows += `<tr><td>${b}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot)}</td><td>${r2(extraSupWt)}</td></tr>`;
-                totalWtBeam += extraSupWt;
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot * count)}</td><td>${r2(extraSupWt * count)}</td></tr>`;
+                totalWt += extraSupWt * count;
                 
                 // Extra bars at mid-span
                 const extraMidTot = extraMidQty * extraMidCut;
                 const extraMidWt = extraMidTot * uw(extraMidDia);
-                rows += `<tr><td>${b}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot)}</td><td>${r2(extraMidWt)}</td></tr>`;
-                totalWtBeam += extraMidWt;
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot * count)}</td><td>${r2(extraMidWt * count)}</td></tr>`;
+                totalWt += extraMidWt * count;
                 
                 // Stirrups
                 const stirTot = totalStirrups * stirCut;
                 const stirWt = stirTot * uw(stirDia);
-                rows += `<tr><td>${b}</td><td>Stirrups (A&B)</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot)}</td><td>${r2(stirWt)}</td></tr>`;
-                totalWtBeam += stirWt;
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Stirrups</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot * count)}</td><td>${r2(stirWt * count)}</td></tr>`;
+                totalWt += stirWt * count;
             });
 
-            beamWt = totalWtBeam;
+            beamWt = totalWt;
             document.getElementById('beamBody').innerHTML = rows;
-            document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} elements): ${r2(beamWt)} kg</span>`;
+            document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} types): ${r2(beamWt)} kg</span>`;
             captureBeam(); updateGlobalSummary();
         });
 
-        // slab calc (unchanged)
+        // ---------- GENERATE ALL SLABS (independent with quantities) ----------
         document.getElementById('calcSlab').addEventListener('click', ()=>{
-            const L = +document.getElementById('sL').value || 5000;
-            const beam = +document.getElementById('sBeam').value || 300;
-            const cov = +document.getElementById('sCov').value || 20;
-            const mainDia = +document.getElementById('sMainDia').value || 8;
-            const mainSp = +document.getElementById('sMainSp').value || 200;
-            const extraDia = +document.getElementById('sExtraDia').value || 8;
-            const extraSp = +document.getElementById('sExtraSp').value || 125;
-            const extraLen = +document.getElementById('sExtraLen').value || 1500;
-            const topDia = +document.getElementById('sTopDia').value || 8;
-
-            const mainNos = Math.floor((L - beam) / mainSp) + 1;
-            const mainCut = (L - 2*cov)/1000;
-            const mainTot = mainNos * mainCut;
-            const mainWt = mainTot * uw(mainDia);
-
-            const distNos = mainNos;
-            const distTot = distNos * mainCut;
-            const distWt = distTot * uw(mainDia);
-
-            const extraPerSide = Math.floor((L - beam) / extraSp) + 1;
-            const extraCut = (extraLen - cov)/1000;
-            const extraXtot = extraPerSide * 2 * extraCut;
-            const extraYtot = extraPerSide * 2 * extraCut;
-            const extraWt = (extraXtot + extraYtot) * uw(extraDia);
-
-            const topPerSide = Math.floor((extraLen - beam) / extraSp) + 1;
-            const topSafe = topPerSide > 0 ? topPerSide : 0;
-            const topCut = (L - 2*cov)/1000;
-            const topXtot = topSafe * 2 * topCut;
-            const topYtot = topSafe * 2 * topCut;
-            const topWt = (topXtot + topYtot) * uw(topDia);
-
-            const perSlabWt = mainWt + distWt + extraWt + topWt;
-            slabWt = perSlabWt * slabs.length;
-
+            let totalWt = 0;
             let rows = '';
+
             slabs.forEach(s => {
-                rows += `<tr><td>${s}</td><td>Main bottom (X)</td><td>${mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(mainTot)}</td><td>${r2(mainWt)}</td></tr>`;
-                rows += `<tr><td>${s}</td><td>Distribution (Y)</td><td>${mainDia}</td><td>${distNos}</td><td>${r3(mainCut)}</td><td>${r3(distTot)}</td><td>${r2(distWt)}</td></tr>`;
-                rows += `<tr><td>${s}</td><td>Extra top (X+Y)</td><td>${extraDia}</td><td>${extraPerSide*4}</td><td>${r3(extraCut)}</td><td>${r3(extraXtot+extraYtot)}</td><td>${r2(extraWt)}</td></tr>`;
-                rows += `<tr><td>${s}</td><td>Top distrib (X+Y)</td><td>${topDia}</td><td>${topSafe*4}</td><td>${r3(topCut)}</td><td>${r3(topXtot+topYtot)}</td><td>${r2(topWt)}</td></tr>`;
+                const d = slabDesigns[s];
+                if (!d) return;
+                
+                const count = d.count || 1;
+                const L = d.L, beam = d.beam, cov = d.cov;
+                const mainDia = d.mainDia, mainSp = d.mainSp;
+                const extraDia = d.extraDia, extraSp = d.extraSp, extraLen = d.extraLen;
+                const topDia = d.topDia;
+
+                const mainNos = Math.floor((L - beam) / mainSp) + 1;
+                const mainCut = (L - 2*cov)/1000;
+                const mainTot = mainNos * mainCut;
+                const mainWt = mainTot * uw(mainDia);
+
+                const distNos = mainNos;
+                const distTot = distNos * mainCut;
+                const distWt = distTot * uw(mainDia);
+
+                const extraPerSide = Math.floor((L - beam) / extraSp) + 1;
+                const extraCut = (extraLen - cov)/1000;
+                const extraXtot = extraPerSide * 2 * extraCut;
+                const extraYtot = extraPerSide * 2 * extraCut;
+                const extraWt = (extraXtot + extraYtot) * uw(extraDia);
+
+                const topPerSide = Math.floor((extraLen - beam) / extraSp) + 1;
+                const topSafe = topPerSide > 0 ? topPerSide : 0;
+                const topCut = (L - 2*cov)/1000;
+                const topXtot = topSafe * 2 * topCut;
+                const topYtot = topSafe * 2 * topCut;
+                const topWt = (topXtot + topYtot) * uw(topDia);
+
+                const perSlabWt = mainWt + distWt + extraWt + topWt;
+                totalWt += perSlabWt * count;
+
+                rows += `<tr><td>${s}</td><td>${count}</td><td>Main bottom (X)</td><td>${mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(mainTot * count)}</td><td>${r2(mainWt * count)}</td></tr>`;
+                rows += `<tr><td>${s}</td><td>${count}</td><td>Distribution (Y)</td><td>${mainDia}</td><td>${distNos}</td><td>${r3(mainCut)}</td><td>${r3(distTot * count)}</td><td>${r2(distWt * count)}</td></tr>`;
+                rows += `<tr><td>${s}</td><td>${count}</td><td>Extra top (X+Y)</td><td>${extraDia}</td><td>${extraPerSide*4}</td><td>${r3(extraCut)}</td><td>${r3((extraXtot+extraYtot) * count)}</td><td>${r2(extraWt * count)}</td></tr>`;
+                rows += `<tr><td>${s}</td><td>${count}</td><td>Top distrib (X+Y)</td><td>${topDia}</td><td>${topSafe*4}</td><td>${r3(topCut)}</td><td>${r3((topXtot+topYtot) * count)}</td><td>${r2(topWt * count)}</td></tr>`;
             });
+
+            slabWt = totalWt;
             document.getElementById('slabBody').innerHTML = rows;
-            document.getElementById('slabSummary').innerHTML = `<span>🧾 Total slab steel (${slabs.length} elements): ${r2(slabWt)} kg</span>`;
+            document.getElementById('slabSummary').innerHTML = `<span>🧾 Total slab steel (${slabs.length} types): ${r2(slabWt)} kg</span>`;
             captureSlab(); updateGlobalSummary();
         });
 
-        // initial calculation
-        setTimeout(()=>{
+        // print full BBS
+        document.getElementById('printFullBtn').addEventListener('click', ()=>{
+            document.getElementById('calcFooting').click();
+            document.getElementById('calcColumn').click();
+            document.getElementById('calcBeam').click();
+            document.getElementById('calcSlab').click();
+            
+            setTimeout(() => {
+                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+                const globalHTML = document.getElementById('globalSummaryBlock').outerHTML;
+                
+                const win = window.open('', '_blank');
+                win.document.write(`
+                    <html><head><title>KAJAL · complete BBS</title><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+                    <style>
+                        body{font-family:Calibri,sans-serif;padding:1.5rem;}
+                        .brand-header{background:linear-gradient(112deg,#06203b,#103a5e);color:white;padding:1.5rem;border-bottom:4px solid #f3b33d;text-align:center;print-color-adjust:exact;}
+                        .brand-main{font-family:'Cinzel Decorative',cursive;font-size:3.2rem;color:white;text-shadow:2px 2px 0 #103a5e;}
+                        .brand-sub{color:#fedb9f;font-size:1.6rem;}
+                        .tagline{background:rgba(0,0,0,0.2);padding:0.3rem 2rem;border-radius:40px;display:inline-block;border:1px solid #f3b33d;color:white;}
+                        .element-items{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0;}
+                        .element-tag{background:#f0f5fc;border:1px solid #103a5e;border-radius:2rem;padding:0.4rem 1.5rem;font-weight:600;color:#103a5e;}
+                        h2{color:#103a5e;border-bottom:2px solid #f3b33d;padding-bottom:0.3rem;}
+                        table{width:100%;border-collapse:collapse;margin:1rem 0;}
+                        th{background:#103a5e;color:white;padding:0.8rem;border-bottom:2px solid #f3b33d;print-color-adjust:exact;}
+                        td{padding:0.7rem;border-bottom:1px solid #aaa;}
+                        .summary-card{background:#e9f0fa;border-left:8px solid #f3b33d;padding:1rem 2rem;margin:1rem 0;print-color-adjust:exact;}
+                        .global-summary{background:#e6f0ff;border:2px solid #103a5e;padding:1.5rem;margin:2rem 0;print-color-adjust:exact;}
+                        .summary-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+                        .stat-block{background:white;padding:1rem;border-radius:1rem;border:1px solid #aac1df;}
+                        .print-footer{margin-top:2rem;text-align:center;color:#103a5e;border-top:1px dashed #103a5e;padding-top:1rem;}
+                        .footing-page,.column-page,.beam-page,.slab-page{page-break-after:always;}
+                        .summary-page{page-break-before:always;}
+                    </style></head>
+                    <body>
+                        <div class="brand-header"><div class="brand-main">KAJAL</div><div class="brand-sub">STRUCTURAL DESIGN STUDIO</div><div class="tagline"><strong>Build Smarter, Build Stronger</strong></div></div>
+                        <div class="footing-page"><h2>📐 Footing BBS</h2><div class="element-items">${footingTags}</div>${footingHTML}</div>
+                        <div class="column-page"><h2>📏 Column BBS (Corner & Middle Bars)</h2><div class="element-items">${columnTags}</div>${columnHTML}</div>
+                        <div class="beam-page"><h2>📦 Beam BBS (full details)</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
+                        <div class="slab-page"><h2>🧱 Slab BBS</h2><div class="element-items">${slabTags}</div>${slabHTML}</div>
+                        <div class="summary-page">${globalHTML}</div>
+                        <div class="print-footer">KAJAL · 9390396951 · designbykajal786@gmail.com<br>Generated ${new Date().toLocaleString()}</div>
+                    </body></html>
+                `);
+                win.document.close(); win.print();
+            }, 500);
+        });
+
+        // excel export
+        document.getElementById('excelFullBtn').addEventListener('click', ()=>{
+            document.getElementById('calcFooting').click();
+            document.getElementById('calcColumn').click();
+            document.getElementById('calcBeam').click();
+            document.getElementById('calcSlab').click();
+            
+            setTimeout(() => {
+                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+                const html = `<html><head><meta charset="UTF-8"><style>td{border:1px solid #000;}</style></head><body>
+                    <h2>KAJAL STRUCTURAL DESIGN STUDIO</h2><h3>Build Smarter, Build Stronger</h3>
+                    ${document.getElementById('globalSummaryBlock').outerHTML}
+                    <h2>FOOTING BBS</h2>${footingTags}${footingHTML}
+                    <h2>COLUMN BBS (Corner & Middle Bars)</h2>${columnTags}${columnHTML}
+                    <h2>BEAM BBS (full details)</h2>${beamTags}${beamHTML}
+                    <h2>SLAB BBS</h2>${slabTags}${slabHTML}
+                    <p>Contact: 9390396951 · designbykajal786@gmail.com</p></body></html>`;
+                const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+                const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'KAJAL_full_bbs.xls'; a.click();
+            }, 500);
+        });
+
+        // Initial load
+        renderTags();
+        loadFootingDesign('F1');
+        loadColumnDesign('C1');
+        loadBeamDesign('B101');
+        loadSlabDesign('S1');
+        
+        // Generate initial BBS
+        setTimeout(() => {
             document.getElementById('calcFooting').click();
             document.getElementById('calcColumn').click();
             document.getElementById('calcBeam').click();
             document.getElementById('calcSlab').click();
         }, 100);
-
-        // print full BBS
-        document.getElementById('printFullBtn').addEventListener('click', ()=>{
-            captureFooting(); captureColumn(); captureBeam(); captureSlab();
-            const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-            const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-            const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-            const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-            const globalHTML = document.getElementById('globalSummaryBlock').outerHTML;
-            const win = window.open('', '_blank');
-            win.document.write(`
-                <html><head><title>KAJAL · complete BBS</title><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
-                <style>
-                    body{font-family:Calibri,sans-serif;padding:1.5rem;}
-                    .brand-header{background:linear-gradient(112deg,#06203b,#103a5e);color:white;padding:1.5rem;border-bottom:4px solid #f3b33d;text-align:center;print-color-adjust:exact;}
-                    .brand-main{font-family:'Cinzel Decorative',cursive;font-size:3.2rem;color:white;text-shadow:2px 2px 0 #103a5e;}
-                    .brand-sub{color:#fedb9f;font-size:1.6rem;}
-                    .tagline{background:rgba(0,0,0,0.2);padding:0.3rem 2rem;border-radius:40px;display:inline-block;border:1px solid #f3b33d;color:white;}
-                    .element-items{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0;}
-                    .element-tag{background:#f0f5fc;border:1px solid #103a5e;border-radius:2rem;padding:0.4rem 1.5rem;font-weight:600;color:#103a5e;}
-                    h2{color:#103a5e;border-bottom:2px solid #f3b33d;padding-bottom:0.3rem;}
-                    table{width:100%;border-collapse:collapse;margin:1rem 0;}
-                    th{background:#103a5e;color:white;padding:0.8rem;border-bottom:2px solid #f3b33d;print-color-adjust:exact;}
-                    td{padding:0.7rem;border-bottom:1px solid #aaa;}
-                    .summary-card{background:#e9f0fa;border-left:8px solid #f3b33d;padding:1rem 2rem;margin:1rem 0;print-color-adjust:exact;}
-                    .global-summary{background:#e6f0ff;border:2px solid #103a5e;padding:1.5rem;margin:2rem 0;print-color-adjust:exact;}
-                    .summary-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
-                    .stat-block{background:white;padding:1rem;border-radius:1rem;border:1px solid #aac1df;}
-                    .print-footer{margin-top:2rem;text-align:center;color:#103a5e;border-top:1px dashed #103a5e;padding-top:1rem;}
-                    .footing-page,.column-page,.beam-page,.slab-page{page-break-after:always;}
-                    .summary-page{page-break-before:always;}
-                </style></head>
-                <body>
-                    <div class="brand-header"><div class="brand-main">KAJAL</div><div class="brand-sub">STRUCTURAL DESIGN STUDIO</div><div class="tagline"><strong>Build Smarter, Build Stronger</strong></div></div>
-                    <div class="footing-page"><h2>📐 Footing BBS</h2><div class="element-items">${footingTags}</div>${footingHTML}</div>
-                    <div class="column-page"><h2>📏 Column BBS (Zone-A/Zone-B)</h2><div class="element-items">${columnTags}</div>${columnHTML}</div>
-                    <div class="beam-page"><h2>📦 Beam BBS (full details)</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
-                    <div class="slab-page"><h2>🧱 Slab BBS</h2><div class="element-items">${slabTags}</div>${slabHTML}</div>
-                    <div class="summary-page">${globalHTML}</div>
-                    <div class="print-footer">KAJAL · 9390396951 · designbykajal786@gmail.com<br>Generated ${new Date().toLocaleString()}</div>
-                </body></html>
-            `);
-            win.document.close(); win.print();
-        });
-
-        // excel export
-        document.getElementById('excelFullBtn').addEventListener('click', ()=>{
-            captureFooting(); captureColumn(); captureBeam(); captureSlab();
-            const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-            const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-            const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-            const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-            const html = `<html><head><meta charset="UTF-8"><style>td{border:1px solid #000;}</style></head><body>
-                <h2>KAJAL STRUCTURAL DESIGN STUDIO</h2><h3>Build Smarter, Build Stronger</h3>
-                ${document.getElementById('globalSummaryBlock').outerHTML}
-                <h2>FOOTING BBS</h2>${footingTags}${footingHTML}
-                <h2>COLUMN BBS (Zone-A/Zone-B)</h2>${columnTags}${columnHTML}
-                <h2>BEAM BBS (full details)</h2>${beamTags}${beamHTML}
-                <h2>SLAB BBS</h2>${slabTags}${slabHTML}
-                <p>Contact: 9390396951 · designbykajal786@gmail.com</p></body></html>`;
-            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'KAJAL_full_bbs.xls'; a.click();
-        });
-
-        renderTags();
     })();
 </script>
 </body>
