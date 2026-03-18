@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <!-- Font Awesome for minimal icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js for sleek charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         /* ---------- minimal & classy reset ---------- */
         * {
@@ -59,7 +61,7 @@
             font-size: 1.2rem;
             font-weight: 300;
             letter-spacing: 3px;
-            color: #000000; /* BLACK as requested */
+            color: #000000;
             margin-top: 0.25rem;
             text-transform: uppercase;
         }
@@ -67,7 +69,7 @@
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
             font-weight: 400;
-            color: #000000; /* BLACK as requested */
+            color: #000000;
             margin-top: 0.75rem;
             background: #f8fafd;
             padding: 0.3rem 2rem;
@@ -400,17 +402,144 @@
         .contact span {
             margin-left: 1.5rem;
         }
-        /* note removed as requested */
-        /* Print styles (refined) */
+        /* Chart containers - sleek design with NARROW height */
+        .chart-container {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0 1rem;
+            border: 1px solid #edf2f9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            height: 240px;  /* Narrow height as requested */
+        }
+        canvas {
+            max-height: 200px;  /* Canvas narrower */
+            width: 100%;
+        }
+        /* Print styles - updated to match exact layout */
         @media print {
-            .brand-header .header-actions, .component-tabs, .input-grid, .btn-calc,
-            .element-list .add-btn, .element-list input, .studio-footer {
+            /* Hide interactive elements */
+            .brand-header .header-actions,
+            .component-tabs,
+            .input-grid,
+            .btn-calc,
+            .element-list .add-btn,
+            .element-list input,
+            .studio-footer,
+            .chart-container {
                 display: none !important;
             }
-            .element-items { display: flex !important; }
-            .brand-header { border-bottom: 1px solid #ccc; }
+            
+            /* Keep element tags visible */
+            .element-items {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .element-tag {
+                background: #f0f5fc !important;
+                border: 1px solid #1e2b3c !important;
+                border-radius: 40px !important;
+                padding: 0.3rem 1rem !important;
+                font-weight: 500 !important;
+                color: #1e2b3c !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .element-tag span {
+                color: #1e2b3c !important;
+            }
+            
+            /* Brand header - exact colors as on screen */
+            .brand-header {
+                background: #ffffff !important;
+                color: #1e2b3c !important;
+                border-bottom: 1px solid #e9eef3 !important;
+                padding: 1.5rem !important;
+                text-align: center !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .brand-main {
+                font-family: 'Cinzel Decorative', cursive !important;
+                color: #1e2b3c !important;
+                font-size: 2.5rem !important;
+                text-shadow: none !important;
+            }
+            
+            .brand-sub {
+                color: #000000 !important;
+                font-size: 1.1rem !important;
+            }
+            
+            .tagline {
+                background: #f8fafd !important;
+                color: #000000 !important;
+                border: 1px solid #e0e7ef !important;
+                padding: 0.2rem 1.5rem !important;
+            }
+            
+            /* Component sections - each on its own page */
+            .component-section {
+                display: block !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+            }
+            
+            /* Last component should not have page break after */
+            #slab-section {
+                page-break-after: avoid !important;
+            }
+            
+            /* Global summary on its own page */
+            .global-summary {
+                page-break-before: always !important;
+                background: #f9fbfd !important;
+                border: 1px solid #e4eaf2 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            /* Table headers - brand color */
+            th {
+                background: #f9fbfd !important;
+                color: #405b73 !important;
+                border-bottom: 1px solid #dbe1ec !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            /* Summary cards */
+            .summary-card {
+                border-left: 4px solid #c9a959 !important;
+                background: #f9fbfd !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            /* Print contact footer */
+            .print-contact-footer {
+                display: block !important;
+                text-align: center;
+                margin-top: 2rem;
+                font-size: 0.9rem;
+                color: #70859c;
+                border-top: 1px solid #e9eef3;
+                padding-top: 1rem;
+            }
+            
+            /* Hide any leftover interactive elements */
+            .remove-tag {
+                display: none !important;
+            }
         }
-        .print-contact-footer { display: none; }
+        .print-contact-footer {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -434,7 +563,7 @@
         <button class="comp-btn" data-comp="slab">Slabs</button>
     </div>
 
-    <!-- main content (fully functional, note line removed) -->
+    <!-- main content (fully functional) -->
     <div class="content-panel" id="fullContent">
         <!-- FOOTING SECTION -->
         <div id="footing-section" class="component-section active">
@@ -481,6 +610,12 @@
                 <button class="btn-calc" id="saveFooting"><i class="far fa-save"></i> SAVE CURRENT</button>
                 <button class="btn-calc" id="calcFooting"><i class="fas fa-calculator"></i> GENERATE ALL</button>
             </div>
+            
+            <!-- Footing Chart - narrow -->
+            <div class="chart-container">
+                <canvas id="footingChart"></canvas>
+            </div>
+            
             <div class="results-area" id="footingResult"><table><thead><tr><th>Element</th><th>Qty</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table><div class="summary-card" id="footingSummary"></div></div>
         </div>
 
@@ -524,10 +659,16 @@
                 <div class="input-group"><label>Zone-A length (mm) each end</label><input id="colZoneALen" value="1000"></div>
             </div>
             <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveColumn"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcColumn"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
+            
+            <!-- Column Chart - narrow -->
+            <div class="chart-container">
+                <canvas id="columnChart"></canvas>
+            </div>
+            
             <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table><div class="summary-card" id="columnSummary"></div></div>
         </div>
 
-        <!-- BEAM SECTION (identical, only layout refined) -->
+        <!-- BEAM SECTION -->
         <div id="beam-section" class="component-section">
             <h2 style="font-weight:400; margin-bottom:1.5rem;">📦 Beam BBS · full details</h2>
             <div class="element-list" id="beam-list-container">
@@ -574,6 +715,12 @@
                 <div class="input-group"><label>Zone-B spacing</label><input id="bStirSpB" value="250"></div>
             </div>
             <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveBeam"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcBeam"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
+            
+            <!-- Beam Chart - narrow -->
+            <div class="chart-container">
+                <canvas id="beamChart"></canvas>
+            </div>
+            
             <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table><div class="summary-card" id="beamSummary"></div></div>
         </div>
 
@@ -602,6 +749,12 @@
                 <div class="input-group"><label>Top dist. dia</label><select id="sTopDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
             </div>
             <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveSlab"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcSlab"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
+            
+            <!-- Slab Chart - narrow -->
+            <div class="chart-container">
+                <canvas id="slabChart"></canvas>
+            </div>
+            
             <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table><div class="summary-card" id="slabSummary"></div></div>
         </div>
 
@@ -611,7 +764,6 @@
             <div class="summary-stats" id="globalStats"></div>
             <div style="margin-top:1.5rem;" id="globalBreakdown"></div>
         </div>
-        <!-- note line removed as requested -->
     </div>
 
     <!-- footer -->
@@ -684,7 +836,13 @@
         let beams = ['B101'];
         let slabs = ['S1'];
 
-        // Helper functions to load design into inputs
+        // Chart instances
+        let footingChart = null;
+        let columnChart = null;
+        let beamChart = null;
+        let slabChart = null;
+
+        // Helper functions to load design into inputs (identical to previous)
         function loadFootingDesign(name) {
             if (!footingDesigns[name]) {
                 footingDesigns[name] = { ...footingDesigns['F1'] };
@@ -777,7 +935,7 @@
             document.getElementById('current-slab').textContent = name;
         }
 
-        // Save current design including quantity
+        // Save current design including quantity (identical)
         function saveCurrentFooting() {
             const name = currentFooting;
             footingDesigns[name] = {
@@ -866,30 +1024,26 @@
             alert(`Slab ${name} design saved with quantity ${slabDesigns[name].count}`);
         }
 
-        // Render tags with click handlers
+        // Render tags (identical)
         function renderTags() {
-            // Footing tags
             let ftHtml = '';
             footings.forEach(f => {
                 ftHtml += `<div class="element-tag ${f === currentFooting ? 'selected' : ''}" data-footing="${f}"><span>${f}</span><button class="remove-tag" data-type="footing" data-value="${f}">✕</button></div>`;
             });
             document.getElementById('footing-tags').innerHTML = ftHtml;
             
-            // Column tags
             let colHtml = '';
             columns.forEach(c => {
                 colHtml += `<div class="element-tag ${c === currentColumn ? 'selected' : ''}" data-column="${c}"><span>${c}</span><button class="remove-tag" data-type="column" data-value="${c}">✕</button></div>`;
             });
             document.getElementById('column-tags').innerHTML = colHtml;
             
-            // Beam tags
             let beamHtml = '';
             beams.forEach(b => {
                 beamHtml += `<div class="element-tag ${b === currentBeam ? 'selected' : ''}" data-beam="${b}"><span>${b}</span><button class="remove-tag" data-type="beam" data-value="${b}">✕</button></div>`;
             });
             document.getElementById('beam-tags').innerHTML = beamHtml;
             
-            // Slab tags
             let slabHtml = '';
             slabs.forEach(s => {
                 slabHtml += `<div class="element-tag ${s === currentSlab ? 'selected' : ''}" data-slab="${s}"><span>${s}</span><button class="remove-tag" data-type="slab" data-value="${s}">✕</button></div>`;
@@ -897,7 +1051,7 @@
             document.getElementById('slab-tags').innerHTML = slabHtml;
         }
 
-        // Add new tags with quantity
+        // Add new tags (identical)
         document.getElementById('add-footing').addEventListener('click', ()=>{
             const inp = document.getElementById('new-footing-name');
             if(inp.value.trim()) { 
@@ -954,9 +1108,8 @@
             }
         });
 
-        // Tag click selection (delegation)
+        // Tag click selection (identical)
         document.addEventListener('click', (e)=>{
-            // Footing tag click
             if (e.target.closest('[data-footing]')) {
                 const tag = e.target.closest('[data-footing]');
                 const name = tag.dataset.footing;
@@ -964,7 +1117,6 @@
                 loadFootingDesign(name);
                 renderTags();
             }
-            // Column tag click
             if (e.target.closest('[data-column]')) {
                 const tag = e.target.closest('[data-column]');
                 const name = tag.dataset.column;
@@ -972,7 +1124,6 @@
                 loadColumnDesign(name);
                 renderTags();
             }
-            // Beam tag click
             if (e.target.closest('[data-beam]')) {
                 const tag = e.target.closest('[data-beam]');
                 const name = tag.dataset.beam;
@@ -980,7 +1131,6 @@
                 loadBeamDesign(name);
                 renderTags();
             }
-            // Slab tag click
             if (e.target.closest('[data-slab]')) {
                 const tag = e.target.closest('[data-slab]');
                 const name = tag.dataset.slab;
@@ -989,7 +1139,6 @@
                 renderTags();
             }
 
-            // Remove tag
             if(e.target.classList.contains('remove-tag')){
                 e.stopPropagation();
                 const type = e.target.dataset.type;
@@ -1086,15 +1235,238 @@
             });
         });
 
-        // ---------- GENERATE ALL FOOTINGS ----------
-        document.getElementById('calcFooting').addEventListener('click', ()=>{
-            let totalWt = 0;
-            let rows = '';
-
+        // Chart update functions (identical to previous)
+        function updateFootingChart() {
+            const barQuantities = {};
             footings.forEach(f => {
                 const d = footingDesigns[f];
                 if (!d) return;
-                
+                const count = d.count || 1;
+                const addBars = (dia, nos) => {
+                    barQuantities[dia] = (barQuantities[dia] || 0) + nos * count;
+                };
+                addBars(d.botXdia, Math.floor((d.L - 2*d.cov) / d.botXsp) + 1);
+                addBars(d.botYdia, Math.floor((d.W - 2*d.cov) / d.botYsp) + 1);
+                if (d.matType === 'double') {
+                    addBars(d.topXdia, Math.floor((d.L - 2*d.cov) / d.topXsp) + 1);
+                    addBars(d.topYdia, Math.floor((d.W - 2*d.cov) / d.topYsp) + 1);
+                }
+            });
+            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
+            const quantities = diameters.map(d => barQuantities[d]);
+            
+            if (footingChart) footingChart.destroy();
+            const ctx = document.getElementById('footingChart').getContext('2d');
+            footingChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: diameters.map(d => d + ' mm'),
+                    datasets: [{
+                        label: 'Number of Bars',
+                        data: quantities,
+                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
+                        borderColor: '#c9a959',
+                        borderWidth: 1,
+                        yAxisID: 'y',
+                    }, {
+                        label: 'Cumulative %',
+                        data: quantities.map((v, i, arr) => {
+                            const sum = arr.reduce((a,b) => a + b, 0);
+                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
+                        }),
+                        type: 'line',
+                        borderColor: '#1e2b3c',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        yAxisID: 'y1',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Footing Bar Quantities by Diameter' } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
+                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
+                }
+            });
+        }
+
+        function updateColumnChart() {
+            const barQuantities = {};
+            columns.forEach(c => {
+                const d = columnDesigns[c];
+                if (!d) return;
+                const count = d.count || 1;
+                barQuantities[d.cornerDia] = (barQuantities[d.cornerDia] || 0) + d.cornerQty * count;
+                barQuantities[d.middleDia] = (barQuantities[d.middleDia] || 0) + d.middleQty * count;
+                barQuantities[d.tieDia] = (barQuantities[d.tieDia] || 0) + (() => {
+                    const effZoneA = Math.min(d.zoneALen, d.H/3);
+                    const zoneACount = Math.floor(effZoneA / d.spA) + 1;
+                    const zoneBLength = d.H - 2 * effZoneA;
+                    let zoneBCount = 0;
+                    if (zoneBLength > 0) zoneBCount = Math.floor(zoneBLength / d.spB) - 1;
+                    if (zoneBCount < 0) zoneBCount = 0;
+                    return (zoneACount * 2 + zoneBCount) * count;
+                })();
+            });
+            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
+            const quantities = diameters.map(d => barQuantities[d]);
+            
+            if (columnChart) columnChart.destroy();
+            const ctx = document.getElementById('columnChart').getContext('2d');
+            columnChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: diameters.map(d => d + ' mm'),
+                    datasets: [{
+                        label: 'Number of Bars',
+                        data: quantities,
+                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
+                        borderColor: '#c9a959',
+                        borderWidth: 1,
+                        yAxisID: 'y',
+                    }, {
+                        label: 'Cumulative %',
+                        data: quantities.map((v, i, arr) => {
+                            const sum = arr.reduce((a,b) => a + b, 0);
+                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
+                        }),
+                        type: 'line',
+                        borderColor: '#1e2b3c',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        yAxisID: 'y1',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Column Bar Quantities by Diameter' } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
+                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
+                }
+            });
+        }
+
+        function updateBeamChart() {
+            const barQuantities = {};
+            beams.forEach(b => {
+                const d = beamDesigns[b];
+                if (!d) return;
+                const count = d.count || 1;
+                barQuantities[d.botDia] = (barQuantities[d.botDia] || 0) + d.botQty * count;
+                barQuantities[d.crankDia] = (barQuantities[d.crankDia] || 0) + d.crankQty * count;
+                barQuantities[d.topDia] = (barQuantities[d.topDia] || 0) + d.topQty * count;
+                barQuantities[d.extraSupDia] = (barQuantities[d.extraSupDia] || 0) + d.extraSupQty * 2 * count;
+                barQuantities[d.extraMidDia] = (barQuantities[d.extraMidDia] || 0) + d.extraMidQty * count;
+                barQuantities[d.stirDia] = (barQuantities[d.stirDia] || 0) + (() => {
+                    const zoneALen = d.span / 4;
+                    const zoneBLen = d.span / 2;
+                    const zoneACount = Math.floor(zoneALen / d.spA) + 1;
+                    let zoneBCount = Math.floor(zoneBLen / d.spB) - 1;
+                    if (zoneBCount < 0) zoneBCount = 0;
+                    return (zoneACount * 2 + zoneBCount) * count;
+                })();
+            });
+            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
+            const quantities = diameters.map(d => barQuantities[d]);
+            
+            if (beamChart) beamChart.destroy();
+            const ctx = document.getElementById('beamChart').getContext('2d');
+            beamChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: diameters.map(d => d + ' mm'),
+                    datasets: [{
+                        label: 'Number of Bars',
+                        data: quantities,
+                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
+                        borderColor: '#c9a959',
+                        borderWidth: 1,
+                        yAxisID: 'y',
+                    }, {
+                        label: 'Cumulative %',
+                        data: quantities.map((v, i, arr) => {
+                            const sum = arr.reduce((a,b) => a + b, 0);
+                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
+                        }),
+                        type: 'line',
+                        borderColor: '#1e2b3c',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        yAxisID: 'y1',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Beam Bar Quantities by Diameter' } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
+                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
+                }
+            });
+        }
+
+        function updateSlabChart() {
+            const barQuantities = {};
+            slabs.forEach(s => {
+                const d = slabDesigns[s];
+                if (!d) return;
+                const count = d.count || 1;
+                barQuantities[d.mainDia] = (barQuantities[d.mainDia] || 0) + (Math.floor((d.L - d.beam) / d.mainSp) + 1) * 2 * count; // main + distribution same dia
+                barQuantities[d.extraDia] = (barQuantities[d.extraDia] || 0) + (Math.floor((d.L - d.beam) / d.extraSp) + 1) * 4 * count;
+                barQuantities[d.topDia] = (barQuantities[d.topDia] || 0) + (Math.floor((d.extraLen - d.beam) / d.extraSp) + 1) * 4 * count;
+            });
+            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
+            const quantities = diameters.map(d => barQuantities[d]);
+            
+            if (slabChart) slabChart.destroy();
+            const ctx = document.getElementById('slabChart').getContext('2d');
+            slabChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: diameters.map(d => d + ' mm'),
+                    datasets: [{
+                        label: 'Number of Bars',
+                        data: quantities,
+                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
+                        borderColor: '#c9a959',
+                        borderWidth: 1,
+                        yAxisID: 'y',
+                    }, {
+                        label: 'Cumulative %',
+                        data: quantities.map((v, i, arr) => {
+                            const sum = arr.reduce((a,b) => a + b, 0);
+                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
+                        }),
+                        type: 'line',
+                        borderColor: '#1e2b3c',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        yAxisID: 'y1',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Slab Bar Quantities by Diameter' } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
+                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
+                }
+            });
+        }
+
+        // Generation functions (identical to previous, but with chart updates)
+        document.getElementById('calcFooting').addEventListener('click', ()=>{
+            let totalWt = 0;
+            let rows = '';
+            footings.forEach(f => {
+                const d = footingDesigns[f];
+                if (!d) return;
                 const count = d.count || 1;
                 const L = d.L, W = d.W, D = d.D, cov = d.cov, matType = d.matType;
                 const botXdia = d.botXdia, botXsp = d.botXsp;
@@ -1114,11 +1486,9 @@
 
                 const botX = calcDir(L, W, botXdia, botXsp);
                 const botY = calcDir(W, L, botYdia, botYsp);
-
                 rows += `<tr><td>${f}</td><td>${count}</td><td>Bottom</td><td>X</td><td>${botXdia}</td><td>${botX.nos}</td><td>${r3(botX.cut)}</td><td>${r3(botX.total * count)}</td><td>${r2(botX.wt * count)}</td></tr>`;
                 rows += `<tr><td>${f}</td><td>${count}</td><td>Bottom</td><td>Y</td><td>${botYdia}</td><td>${botY.nos}</td><td>${r3(botY.cut)}</td><td>${r3(botY.total * count)}</td><td>${r2(botY.wt * count)}</td></tr>`;
                 totalWt += (botX.wt + botY.wt) * count;
-
                 if (matType === 'double') {
                     const topX = calcDir(L, W, topXdia, topXsp);
                     const topY = calcDir(W, L, topYdia, topYsp);
@@ -1127,157 +1497,90 @@
                     totalWt += (topX.wt + topY.wt) * count;
                 }
             });
-
             footingWt = totalWt;
             document.getElementById('footingBody').innerHTML = rows;
             document.getElementById('footingSummary').innerHTML = `<span>🧾 Total footing steel (${footings.length} types): ${r2(footingWt)} kg</span>`;
-            captureFooting(); updateGlobalSummary();
+            captureFooting(); updateGlobalSummary(); updateFootingChart();
         });
 
-        // ---------- GENERATE ALL COLUMNS ----------
         document.getElementById('calcColumn').addEventListener('click', ()=>{
-            let totalWt = 0;
-            let rows = '';
-
+            let totalWt = 0; let rows = '';
             columns.forEach(c => {
-                const d = columnDesigns[c];
-                if (!d) return;
-                
+                const d = columnDesigns[c]; if (!d) return;
                 const count = d.count || 1;
                 const H = d.H, cov = d.cov, Ld = d.Ld, colX = d.colX, colY = d.colY;
                 const cornerDia = d.cornerDia, cornerQty = d.cornerQty;
                 const middleDia = d.middleDia, middleQty = d.middleQty;
-                const tieDia = d.tieDia;
-                const spA = d.spA, spB = d.spB, zoneALen = d.zoneALen;
-
+                const tieDia = d.tieDia; const spA = d.spA, spB = d.spB, zoneALen = d.zoneALen;
                 const longCut = H/1000;
-                
-                const cornerTot = cornerQty * longCut;
-                const cornerWt = cornerTot * uw(cornerDia);
-                
-                const middleTot = middleQty * longCut;
-                const middleWt = middleTot * uw(middleDia);
-                
-                const a = colX - 2*cov;
-                const b = colY - 2*cov;
-                const peri = 2*(a+b);
-                const hook = 2*12*tieDia;
-                const bend = 3*2*tieDia + 2*3*tieDia;
+                const cornerTot = cornerQty * longCut; const cornerWt = cornerTot * uw(cornerDia);
+                const middleTot = middleQty * longCut; const middleWt = middleTot * uw(middleDia);
+                const a = colX - 2*cov; const b = colY - 2*cov;
+                const peri = 2*(a+b); const hook = 2*12*tieDia; const bend = 3*2*tieDia + 2*3*tieDia;
                 const tieCut = (peri + hook - bend)/1000;
-
-                const effZoneA = Math.min(zoneALen, H/3);
-                const zoneACount = Math.floor(effZoneA / spA) + 1;
-                const zoneBLength = H - 2 * effZoneA;
-                let zoneBCount = 0;
-                if (zoneBLength > 0) {
-                    zoneBCount = Math.floor(zoneBLength / spB) - 1;
-                    if (zoneBCount < 0) zoneBCount = 0;
-                }
-                const totalTieNos = (zoneACount * 2) + zoneBCount;
-                const tieTot = totalTieNos * tieCut;
-                const tieWt = tieTot * uw(tieDia);
-
+                const effZoneA = Math.min(zoneALen, H/3); const zoneACount = Math.floor(effZoneA / spA) + 1;
+                const zoneBLength = H - 2 * effZoneA; let zoneBCount = 0;
+                if (zoneBLength > 0) { zoneBCount = Math.floor(zoneBLength / spB) - 1; if (zoneBCount < 0) zoneBCount = 0; }
+                const totalTieNos = (zoneACount * 2) + zoneBCount; const tieTot = totalTieNos * tieCut; const tieWt = tieTot * uw(tieDia);
                 totalWt += (cornerWt + middleWt + tieWt) * count;
-
                 rows += `<tr><td>${c}</td><td>${count}</td><td>Corner bars</td><td>—</td><td>${cornerDia}</td><td>${cornerQty}</td><td>${r3(longCut)}</td><td>${r3(cornerTot * count)}</td><td>${r2(cornerWt * count)}</td></tr>`;
                 rows += `<tr><td>${c}</td><td>${count}</td><td>Middle bars</td><td>—</td><td>${middleDia}</td><td>${middleQty}</td><td>${r3(longCut)}</td><td>${r3(middleTot * count)}</td><td>${r2(middleWt * count)}</td></tr>`;
                 rows += `<tr><td>${c}</td><td>${count}</td><td>Ties (Zone-A)</td><td>A</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut * count)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia) * count)}</td></tr>`;
                 rows += `<tr><td>${c}</td><td>${count}</td><td>Ties (Zone-B)</td><td>B</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut * count)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia) * count)}</td></tr>`;
             });
-
             columnWt = totalWt;
             document.getElementById('columnBody').innerHTML = rows;
             document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} types): ${r2(columnWt)} kg</span>`;
-            captureColumn(); updateGlobalSummary();
+            captureColumn(); updateGlobalSummary(); updateColumnChart();
         });
 
-        // ---------- GENERATE ALL BEAMS ----------
         document.getElementById('calcBeam').addEventListener('click', ()=>{
-            let totalWt = 0;
-            let rows = '';
-
+            let totalWt = 0; let rows = '';
             beams.forEach(b => {
-                const d = beamDesigns[b];
-                if (!d) return;
-                
+                const d = beamDesigns[b]; if (!d) return;
                 const count = d.count || 1;
                 const bw = d.bw, bd = d.bd, span = d.span, cov = d.cov, Ld = d.Ld;
-                const botDia = d.botDia, botQty = d.botQty;
-                const crankDia = d.crankDia, crankQty = d.crankQty;
+                const botDia = d.botDia, botQty = d.botQty; const crankDia = d.crankDia, crankQty = d.crankQty;
                 const topDia = d.topDia, topQty = d.topQty;
                 const extraSupDia = d.extraSupDia, extraSupQty = d.extraSupQty, extraSupLen = d.extraSupLen;
                 const extraMidDia = d.extraMidDia, extraMidQty = d.extraMidQty, extraMidLen = d.extraMidLen;
                 const stirDia = d.stirDia, spA = d.spA, spB = d.spB;
 
                 const bottomCut = (span + 2*Ld - 2*cov) / 1000;
-                const crankH = bd - 2*cov;
-                const crankExtra = 0.42 * crankH;
+                const crankH = bd - 2*cov; const crankExtra = 0.42 * crankH;
                 const crankCut = (span + 2*Ld - 2*cov + 2*crankExtra) / 1000;
                 const topCut = (span + 2*Ld - 2*cov) / 1000;
-                const extraSupCut = (extraSupLen - cov) / 1000;
-                const extraMidCut = (extraMidLen - cov) / 1000;
-                
-                const a = bw - 2*cov;
-                const bb = bd - 2*cov;
-                const peri = 2*(a+bb);
-                const hook = 2*12*stirDia;
-                const bend = 3*2*stirDia + 2*3*stirDia;
-                const stirCut = (peri + hook - bend)/1000;
-                
-                const zoneALen = span / 4;
-                const zoneBLen = span / 2;
+                const extraSupCut = (extraSupLen - cov) / 1000; const extraMidCut = (extraMidLen - cov) / 1000;
+                const a = bw - 2*cov; const bb = bd - 2*cov; const peri = 2*(a+bb);
+                const hook = 2*12*stirDia; const bend = 3*2*stirDia + 2*3*stirDia; const stirCut = (peri + hook - bend)/1000;
+                const zoneALen = span / 4; const zoneBLen = span / 2;
                 const zoneACount = Math.floor(zoneALen / spA) + 1;
-                let zoneBCount = Math.floor(zoneBLen / spB) - 1;
-                if (zoneBCount < 0) zoneBCount = 0;
+                let zoneBCount = Math.floor(zoneBLen / spB) - 1; if (zoneBCount < 0) zoneBCount = 0;
                 const totalStirrups = (zoneACount * 2) + zoneBCount;
 
-                // Bottom straight
-                const botTot = botQty * bottomCut;
-                const botWt = botTot * uw(botDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot * count)}</td><td>${r2(botWt * count)}</td></tr>`;
-                totalWt += botWt * count;
-                
-                const crankTot = crankQty * crankCut;
-                const crankWt = crankTot * uw(crankDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot * count)}</td><td>${r2(crankWt * count)}</td></tr>`;
-                totalWt += crankWt * count;
-                
-                const topTot = topQty * topCut;
-                const topWt = topTot * uw(topDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot * count)}</td><td>${r2(topWt * count)}</td></tr>`;
-                totalWt += topWt * count;
-                
-                const extraSupTot = (extraSupQty * 2) * extraSupCut;
-                const extraSupWt = extraSupTot * uw(extraSupDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot * count)}</td><td>${r2(extraSupWt * count)}</td></tr>`;
-                totalWt += extraSupWt * count;
-                
-                const extraMidTot = extraMidQty * extraMidCut;
-                const extraMidWt = extraMidTot * uw(extraMidDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot * count)}</td><td>${r2(extraMidWt * count)}</td></tr>`;
-                totalWt += extraMidWt * count;
-                
-                const stirTot = totalStirrups * stirCut;
-                const stirWt = stirTot * uw(stirDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Stirrups</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot * count)}</td><td>${r2(stirWt * count)}</td></tr>`;
-                totalWt += stirWt * count;
+                const botTot = botQty * bottomCut; const botWt = botTot * uw(botDia);
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot * count)}</td><td>${r2(botWt * count)}</td></tr>`; totalWt += botWt * count;
+                const crankTot = crankQty * crankCut; const crankWt = crankTot * uw(crankDia);
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot * count)}</td><td>${r2(crankWt * count)}</td></tr>`; totalWt += crankWt * count;
+                const topTot = topQty * topCut; const topWt = topTot * uw(topDia);
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot * count)}</td><td>${r2(topWt * count)}</td></tr>`; totalWt += topWt * count;
+                const extraSupTot = (extraSupQty * 2) * extraSupCut; const extraSupWt = extraSupTot * uw(extraSupDia);
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot * count)}</td><td>${r2(extraSupWt * count)}</td></tr>`; totalWt += extraSupWt * count;
+                const extraMidTot = extraMidQty * extraMidCut; const extraMidWt = extraMidTot * uw(extraMidDia);
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot * count)}</td><td>${r2(extraMidWt * count)}</td></tr>`; totalWt += extraMidWt * count;
+                const stirTot = totalStirrups * stirCut; const stirWt = stirTot * uw(stirDia);
+                rows += `<tr><td>${b}</td><td>${count}</td><td>Stirrups</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot * count)}</td><td>${r2(stirWt * count)}</td></tr>`; totalWt += stirWt * count;
             });
-
             beamWt = totalWt;
             document.getElementById('beamBody').innerHTML = rows;
             document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} types): ${r2(beamWt)} kg</span>`;
-            captureBeam(); updateGlobalSummary();
+            captureBeam(); updateGlobalSummary(); updateBeamChart();
         });
 
-        // ---------- GENERATE ALL SLABS ----------
         document.getElementById('calcSlab').addEventListener('click', ()=>{
-            let totalWt = 0;
-            let rows = '';
-
+            let totalWt = 0; let rows = '';
             slabs.forEach(s => {
-                const d = slabDesigns[s];
-                if (!d) return;
-                
+                const d = slabDesigns[s]; if (!d) return;
                 const count = d.count || 1;
                 const L = d.L, beam = d.beam, cov = d.cov;
                 const mainDia = d.mainDia, mainSp = d.mainSp;
@@ -1285,94 +1588,244 @@
                 const topDia = d.topDia;
 
                 const mainNos = Math.floor((L - beam) / mainSp) + 1;
-                const mainCut = (L - 2*cov)/1000;
-                const mainTot = mainNos * mainCut;
-                const mainWt = mainTot * uw(mainDia);
-
-                const distNos = mainNos;
-                const distTot = distNos * mainCut;
-                const distWt = distTot * uw(mainDia);
-
+                const mainCut = (L - 2*cov)/1000; const mainTot = mainNos * mainCut; const mainWt = mainTot * uw(mainDia);
+                const distNos = mainNos; const distTot = distNos * mainCut; const distWt = distTot * uw(mainDia);
                 const extraPerSide = Math.floor((L - beam) / extraSp) + 1;
-                const extraCut = (extraLen - cov)/1000;
-                const extraXtot = extraPerSide * 2 * extraCut;
-                const extraYtot = extraPerSide * 2 * extraCut;
-                const extraWt = (extraXtot + extraYtot) * uw(extraDia);
-
-                const topPerSide = Math.floor((extraLen - beam) / extraSp) + 1;
-                const topSafe = topPerSide > 0 ? topPerSide : 0;
-                const topCut = (L - 2*cov)/1000;
-                const topXtot = topSafe * 2 * topCut;
-                const topYtot = topSafe * 2 * topCut;
-                const topWt = (topXtot + topYtot) * uw(topDia);
-
-                const perSlabWt = mainWt + distWt + extraWt + topWt;
-                totalWt += perSlabWt * count;
+                const extraCut = (extraLen - cov)/1000; const extraXtot = extraPerSide * 2 * extraCut; const extraYtot = extraPerSide * 2 * extraCut; const extraWt = (extraXtot + extraYtot) * uw(extraDia);
+                const topPerSide = Math.floor((extraLen - beam) / extraSp) + 1; const topSafe = topPerSide > 0 ? topPerSide : 0;
+                const topCut = (L - 2*cov)/1000; const topXtot = topSafe * 2 * topCut; const topYtot = topSafe * 2 * topCut; const topWt = (topXtot + topYtot) * uw(topDia);
+                const perSlabWt = mainWt + distWt + extraWt + topWt; totalWt += perSlabWt * count;
 
                 rows += `<tr><td>${s}</td><td>${count}</td><td>Main bottom (X)</td><td>${mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(mainTot * count)}</td><td>${r2(mainWt * count)}</td></tr>`;
                 rows += `<tr><td>${s}</td><td>${count}</td><td>Distribution (Y)</td><td>${mainDia}</td><td>${distNos}</td><td>${r3(mainCut)}</td><td>${r3(distTot * count)}</td><td>${r2(distWt * count)}</td></tr>`;
                 rows += `<tr><td>${s}</td><td>${count}</td><td>Extra top (X+Y)</td><td>${extraDia}</td><td>${extraPerSide*4}</td><td>${r3(extraCut)}</td><td>${r3((extraXtot+extraYtot) * count)}</td><td>${r2(extraWt * count)}</td></tr>`;
                 rows += `<tr><td>${s}</td><td>${count}</td><td>Top distrib (X+Y)</td><td>${topDia}</td><td>${topSafe*4}</td><td>${r3(topCut)}</td><td>${r3((topXtot+topYtot) * count)}</td><td>${r2(topWt * count)}</td></tr>`;
             });
-
             slabWt = totalWt;
             document.getElementById('slabBody').innerHTML = rows;
             document.getElementById('slabSummary').innerHTML = `<span>🧾 Total slab steel (${slabs.length} types): ${r2(slabWt)} kg</span>`;
-            captureSlab(); updateGlobalSummary();
+            captureSlab(); updateGlobalSummary(); updateSlabChart();
         });
 
-        // print full BBS
+        // print full BBS - updated to match exact layout
         document.getElementById('printFullBtn').addEventListener('click', ()=>{
+            // Trigger generation to capture latest HTML
             document.getElementById('calcFooting').click();
             document.getElementById('calcColumn').click();
             document.getElementById('calcBeam').click();
             document.getElementById('calcSlab').click();
             
             setTimeout(() => {
-                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
-                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span style="display:none"').replace(/button>/g, 'span>');
+                // Get current tags HTML and clean them for print (remove buttons)
+                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                
                 const globalHTML = document.getElementById('globalSummaryBlock').outerHTML;
                 
                 const win = window.open('', '_blank');
                 win.document.write(`
-                    <html><head><title>KAJAL · complete BBS</title><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
-                    <style>
-                        body{font-family:Inter,sans-serif;padding:1.5rem;}
-                        .brand-header{background:linear-gradient(112deg,#06203b,#103a5e);color:white;padding:1.5rem;border-bottom:4px solid #f3b33d;text-align:center;print-color-adjust:exact;}
-                        .brand-main{font-family:'Cinzel Decorative',cursive;font-size:3.2rem;color:white;text-shadow:2px 2px 0 #103a5e;}
-                        .brand-sub{color:#fedb9f;font-size:1.6rem;}
-                        .tagline{background:rgba(0,0,0,0.2);padding:0.3rem 2rem;border-radius:40px;display:inline-block;border:1px solid #f3b33d;color:white;}
-                        .element-items{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0;}
-                        .element-tag{background:#f0f5fc;border:1px solid #103a5e;border-radius:2rem;padding:0.4rem 1.5rem;font-weight:600;color:#103a5e;}
-                        h2{color:#103a5e;border-bottom:2px solid #f3b33d;padding-bottom:0.3rem;}
-                        table{width:100%;border-collapse:collapse;margin:1rem 0;}
-                        th{background:#103a5e;color:white;padding:0.8rem;border-bottom:2px solid #f3b33d;print-color-adjust:exact;}
-                        td{padding:0.7rem;border-bottom:1px solid #aaa;}
-                        .summary-card{background:#e9f0fa;border-left:8px solid #f3b33d;padding:1rem 2rem;margin:1rem 0;print-color-adjust:exact;}
-                        .global-summary{background:#e6f0ff;border:2px solid #103a5e;padding:1.5rem;margin:2rem 0;print-color-adjust:exact;}
-                        .summary-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
-                        .stat-block{background:white;padding:1rem;border-radius:1rem;border:1px solid #aac1df;}
-                        .print-footer{margin-top:2rem;text-align:center;color:#103a5e;border-top:1px dashed #103a5e;padding-top:1rem;}
-                        .footing-page,.column-page,.beam-page,.slab-page{page-break-after:always;}
-                        .summary-page{page-break-before:always;}
-                    </style></head>
+                    <html>
+                    <head>
+                        <title>KAJAL · complete BBS</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                        <style>
+                            body {
+                                font-family: 'Inter', sans-serif;
+                                padding: 1.5rem;
+                                background: white;
+                                color: #1e293b;
+                            }
+                            .brand-header {
+                                background: #ffffff;
+                                padding: 1.5rem;
+                                border-bottom: 1px solid #e9eef3;
+                                text-align: center;
+                                margin-bottom: 1.5rem;
+                            }
+                            .brand-main {
+                                font-family: 'Cinzel Decorative', cursive;
+                                font-size: 2.5rem;
+                                font-weight: 700;
+                                color: #1e2b3c;
+                                line-height: 1.2;
+                            }
+                            .brand-sub {
+                                font-family: 'Inter', sans-serif;
+                                font-size: 1.1rem;
+                                font-weight: 300;
+                                letter-spacing: 2px;
+                                color: #000000;
+                                margin-top: 0.25rem;
+                                text-transform: uppercase;
+                            }
+                            .tagline {
+                                font-family: 'Inter', sans-serif;
+                                font-size: 0.95rem;
+                                font-weight: 400;
+                                color: #000000;
+                                margin-top: 0.5rem;
+                                background: #f8fafd;
+                                padding: 0.2rem 1.5rem;
+                                border-radius: 30px;
+                                display: inline-block;
+                            }
+                            .element-items {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 0.5rem;
+                                margin: 1rem 0;
+                            }
+                            .element-tag {
+                                background: #f0f5fc;
+                                border: 1px solid #1e2b3c;
+                                border-radius: 40px;
+                                padding: 0.3rem 1rem;
+                                font-weight: 500;
+                                color: #1e2b3c;
+                            }
+                            h2 {
+                                font-weight: 400;
+                                font-size: 1.5rem;
+                                color: #1e2b3c;
+                                border-bottom: 1px solid #e9eef3;
+                                padding-bottom: 0.5rem;
+                                margin-top: 1.5rem;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                font-size: 0.9rem;
+                                margin: 1rem 0;
+                            }
+                            th {
+                                background: #f9fbfd;
+                                color: #405b73;
+                                font-weight: 600;
+                                padding: 0.8rem;
+                                border-bottom: 1px solid #dbe1ec;
+                                font-size: 0.85rem;
+                                text-transform: uppercase;
+                                letter-spacing: 0.3px;
+                            }
+                            td {
+                                padding: 0.7rem;
+                                border-bottom: 1px solid #edf2f9;
+                                color: #2f4055;
+                            }
+                            .summary-card {
+                                background: #f9fbfd;
+                                border-left: 4px solid #c9a959;
+                                padding: 1rem 2rem;
+                                margin: 1rem 0;
+                                display: flex;
+                                gap: 2rem;
+                            }
+                            .summary-card span {
+                                font-size: 1.1rem;
+                                font-weight: 500;
+                                color: #1e2b3c;
+                            }
+                            .global-summary {
+                                background: #f9fbfd;
+                                border: 1px solid #e4eaf2;
+                                border-radius: 1.5rem;
+                                padding: 1.5rem;
+                                margin: 2rem 0;
+                            }
+                            .global-summary h2 {
+                                margin-top: 0;
+                                border-bottom: none;
+                            }
+                            .summary-stats {
+                                display: grid;
+                                grid-template-columns: repeat(5, 1fr);
+                                gap: 1rem;
+                            }
+                            .stat-block {
+                                background: white;
+                                padding: 1rem;
+                                border-radius: 1rem;
+                                border: 1px solid #eef2f6;
+                            }
+                            .stat-label {
+                                font-size: 0.8rem;
+                                color: #70859c;
+                                font-weight: 500;
+                                text-transform: uppercase;
+                            }
+                            .stat-value {
+                                font-size: 1.4rem;
+                                font-weight: 600;
+                                color: #1e2b3c;
+                            }
+                            .print-footer {
+                                margin-top: 2rem;
+                                text-align: center;
+                                color: #70859c;
+                                border-top: 1px solid #e9eef3;
+                                padding-top: 1rem;
+                                font-size: 0.9rem;
+                            }
+                            /* Page breaks */
+                            .footing-page, .column-page, .beam-page, .slab-page {
+                                page-break-after: always;
+                            }
+                            .summary-page {
+                                page-break-before: always;
+                            }
+                        </style>
+                    </head>
                     <body>
-                        <div class="brand-header"><div class="brand-main">KAJAL</div><div class="brand-sub">STRUCTURAL DESIGN STUDIO</div><div class="tagline"><strong>Build Smarter, Build Stronger</strong></div></div>
-                        <div class="footing-page"><h2>📐 Footing BBS</h2><div class="element-items">${footingTags}</div>${footingHTML}</div>
-                        <div class="column-page"><h2>📏 Column BBS (Corner & Middle Bars)</h2><div class="element-items">${columnTags}</div>${columnHTML}</div>
-                        <div class="beam-page"><h2>📦 Beam BBS (full details)</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
-                        <div class="slab-page"><h2>🧱 Slab BBS</h2><div class="element-items">${slabTags}</div>${slabHTML}</div>
-                        <div class="summary-page">${globalHTML}</div>
-                        <div class="print-footer">KAJAL · 9390396951 · designbykajal786@gmail.com<br>Generated ${new Date().toLocaleString()}</div>
-                    </body></html>
+                        <div class="brand-header">
+                            <div class="brand-main">KAJAL</div>
+                            <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
+                            <div class="tagline">Build Smarter, Build Stronger</div>
+                        </div>
+                        
+                        <div class="footing-page">
+                            <h2>📐 Footing BBS · independent design</h2>
+                            <div class="element-items">${footingTags}</div>
+                            ${footingHTML}
+                        </div>
+                        
+                        <div class="column-page">
+                            <h2>📏 Column BBS · corner & middle bars</h2>
+                            <div class="element-items">${columnTags}</div>
+                            ${columnHTML}
+                        </div>
+                        
+                        <div class="beam-page">
+                            <h2>📦 Beam BBS · full details</h2>
+                            <div class="element-items">${beamTags}</div>
+                            ${beamHTML}
+                        </div>
+                        
+                        <div class="slab-page">
+                            <h2>🧱 Slab BBS · independent design</h2>
+                            <div class="element-items">${slabTags}</div>
+                            ${slabHTML}
+                        </div>
+                        
+                        <div class="summary-page">
+                            ${globalHTML}
+                        </div>
+                        
+                        <div class="print-footer">
+                            KAJAL STRUCTURAL DESIGN STUDIO · 9390396951 · designbykajal786@gmail.com<br>
+                            Generated on ${new Date().toLocaleString()}
+                        </div>
+                    </body>
+                    </html>
                 `);
-                win.document.close(); win.print();
+                win.document.close();
+                win.print();
             }, 500);
         });
 
-        // excel export
+        // excel export (identical)
         document.getElementById('excelFullBtn').addEventListener('click', ()=>{
             document.getElementById('calcFooting').click();
             document.getElementById('calcColumn').click();
@@ -1380,10 +1833,10 @@
             document.getElementById('calcSlab').click();
             
             setTimeout(() => {
-                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
-                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button/g, '<span').replace(/button>/g, 'span>');
+                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
+                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
                 const html = `<html><head><meta charset="UTF-8"><style>td{border:1px solid #000;}</style></head><body>
                     <h2>KAJAL STRUCTURAL DESIGN STUDIO</h2><h3>Build Smarter, Build Stronger</h3>
                     ${document.getElementById('globalSummaryBlock').outerHTML}
@@ -1404,7 +1857,7 @@
         loadBeamDesign('B101');
         loadSlabDesign('S1');
         
-        // Generate initial BBS
+        // Generate initial BBS and charts
         setTimeout(() => {
             document.getElementById('calcFooting').click();
             document.getElementById('calcColumn').click();
