@@ -2,423 +2,321 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>KAJAL · structural design studio</title>
-    <!-- Google Fonts: Cinzel Decorative (headings) + Inter (clean modern) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for minimal icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js for sleek charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ---------- minimal & classy reset ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            background: #f5f7fa;
-            font-family: 'Inter', sans-serif;
-            color: #1e293b;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 2rem;
+            background:#f5f7fa;
+            font-family:'Inter',sans-serif;
+            color:#1e293b;
+            display:flex;
+            justify-content:center;
+            padding:1.5rem;
         }
         .master-container {
-            max-width: 1600px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            max-width:1600px;
+            width:100%;
+            background:#fff;
+            border-radius:2rem;
+            box-shadow:0 25px 50px -12px rgba(0,0,0,0.15);
+            overflow:hidden;
+            display:flex;
+            flex-direction:column;
         }
-        /* ---------- elegant header ---------- */
         .brand-header {
-            background: #ffffff;
-            padding: 2rem 3rem 1.5rem 3rem;
-            border-bottom: 1px solid #e9eef3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            background:#fff;
+            padding:1.5rem 2rem;
+            border-bottom:1px solid #e9eef3;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:space-between;
+            align-items:center;
         }
         .brand-main {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #1e2b3c;
-            line-height: 1.2;
+            font-family:'Cinzel Decorative',cursive;
+            font-size:2.5rem;
+            font-weight:700;
+            color:#1e2b3c;
         }
         .brand-sub {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            color: #000000;
-            margin-top: 0.25rem;
-            text-transform: uppercase;
+            font-size:1rem;
+            font-weight:300;
+            letter-spacing:2px;
+            color:#000;
+            text-transform:uppercase;
         }
         .tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 400;
-            color: #000000;
-            margin-top: 0.75rem;
-            background: #f8fafd;
-            padding: 0.3rem 2rem;
-            border-radius: 30px;
-            display: inline-block;
+            font-size:0.9rem;
+            color:#000;
+            background:#f8fafd;
+            padding:0.2rem 1.5rem;
+            border-radius:30px;
+            margin-top:0.3rem;
         }
         .header-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            display:flex;
+            gap:0.8rem;
+            flex-wrap:wrap;
         }
-        .print-btn, .excel-btn {
-            background: #ffffff;
-            border: 1px solid #d0d9e6;
-            color: #2c3e50;
-            padding: 0.7rem 2rem;
-            border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        .print-btn, .excel-btn, .save-btn, .load-btn {
+            background:#fff;
+            border:1px solid #d0d9e6;
+            color:#2c3e50;
+            padding:0.6rem 1.2rem;
+            border-radius:40px;
+            font-weight:500;
+            font-size:0.85rem;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            gap:0.5rem;
+            transition:0.2s;
         }
-        .print-btn:hover, .excel-btn:hover {
-            background: #f1f5f9;
-            border-color: #a0b3cc;
-            transform: translateY(-1px);
+        .print-btn:hover, .excel-btn:hover, .save-btn:hover, .load-btn:hover {
+            background:#f1f5f9;
+            border-color:#a0b3cc;
+            transform:translateY(-1px);
         }
-        /* ---------- minimal tabs ---------- */
         .component-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            background: #f9fbfd;
-            padding: 0 3rem;
-            border-bottom: 1px solid #e9eef3;
-            gap: 0.25rem;
+            display:flex;
+            flex-wrap:wrap;
+            background:#f9fbfd;
+            padding:0 2rem;
+            border-bottom:1px solid #e9eef3;
+            gap:0.25rem;
+            overflow-x:auto;
         }
         .comp-btn {
-            background: transparent;
-            border: none;
-            padding: 1rem 2rem 0.9rem 2rem;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.15s;
-            border-bottom: 3px solid transparent;
-            letter-spacing: 0.3px;
+            background:transparent;
+            border:none;
+            padding:0.9rem 1.5rem;
+            font-size:0.95rem;
+            font-weight:500;
+            color:#64748b;
+            cursor:pointer;
+            border-bottom:3px solid transparent;
+            white-space:nowrap;
         }
         .comp-btn.active {
-            color: #1e2b3c;
-            border-bottom: 3px solid #c9a959;
-            font-weight: 600;
-            background: transparent;
+            color:#1e2b3c;
+            border-bottom:3px solid #c9a959;
+            font-weight:600;
         }
-        .comp-btn:hover {
-            color: #2c3e50;
-        }
-        /* ---------- main panel with soft background ---------- */
         .content-panel {
-            background: #ffffff;
-            padding: 2.5rem 3rem;
+            background:#fff;
+            padding:1.5rem 2rem;
         }
-        .component-section {
-            display: none;
-        }
-        .component-section.active {
-            display: block;
-        }
-        /* ---------- element tags (minimal & elegant) ---------- */
+        .component-section { display:none; }
+        .component-section.active { display:block; }
         .element-list {
-            background: #f9fbfd;
-            border-radius: 1.5rem;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            border: 1px solid #eef2f6;
+            background:#f9fbfd;
+            border-radius:1.5rem;
+            padding:1.5rem;
+            margin-bottom:1.5rem;
+            border:1px solid #eef2f6;
         }
         .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.2rem;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:space-between;
+            align-items:center;
+            gap:1rem;
+            margin-bottom:1rem;
         }
         .list-header h3 {
-            font-weight: 500;
-            font-size: 1rem;
-            color: #5f6f87;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight:500;
+            font-size:0.95rem;
+            color:#5f6f87;
+            text-transform:uppercase;
         }
         .add-btn {
-            background: #ffffff;
-            border: 1px solid #d8e0ea;
-            color: #2c3e50;
-            padding: 0.5rem 1.2rem;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: 0.15s;
+            background:#fff;
+            border:1px solid #d8e0ea;
+            color:#2c3e50;
+            padding:0.5rem 1.2rem;
+            border-radius:30px;
+            font-weight:500;
+            font-size:0.85rem;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            gap:0.4rem;
         }
-        .add-btn:hover {
-            background: #f1f5f9;
-            border-color: #b0c0d0;
-        }
+        .add-btn:hover { background:#f1f5f9; }
         .element-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 1rem;
+            display:flex;
+            flex-wrap:wrap;
+            gap:0.6rem;
+            margin-bottom:1rem;
         }
         .element-tag {
-            background: #ffffff;
-            border: 1px solid #e0e7ef;
-            border-radius: 40px;
-            padding: 0.4rem 1rem 0.4rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            cursor: pointer;
-            transition: 0.1s;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            background:#fff;
+            border:1px solid #e0e7ef;
+            border-radius:40px;
+            padding:0.4rem 1rem 0.4rem 1.5rem;
+            display:flex;
+            align-items:center;
+            gap:0.6rem;
+            cursor:pointer;
+            font-size:0.9rem;
         }
         .element-tag.selected {
-            background: #1e2b3c;
-            border-color: #c9a959;
-            color: white;
+            background:#1e2b3c;
+            border-color:#c9a959;
+            color:#fff;
         }
-        .element-tag.selected span {
-            color: white;
-        }
-        .element-tag span {
-            font-weight: 500;
-            color: #1e2b3c;
-        }
+        .element-tag.selected span { color:#fff; }
+        .element-tag span { font-weight:500; color:#1e2b3c; }
         .remove-tag {
-            background: none;
-            border: none;
-            color: #a0aec0;
-            font-size: 1.2rem;
-            cursor: pointer;
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+            background:none;
+            border:none;
+            color:#a0aec0;
+            font-size:1.1rem;
+            cursor:pointer;
+            width:22px;
+            height:22px;
+            border-radius:50%;
         }
-        .remove-tag:hover {
-            background: #f1f0f0;
-            color: #b02b2b;
-        }
-        .element-tag.selected .remove-tag {
-            color: #e0d6c0;
-        }
-        /* ---------- input grids with soft style ---------- */
+        .remove-tag:hover { background:#f1f0f0; color:#b02b2b; }
         .input-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 1.2rem;
-            background: #fafcff;
-            padding: 1.8rem;
-            border-radius: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid #eef2f6;
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+            gap:1rem;
+            background:#fafcff;
+            padding:1.5rem;
+            border-radius:1.5rem;
+            margin-bottom:1.5rem;
+            border:1px solid #eef2f6;
         }
         .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
+            display:flex;
+            flex-direction:column;
+            gap:0.3rem;
         }
         .input-group label {
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            color: #6b7b92;
+            font-weight:600;
+            font-size:0.7rem;
+            text-transform:uppercase;
+            color:#6b7b92;
         }
         .input-group input, .input-group select {
-            padding: 0.8rem 1rem;
-            border: 1px solid #dee5ef;
-            border-radius: 1rem;
-            font-size: 0.95rem;
-            background: white;
-            transition: 0.15s;
-            font-family: 'Inter', sans-serif;
+            padding:0.7rem 0.9rem;
+            border:1px solid #dee5ef;
+            border-radius:1rem;
+            font-size:0.9rem;
+            background:#fff;
         }
         .input-group input:focus, .input-group select:focus {
-            border-color: #c9a959;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(201, 169, 89, 0.1);
+            border-color:#c9a959;
+            outline:none;
         }
         .zone-info {
-            background: #fafcff;
-            border-radius: 1rem;
-            padding: 1rem 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #c9a959;
-            font-size: 0.9rem;
-            color: #405b73;
+            background:#fafcff;
+            border-radius:1rem;
+            padding:1rem 1.5rem;
+            margin-bottom:1.5rem;
+            border-left:4px solid #c9a959;
         }
-        /* ---------- buttons ---------- */
         .btn-calc {
-            background: #1e2b3c;
-            border: none;
-            color: white;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 0.9rem 2rem;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            border: 1px solid #2f4055;
-            margin-bottom: 2rem;
-            letter-spacing: 0.3px;
+            background:#1e2b3c;
+            border:none;
+            color:#fff;
+            font-weight:500;
+            font-size:1rem;
+            padding:0.8rem 2rem;
+            border-radius:40px;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            gap:0.7rem;
+            border:1px solid #2f4055;
+            margin-bottom:1.5rem;
         }
-        .btn-calc:hover {
-            background: #2c3f58;
-            transform: scale(1.01);
-        }
-        /* ---------- tables (clean, minimal) ---------- */
+        .btn-calc:hover { background:#2c3f58; }
         .results-area {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            padding: 1.8rem;
-            border: 1px solid #edf2f9;
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            background:#fff;
+            border-radius:1.5rem;
+            padding:1.5rem;
+            border:1px solid #edf2f9;
+            overflow-x:auto;
+            margin-bottom:1.5rem;
+            box-shadow:0 4px 12px rgba(0,0,0,0.02);
         }
         table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 1200px;
+            width:100%;
+            border-collapse:collapse;
+            font-size:0.85rem;
+            min-width:1000px;
         }
         th {
-            background: #f9fbfd;
-            color: #405b73;
-            font-weight: 600;
-            padding: 1rem 0.8rem;
-            border-bottom: 1px solid #dbe1ec;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            background:#f9fbfd;
+            color:#405b73;
+            font-weight:600;
+            padding:0.8rem 0.6rem;
+            border-bottom:1px solid #dbe1ec;
+            font-size:0.8rem;
+            text-transform:uppercase;
         }
-        td {
-            padding: 0.9rem 0.8rem;
-            border-bottom: 1px solid #edf2f9;
-            color: #2f4055;
-        }
+        td { padding:0.7rem 0.6rem; border-bottom:1px solid #edf2f9; color:#2f4055; }
         .summary-card {
-            background: #f9fbfd;
-            border-radius: 1.5rem;
-            padding: 1.2rem 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 2rem;
-            margin-top: 1rem;
-            border-left: 4px solid #c9a959;
-        }
-        .summary-card span {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #1e2b3c;
+            background:#f9fbfd;
+            border-left:4px solid #c9a959;
+            padding:1rem 1.5rem;
+            display:flex;
+            flex-wrap:wrap;
+            gap:1.5rem;
+            margin-top:1rem;
+            border-radius:1rem;
         }
         .global-summary {
-            background: #f9fbfd;
-            border-radius: 1.5rem;
-            padding: 2rem 2.5rem;
-            margin: 2.5rem 0 1.5rem;
-            border: 1px solid #e4eaf2;
-        }
-        .global-summary h2 {
-            font-weight: 500;
-            font-size: 1.3rem;
-            color: #1e2b3c;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
+            background:#f9fbfd;
+            border-radius:1.5rem;
+            padding:1.5rem;
+            margin:2rem 0 1rem;
+            border:1px solid #e4eaf2;
         }
         .summary-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.2rem;
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));
+            gap:1rem;
         }
         .stat-block {
-            background: white;
-            padding: 1rem 1.2rem;
-            border-radius: 1.2rem;
-            border: 1px solid #eef2f6;
+            background:#fff;
+            padding:0.8rem 1rem;
+            border-radius:1rem;
+            border:1px solid #eef2f6;
         }
-        .stat-label {
-            font-size: 0.8rem;
-            color: #70859c;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-        .stat-value {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #1e2b3c;
-            line-height: 1.2;
-        }
+        .stat-label { font-size:0.75rem; color:#70859c; font-weight:500; text-transform:uppercase; }
+        .stat-value { font-size:1.3rem; font-weight:600; color:#1e2b3c; }
         .studio-footer {
-            background: #f9fbfd;
-            color: #70859c;
-            padding: 1.5rem 3rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-            border-top: 1px solid #e9eef3;
+            background:#f9fbfd;
+            color:#70859c;
+            padding:1rem 2rem;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:space-between;
+            align-items:center;
+            font-size:0.8rem;
+            border-top:1px solid #e9eef3;
         }
-        .rights strong {
-            color: #1e2b3c;
-            font-weight: 500;
-        }
-        .contact span {
-            margin-left: 1.5rem;
-        }
-        /* Chart containers - sleek design with NARROW height */
         .chart-container {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin: 2rem 0 1rem;
-            border: 1px solid #edf2f9;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-            height: 240px;  /* Narrow height as requested */
+            background:#fff;
+            border-radius:1.5rem;
+            padding:1rem;
+            margin:1.5rem 0 1rem;
+            border:1px solid #edf2f9;
+            height:220px;
         }
-        canvas {
-            max-height: 200px;  /* Canvas narrower */
-            width: 100%;
-        }
-        /* Print styles - updated to match exact layout */
+        canvas { max-height:180px; width:100%; }
+
+        /* ========== PROFESSIONAL PRINT STYLES - EXACT LAYOUT ========== */
         @media print {
-            /* Hide interactive elements */
             .brand-header .header-actions,
             .component-tabs,
             .input-grid,
@@ -426,18 +324,11 @@
             .element-list .add-btn,
             .element-list input,
             .studio-footer,
-            .chart-container {
+            .chart-container,
+            .remove-tag {
                 display: none !important;
             }
-            
-            /* Keep element tags visible */
-            .element-items {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                gap: 0.5rem !important;
-                margin-bottom: 1rem !important;
-            }
-            
+            .element-items { display: flex !important; flex-wrap: wrap !important; gap: 0.5rem !important; margin-bottom: 1rem !important; }
             .element-tag {
                 background: #f0f5fc !important;
                 border: 1px solid #1e2b3c !important;
@@ -446,116 +337,44 @@
                 font-weight: 500 !important;
                 color: #1e2b3c !important;
                 print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
             }
-            
-            .element-tag span {
-                color: #1e2b3c !important;
-            }
-            
-            /* Brand header - exact colors as on screen */
             .brand-header {
                 background: #ffffff !important;
                 color: #1e2b3c !important;
                 border-bottom: 1px solid #e9eef3 !important;
                 padding: 1.5rem !important;
                 text-align: center !important;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
             }
-            
-            .brand-main {
-                font-family: 'Cinzel Decorative', cursive !important;
-                color: #1e2b3c !important;
-                font-size: 2.5rem !important;
-                text-shadow: none !important;
-            }
-            
-            .brand-sub {
-                color: #000000 !important;
-                font-size: 1.1rem !important;
-            }
-            
-            .tagline {
-                background: #f8fafd !important;
-                color: #000000 !important;
-                border: 1px solid #e0e7ef !important;
-                padding: 0.2rem 1.5rem !important;
-            }
-            
-            /* Component sections - each on its own page */
-            .component-section {
-                display: block !important;
-                page-break-after: always !important;
-                page-break-inside: avoid !important;
-            }
-            
-            /* Last component should not have page break after */
-            #slab-section {
-                page-break-after: avoid !important;
-            }
-            
-            /* Global summary on its own page */
-            .global-summary {
-                page-break-before: always !important;
-                background: #f9fbfd !important;
-                border: 1px solid #e4eaf2 !important;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-            
-            /* Table headers - brand color */
-            th {
-                background: #f9fbfd !important;
-                color: #405b73 !important;
-                border-bottom: 1px solid #dbe1ec !important;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-            
-            /* Summary cards */
-            .summary-card {
-                border-left: 4px solid #c9a959 !important;
-                background: #f9fbfd !important;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-            
-            /* Print contact footer */
-            .print-contact-footer {
-                display: block !important;
-                text-align: center;
-                margin-top: 2rem;
-                font-size: 0.9rem;
-                color: #70859c;
-                border-top: 1px solid #e9eef3;
-                padding-top: 1rem;
-            }
-            
-            /* Hide any leftover interactive elements */
-            .remove-tag {
-                display: none !important;
-            }
+            .brand-main { font-family: 'Cinzel Decorative', cursive !important; color: #1e2b3c !important; font-size: 2.5rem !important; }
+            .brand-sub { color: #000000 !important; font-size: 1rem !important; }
+            .tagline { background: #f8fafd !important; color: #000000 !important; border: 1px solid #e0e7ef !important; }
+            .component-section { display: block !important; page-break-after: always !important; }
+            #slab-section { page-break-after: avoid !important; }
+            .global-summary { page-break-before: always !important; background: #f9fbfd !important; border: 1px solid #e4eaf2 !important; }
+            th { background: #f9fbfd !important; color: #405b73 !important; border-bottom: 1px solid #dbe1ec !important; }
+            .summary-card { border-left: 4px solid #c9a959 !important; background: #f9fbfd !important; }
+            .print-contact-footer { display: block !important; text-align: center; margin-top: 2rem; color: #70859c; border-top: 1px solid #e9eef3; padding-top: 1rem; }
+            .results-area { border: 1px solid #e9eef3 !important; box-shadow: none !important; }
         }
-        .print-contact-footer {
-            display: none;
-        }
+        .print-contact-footer { display: none; }
     </style>
 </head>
 <body>
 <div class="master-container">
-    <!-- refined header with black sub and tagline -->
     <div class="brand-header">
-        <div class="brand-main">KAJAL</div>
-        <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
-        <div class="tagline"><i class="fas fa-arrow-right" style="margin-right:6px; opacity:0.6;"></i> Build Smarter, Build Stronger</div>
+        <div>
+            <div class="brand-main">KAJAL</div>
+            <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
+            <div class="tagline"><i class="fas fa-arrow-right" style="margin-right:6px;"></i> Build Smarter, Build Stronger</div>
+        </div>
         <div class="header-actions">
-            <button class="print-btn" id="printFullBtn"><i class="fas fa-print"></i> Print full BBS</button>
-            <button class="excel-btn" id="excelFullBtn"><i class="fas fa-file-excel"></i> Excel complete</button>
+            <button class="save-btn" id="saveProjectBtn"><i class="fas fa-save"></i> Save</button>
+            <button class="load-btn" id="loadProjectBtn"><i class="fas fa-folder-open"></i> Load</button>
+            <button class="print-btn" id="printFullBtn"><i class="fas fa-print"></i> Print</button>
+            <button class="excel-btn" id="excelFullBtn"><i class="fas fa-file-excel"></i> Excel</button>
         </div>
     </div>
 
-    <!-- tabs -->
     <div class="component-tabs">
         <button class="comp-btn active" data-comp="footing">Footings</button>
         <button class="comp-btn" data-comp="column">Columns</button>
@@ -563,1308 +382,752 @@
         <button class="comp-btn" data-comp="slab">Slabs</button>
     </div>
 
-    <!-- main content (fully functional) -->
     <div class="content-panel" id="fullContent">
-        <!-- FOOTING SECTION -->
+        <!-- FOOTING -->
         <div id="footing-section" class="component-section active">
-            <h2 style="font-weight:400; margin-bottom:1.5rem;">📐 Footing BBS · independent design</h2>
-            <div class="element-list" id="footing-list-container">
-                <div class="list-header">
-                    <h3><i class="far fa-dot-circle" style="margin-right:8px;"></i> Click any footing to edit</h3>
-                    <button class="add-btn" id="add-footing"><i class="fas fa-plus"></i> Add footing type</button>
-                </div>
+            <h2 style="font-weight:400;">📐 Footing BBS</h2>
+            <div class="element-list">
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click footing to edit</h3><button class="add-btn" id="add-footing"><i class="fas fa-plus"></i> Add footing</button></div>
                 <div class="element-items" id="footing-tags"></div>
-                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
                     <input type="text" id="new-footing-name" placeholder="e.g. F4" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
-                    <div class="input-group" style="width: 120px;">
-                        <label>Quantity</label>
-                        <input type="number" id="footing-count" value="1" min="1" style="padding:0.6rem;">
-                    </div>
+                    <div class="input-group" style="width:120px;"><label>Quantity</label><input type="number" id="footing-count" value="1" min="1"></div>
                 </div>
             </div>
-            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;">
-                <span style="font-weight:400;">Currently editing: <span id="current-footing">F1</span></span>
-            </div>
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem;"><span>Editing: <span id="current-footing">F1</span></span></div>
             <div class="input-grid">
-                <div class="input-group"><label>Length Lx (mm)</label><input id="fL" value="2000"></div>
-                <div class="input-group"><label>Width Ly (mm)</label><input id="fW" value="1500"></div>
-                <div class="input-group"><label>Depth (mm)</label><input id="fD" value="300"></div>
-                <div class="input-group"><label>Cover (mm)</label><input id="fCov" value="50"></div>
-                <div class="input-group"><label>Mat type</label><select id="fMatType"><option value="single">Single</option><option value="double" selected>Double</option></select></div>
+                <div class="input-group"><label>Lx (mm)</label><input id="fL" value="2000"></div>
+                <div class="input-group"><label>Ly (mm)</label><input id="fW" value="1500"></div>
+                <div class="input-group"><label>Depth</label><input id="fD" value="300"></div>
+                <div class="input-group"><label>Cover</label><input id="fCov" value="50"></div>
+                <div class="input-group"><label>Mat</label><select id="fMatType"><option value="single">Single</option><option value="double" selected>Double</option></select></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬇️ Bottom</h3>
+            <h3 style="font-weight:400;">⬇️ Bottom</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Bottom X dia</label><select id="fBotXdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>X spacing</label><input id="fBotXsp" value="150"></div>
-                <div class="input-group"><label>Bottom Y dia</label><select id="fBotYdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>Y spacing</label><input id="fBotYsp" value="150"></div>
+                <div class="input-group"><label>X dia</label><select id="fBotXdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>X sp</label><input id="fBotXsp" value="150"></div>
+                <div class="input-group"><label>Y dia</label><select id="fBotYdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Y sp</label><input id="fBotYsp" value="150"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬆️ Top (double mat)</h3>
+            <h3 style="font-weight:400;">⬆️ Top</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Top X dia</label><select id="fTopXdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>X spacing</label><input id="fTopXsp" value="150"></div>
-                <div class="input-group"><label>Top Y dia</label><select id="fTopYdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>Y spacing</label><input id="fTopYsp" value="150"></div>
+                <div class="input-group"><label>X dia</label><select id="fTopXdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>X sp</label><input id="fTopXsp" value="150"></div>
+                <div class="input-group"><label>Y dia</label><select id="fTopYdia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Y sp</label><input id="fTopYsp" value="150"></div>
             </div>
-            <div style="display:flex; gap:1rem;">
-                <button class="btn-calc" id="saveFooting"><i class="far fa-save"></i> SAVE CURRENT</button>
-                <button class="btn-calc" id="calcFooting"><i class="fas fa-calculator"></i> GENERATE ALL</button>
-            </div>
-            
-            <!-- Footing Chart - narrow -->
-            <div class="chart-container">
-                <canvas id="footingChart"></canvas>
-            </div>
-            
-            <div class="results-area" id="footingResult"><table><thead><tr><th>Element</th><th>Qty</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Weight (kg)</th></tr></thead><tbody id="footingBody"></tbody></table><div class="summary-card" id="footingSummary"></div></div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveFooting"><i class="far fa-save"></i> SAVE</button><button class="btn-calc" id="calcFooting"><i class="fas fa-calculator"></i> GENERATE</button></div>
+            <div class="chart-container"><canvas id="footingChart"></canvas></div>
+            <div class="results-area" id="footingResult"><table><thead><tr><th>Element</th><th>Qty</th><th>Layer</th><th>Orientation</th><th>Ø</th><th>Nos.</th><th>Cut(m)</th><th>Total(m)</th><th>Wt(kg)</th></tr></thead><tbody id="footingBody"></tbody></table><div class="summary-card" id="footingSummary"></div></div>
         </div>
 
-        <!-- COLUMN SECTION -->
+        <!-- COLUMN -->
         <div id="column-section" class="component-section">
-            <h2 style="font-weight:400; margin-bottom:1.5rem;">📏 Column BBS · corner & middle bars</h2>
-            <div class="element-list" id="column-list-container">
-                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click any column to edit</h3><button class="add-btn" id="add-column"><i class="fas fa-plus"></i> Add column type</button></div>
+            <h2 style="font-weight:400;">📏 Column BBS</h2>
+            <div class="element-list">
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click column to edit</h3><button class="add-btn" id="add-column"><i class="fas fa-plus"></i> Add column</button></div>
                 <div class="element-items" id="column-tags"></div>
-                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
                     <input type="text" id="new-column-name" placeholder="e.g. C4" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
-                    <div class="input-group" style="width: 120px;"><label>Quantity</label><input type="number" id="column-count" value="1" min="1" style="padding:0.6rem;"></div>
+                    <div class="input-group" style="width:120px;"><label>Quantity</label><input type="number" id="column-count" value="1" min="1"></div>
                 </div>
             </div>
-            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;"><span>Currently editing: <span id="current-column">C1</span></span></div>
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem;"><span>Editing: <span id="current-column">C1</span></span></div>
             <div class="input-grid">
-                <div class="input-group"><label>Column X (mm)</label><input id="colX" value="300"></div>
-                <div class="input-group"><label>Column Y (mm)</label><input id="colY" value="230"></div>
-                <div class="input-group"><label>Height (mm)</label><input id="colH" value="5700"></div>
-                <div class="input-group"><label>Cover (mm)</label><input id="colCov" value="40"></div>
-                <div class="input-group"><label>Ld (mm)</label><input id="colLd" value="800"></div>
+                <div class="input-group"><label>X (mm)</label><input id="colX" value="300"></div>
+                <div class="input-group"><label>Y (mm)</label><input id="colY" value="230"></div>
+                <div class="input-group"><label>Height</label><input id="colH" value="5700"></div>
+                <div class="input-group"><label>Cover</label><input id="colCov" value="40"></div>
+                <div class="input-group"><label>Ld</label><input id="colLd" value="800"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">🏛️ Corner bars</h3>
+            <h3 style="font-weight:400;">🏛️ Corner bars</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Corner dia</label><select id="colCornerDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="16" selected>16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. of corner bars</label><input id="colCornerQty" value="4"></div>
+                <div class="input-group"><label>Dia</label><select id="colCornerDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="16" selected>16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No.</label><input id="colCornerQty" value="4"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">📏 Middle bars</h3>
+            <h3 style="font-weight:400;">📏 Middle bars</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Middle dia</label><select id="colMiddleDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. of middle bars</label><input id="colMiddleQty" value="4"></div>
+                <div class="input-group"><label>Dia</label><select id="colMiddleDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No.</label><input id="colMiddleQty" value="4"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">🌀 Lateral ties</h3>
+            <h3 style="font-weight:400;">🌀 Ties</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Tie dia</label><select id="colTieDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Dia</label><select id="colTieDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
             </div>
-            <div class="zone-info"><strong>Zones:</strong> Zone-A (ends) & Zone-B (mid) – enter spacings below.</div>
+            <div class="zone-info"><strong>Zones:</strong> Zone‑A ends, Zone‑B mid</div>
             <div class="input-grid">
-                <div class="input-group"><label>Zone-A spacing (mm)</label><input id="colTieSpA" value="150"></div>
-                <div class="input-group"><label>Zone-B spacing (mm)</label><input id="colTieSpB" value="250"></div>
-                <div class="input-group"><label>Zone-A length (mm) each end</label><input id="colZoneALen" value="1000"></div>
+                <div class="input-group"><label>Zone‑A sp</label><input id="colTieSpA" value="150"></div>
+                <div class="input-group"><label>Zone‑B sp</label><input id="colTieSpB" value="250"></div>
+                <div class="input-group"><label>Zone‑A len</label><input id="colZoneALen" value="1000"></div>
             </div>
-            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveColumn"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcColumn"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
-            
-            <!-- Column Chart - narrow -->
-            <div class="chart-container">
-                <canvas id="columnChart"></canvas>
-            </div>
-            
-            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="columnBody"></tbody></table><div class="summary-card" id="columnSummary"></div></div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveColumn">SAVE</button><button class="btn-calc" id="calcColumn">GENERATE</button></div>
+            <div class="chart-container"><canvas id="columnChart"></canvas></div>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Zone</th><th>Ø</th><th>Nos.</th><th>Cut(m)</th><th>Total(m)</th><th>Wt(kg)</th></tr></thead><tbody id="columnBody"></tbody></table><div class="summary-card" id="columnSummary"></div></div>
         </div>
 
-        <!-- BEAM SECTION -->
+        <!-- BEAM -->
         <div id="beam-section" class="component-section">
-            <h2 style="font-weight:400; margin-bottom:1.5rem;">📦 Beam BBS · full details</h2>
-            <div class="element-list" id="beam-list-container">
-                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click any beam to edit</h3><button class="add-btn" id="add-beam"><i class="fas fa-plus"></i> Add beam type</button></div>
+            <h2 style="font-weight:400;">📦 Beam BBS</h2>
+            <div class="element-list">
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click beam to edit</h3><button class="add-btn" id="add-beam"><i class="fas fa-plus"></i> Add beam</button></div>
                 <div class="element-items" id="beam-tags"></div>
-                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
                     <input type="text" id="new-beam-name" placeholder="e.g. B103" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
-                    <div class="input-group" style="width: 120px;"><label>Quantity</label><input type="number" id="beam-count" value="1" min="1" style="padding:0.6rem;"></div>
+                    <div class="input-group" style="width:120px;"><label>Quantity</label><input type="number" id="beam-count" value="1" min="1"></div>
                 </div>
             </div>
-            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;"><span>Currently editing: <span id="current-beam">B101</span></span></div>
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem;"><span>Editing: <span id="current-beam">B101</span></span></div>
             <div class="input-grid">
-                <div class="input-group"><label>Beam width (mm)</label><input id="bw" value="300"></div>
-                <div class="input-group"><label>Beam depth (mm)</label><input id="bd" value="380"></div>
-                <div class="input-group"><label>Clear span L (mm)</label><input id="bSpan" value="2500"></div>
-                <div class="input-group"><label>Cover (mm)</label><input id="bCov" value="25"></div>
-                <div class="input-group"><label>Ld (mm)</label><input id="bLd" value="600"></div>
+                <div class="input-group"><label>Width</label><input id="bw" value="300"></div>
+                <div class="input-group"><label>Depth</label><input id="bd" value="380"></div>
+                <div class="input-group"><label>Span</label><input id="bSpan" value="2500"></div>
+                <div class="input-group"><label>Cover</label><input id="bCov" value="25"></div>
+                <div class="input-group"><label>Ld</label><input id="bLd" value="600"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬇️ Bottom</h3>
+            <h3 style="font-weight:400;">⬇️ Bottom</h3>
             <div class="input-grid">
                 <div class="input-group"><label>Straight dia</label><select id="bBotDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. straight</label><input id="bBotQty" value="2"></div>
+                <div class="input-group"><label>No.</label><input id="bBotQty" value="2"></div>
                 <div class="input-group"><label>Cranked dia</label><select id="bCrankDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. cranked</label><input id="bCrankQty" value="2"></div>
+                <div class="input-group"><label>No.</label><input id="bCrankQty" value="2"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">⬆️ Top</h3>
+            <h3 style="font-weight:400;">⬆️ Top</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Top straight dia</label><select id="bTopDia"><option value="6">6</option><option value="8">8</option><option value="10" selected>10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. top</label><input id="bTopQty" value="2"></div>
+                <div class="input-group"><label>Dia</label><select id="bTopDia"><option value="6">6</option><option value="8">8</option><option value="10" selected>10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>No.</label><input id="bTopQty" value="2"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">➕ Extra bars</h3>
+            <h3 style="font-weight:400;">➕ Extra</h3>
             <div class="input-grid">
                 <div class="input-group"><label>Support dia</label><select id="bExtraSupDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. at supports</label><input id="bExtraSupQty" value="2"></div>
-                <div class="input-group"><label>Support L/4 (mm)</label><input id="bExtraSupLen" value="625"></div>
+                <div class="input-group"><label>No.</label><input id="bExtraSupQty" value="2"></div>
+                <div class="input-group"><label>L/4 len</label><input id="bExtraSupLen" value="625"></div>
                 <div class="input-group"><label>Mid dia</label><select id="bExtraMidDia"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>No. mid</label><input id="bExtraMidQty" value="2"></div>
-                <div class="input-group"><label>Mid L/4 (mm)</label><input id="bExtraMidLen" value="625"></div>
+                <div class="input-group"><label>No.</label><input id="bExtraMidQty" value="2"></div>
+                <div class="input-group"><label>L/4 len</label><input id="bExtraMidLen" value="625"></div>
             </div>
-            <h3 style="font-weight:400; margin:1rem 0 0.5rem;">🌀 Stirrups</h3>
+            <h3 style="font-weight:400;">🌀 Stirrups</h3>
             <div class="input-grid">
-                <div class="input-group"><label>Stirrup dia</label><select id="bStirDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>Zone-A spacing</label><input id="bStirSpA" value="150"></div>
-                <div class="input-group"><label>Zone-B spacing</label><input id="bStirSpB" value="250"></div>
+                <div class="input-group"><label>Dia</label><select id="bStirDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Zone‑A sp</label><input id="bStirSpA" value="150"></div>
+                <div class="input-group"><label>Zone‑B sp</label><input id="bStirSpB" value="250"></div>
             </div>
-            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveBeam"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcBeam"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
-            
-            <!-- Beam Chart - narrow -->
-            <div class="chart-container">
-                <canvas id="beamChart"></canvas>
-            </div>
-            
-            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="beamBody"></tbody></table><div class="summary-card" id="beamSummary"></div></div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveBeam">SAVE</button><button class="btn-calc" id="calcBeam">GENERATE</button></div>
+            <div class="chart-container"><canvas id="beamChart"></canvas></div>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Type</th><th>Ø</th><th>Nos.</th><th>Cut(m)</th><th>Total(m)</th><th>Wt(kg)</th></tr></thead><tbody id="beamBody"></tbody></table><div class="summary-card" id="beamSummary"></div></div>
         </div>
 
-        <!-- SLAB SECTION -->
+        <!-- SLAB -->
         <div id="slab-section" class="component-section">
-            <h2 style="font-weight:400; margin-bottom:1.5rem;">🧱 Slab BBS · independent design</h2>
-            <div class="element-list" id="slab-list-container">
-                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click any slab to edit</h3><button class="add-btn" id="add-slab"><i class="fas fa-plus"></i> Add slab type</button></div>
+            <h2 style="font-weight:400;">🧱 Slab BBS</h2>
+            <div class="element-list">
+                <div class="list-header"><h3><i class="far fa-dot-circle"></i> Click slab to edit</h3><button class="add-btn" id="add-slab"><i class="fas fa-plus"></i> Add slab</button></div>
                 <div class="element-items" id="slab-tags"></div>
-                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
                     <input type="text" id="new-slab-name" placeholder="e.g. S3" style="padding:0.6rem 1rem; border-radius:40px; border:1px solid #d8e0ea; width:200px;">
-                    <div class="input-group" style="width: 120px;"><label>Quantity</label><input type="number" id="slab-count" value="1" min="1" style="padding:0.6rem;"></div>
+                    <div class="input-group" style="width:120px;"><label>Quantity</label><input type="number" id="slab-count" value="1" min="1"></div>
                 </div>
             </div>
-            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem; display:inline-block;"><span>Currently editing: <span id="current-slab">S1</span></span></div>
+            <div style="background:#f5f8fe; padding:0.7rem 1.5rem; border-radius:40px; margin-bottom:1.5rem;"><span>Editing: <span id="current-slab">S1</span></span></div>
             <div class="input-grid">
-                <div class="input-group"><label>Slab Lx (mm)</label><input id="sL" value="5000"></div>
-                <div class="input-group"><label>Slab Ly (mm)</label><input id="sW" value="5000"></div>
-                <div class="input-group"><label>Beam width (mm)</label><input id="sBeam" value="300"></div>
-                <div class="input-group"><label>Cover (mm)</label><input id="sCov" value="20"></div>
-                <div class="input-group"><label>Main bar dia</label><select id="sMainDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>Main spacing</label><input id="sMainSp" value="200"></div>
-                <div class="input-group"><label>Extra bar dia</label><select id="sExtraDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
-                <div class="input-group"><label>Extra spacing</label><input id="sExtraSp" value="125"></div>
-                <div class="input-group"><label>Extra length L</label><input id="sExtraLen" value="1500"></div>
-                <div class="input-group"><label>Top dist. dia</label><select id="sTopDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Lx</label><input id="sL" value="5000"></div>
+                <div class="input-group"><label>Ly</label><input id="sW" value="5000"></div>
+                <div class="input-group"><label>Beam width</label><input id="sBeam" value="300"></div>
+                <div class="input-group"><label>Cover</label><input id="sCov" value="20"></div>
+                <div class="input-group"><label>Main dia</label><select id="sMainDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Main sp</label><input id="sMainSp" value="200"></div>
+                <div class="input-group"><label>Extra dia</label><select id="sExtraDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
+                <div class="input-group"><label>Extra sp</label><input id="sExtraSp" value="125"></div>
+                <div class="input-group"><label>Extra len</label><input id="sExtraLen" value="1500"></div>
+                <div class="input-group"><label>Top dia</label><select id="sTopDia"><option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option><option value="16">16</option><option value="20">20</option><option value="25">25</option><option value="32">32</option></select></div>
             </div>
-            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveSlab"><i class="far fa-save"></i> SAVE CURRENT</button><button class="btn-calc" id="calcSlab"><i class="fas fa-calculator"></i> GENERATE ALL</button></div>
-            
-            <!-- Slab Chart - narrow -->
-            <div class="chart-container">
-                <canvas id="slabChart"></canvas>
-            </div>
-            
-            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut (m)</th><th>Total (m)</th><th>Wt (kg)</th></tr></thead><tbody id="slabBody"></tbody></table><div class="summary-card" id="slabSummary"></div></div>
+            <div style="display:flex; gap:1rem;"><button class="btn-calc" id="saveSlab">SAVE</button><button class="btn-calc" id="calcSlab">GENERATE</button></div>
+            <div class="chart-container"><canvas id="slabChart"></canvas></div>
+            <div class="results-area"><table><thead><tr><th>Element</th><th>Qty</th><th>Description</th><th>Ø</th><th>Nos</th><th>Cut(m)</th><th>Total(m)</th><th>Wt(kg)</th></tr></thead><tbody id="slabBody"></tbody></table><div class="summary-card" id="slabSummary"></div></div>
         </div>
 
         <!-- GLOBAL SUMMARY -->
         <div class="global-summary" id="globalSummaryBlock">
-            <h2>📋 PROJECT TOTAL – REINFORCEMENT SUMMARY</h2>
+            <h2 style="font-weight:500;">📋 PROJECT TOTAL</h2>
             <div class="summary-stats" id="globalStats"></div>
-            <div style="margin-top:1.5rem;" id="globalBreakdown"></div>
+            <div style="margin-top:1rem;" id="globalBreakdown"></div>
         </div>
     </div>
 
-    <!-- footer -->
     <div class="studio-footer">
-        <div class="rights">© 2026 · <strong>KAJAL STRUCTURAL DESIGN STUDIO</strong> · All rights reserved</div>
-        <div class="contact"><span><i class="fas fa-phone-alt"></i> 9390396951</span><span><i class="far fa-envelope"></i> designbykajal786@gmail.com</span></div>
+        <div>© 2026 · <strong>KAJAL STUDIO</strong> · All rights reserved</div>
+        <div><span><i class="fas fa-phone-alt"></i> 9390396951</span> <span><i class="far fa-envelope"></i> designbykajal786@gmail.com</span></div>
     </div>
     <div class="print-contact-footer">KAJAL STRUCTURAL DESIGN STUDIO · 9390396951 · designbykajal786@gmail.com</div>
 </div>
 
 <script>
-    (function() {
-        // ---------- Data structures for independent designs ----------
-        // Each element stores its own complete set of design parameters and quantity
-        
-        // Footings data
-        let footingDesigns = {
-            'F1': {
-                L: 2000, W: 1500, D: 300, cov: 50, matType: 'double',
-                botXdia: 12, botXsp: 150, botYdia: 12, botYsp: 150,
-                topXdia: 12, topXsp: 150, topYdia: 12, topYsp: 150,
-                count: 1
-            }
+(function() {
+    // ----- data -----
+    let footingDesigns = { 'F1': { L:2000, W:1500, D:300, cov:50, matType:'double', botXdia:12, botXsp:150, botYdia:12, botYsp:150, topXdia:12, topXsp:150, topYdia:12, topYsp:150, count:1 } };
+    let columnDesigns = { 'C1': { colX:300, colY:230, H:5700, cov:40, Ld:800, cornerDia:16, cornerQty:4, middleDia:12, middleQty:4, tieDia:8, spA:150, spB:250, zoneALen:1000, count:1 } };
+    let beamDesigns = { 'B101': { bw:300, bd:380, span:2500, cov:25, Ld:600, botDia:12, botQty:2, crankDia:12, crankQty:2, topDia:10, topQty:2, extraSupDia:12, extraSupQty:2, extraSupLen:625, extraMidDia:12, extraMidQty:2, extraMidLen:625, stirDia:8, spA:150, spB:250, count:1 } };
+    let slabDesigns = { 'S1': { L:5000, W:5000, beam:300, cov:20, mainDia:8, mainSp:200, extraDia:8, extraSp:125, extraLen:1500, topDia:8, count:1 } };
+
+    let footings = ['F1'], columns = ['C1'], beams = ['B101'], slabs = ['S1'];
+    let currentFooting='F1', currentColumn='C1', currentBeam='B101', currentSlab='S1';
+
+    let footingChart, columnChart, beamChart, slabChart;
+    let footingHTML='', columnHTML='', beamHTML='', slabHTML='';
+    let footingWt=0, columnWt=0, beamWt=0, slabWt=0;
+
+    const uw = d => d*d/162;
+    const r2 = v => Math.round(v*100)/100;
+    const r3 = v => Math.round(v*1000)/1000;
+
+    function captureFooting() { footingHTML = document.getElementById('footingResult').innerHTML; }
+    function captureColumn() { columnHTML = document.querySelector('#column-section .results-area').innerHTML; }
+    function captureBeam() { beamHTML = document.querySelector('#beam-section .results-area').innerHTML; }
+    function captureSlab() { slabHTML = document.querySelector('#slab-section .results-area').innerHTML; }
+
+    function updateGlobal() {
+        let t = footingWt+columnWt+beamWt+slabWt;
+        document.getElementById('globalStats').innerHTML = `
+            <div class="stat-block"><span class="stat-label">Footing</span><div class="stat-value">${r2(footingWt)} kg</div></div>
+            <div class="stat-block"><span class="stat-label">Column</span><div class="stat-value">${r2(columnWt)} kg</div></div>
+            <div class="stat-block"><span class="stat-label">Beam</span><div class="stat-value">${r2(beamWt)} kg</div></div>
+            <div class="stat-block"><span class="stat-label">Slab</span><div class="stat-value">${r2(slabWt)} kg</div></div>
+            <div class="stat-block" style="background:#d0e2ff;"><span class="stat-label">TOTAL</span><div class="stat-value">${r2(t)} kg</div></div>
+        `;
+        document.getElementById('globalBreakdown').innerHTML = `<strong>F:</strong>${r2(footingWt)} · <strong>C:</strong>${r2(columnWt)} · <strong>B:</strong>${r2(beamWt)} · <strong>S:</strong>${r2(slabWt)}`;
+    }
+
+    function renderTags() {
+        document.getElementById('footing-tags').innerHTML = footings.map(f => `<div class="element-tag ${f===currentFooting?'selected':''}" data-footing="${f}"><span>${f}</span><button class="remove-tag" data-type="footing" data-value="${f}">✕</button></div>`).join('');
+        document.getElementById('column-tags').innerHTML = columns.map(c => `<div class="element-tag ${c===currentColumn?'selected':''}" data-column="${c}"><span>${c}</span><button class="remove-tag" data-type="column" data-value="${c}">✕</button></div>`).join('');
+        document.getElementById('beam-tags').innerHTML = beams.map(b => `<div class="element-tag ${b===currentBeam?'selected':''}" data-beam="${b}"><span>${b}</span><button class="remove-tag" data-type="beam" data-value="${b}">✕</button></div>`).join('');
+        document.getElementById('slab-tags').innerHTML = slabs.map(s => `<div class="element-tag ${s===currentSlab?'selected':''}" data-slab="${s}"><span>${s}</span><button class="remove-tag" data-type="slab" data-value="${s}">✕</button></div>`).join('');
+    }
+
+    function loadFooting(name) {
+        if (!footingDesigns[name]) footingDesigns[name] = { ...footingDesigns['F1'] };
+        let d = footingDesigns[name];
+        document.getElementById('fL').value = d.L; document.getElementById('fW').value = d.W;
+        document.getElementById('fD').value = d.D; document.getElementById('fCov').value = d.cov;
+        document.getElementById('fMatType').value = d.matType;
+        document.getElementById('fBotXdia').value = d.botXdia; document.getElementById('fBotXsp').value = d.botXsp;
+        document.getElementById('fBotYdia').value = d.botYdia; document.getElementById('fBotYsp').value = d.botYsp;
+        document.getElementById('fTopXdia').value = d.topXdia; document.getElementById('fTopXsp').value = d.topXsp;
+        document.getElementById('fTopYdia').value = d.topYdia; document.getElementById('fTopYsp').value = d.topYsp;
+        document.getElementById('footing-count').value = d.count||1;
+        document.getElementById('current-footing').textContent = name;
+    }
+    function loadColumn(name) {
+        if (!columnDesigns[name]) columnDesigns[name] = { ...columnDesigns['C1'] };
+        let d = columnDesigns[name];
+        document.getElementById('colX').value = d.colX; document.getElementById('colY').value = d.colY;
+        document.getElementById('colH').value = d.H; document.getElementById('colCov').value = d.cov;
+        document.getElementById('colLd').value = d.Ld; document.getElementById('colCornerDia').value = d.cornerDia;
+        document.getElementById('colCornerQty').value = d.cornerQty; document.getElementById('colMiddleDia').value = d.middleDia;
+        document.getElementById('colMiddleQty').value = d.middleQty; document.getElementById('colTieDia').value = d.tieDia;
+        document.getElementById('colTieSpA').value = d.spA; document.getElementById('colTieSpB').value = d.spB;
+        document.getElementById('colZoneALen').value = d.zoneALen; document.getElementById('column-count').value = d.count||1;
+        document.getElementById('current-column').textContent = name;
+    }
+    function loadBeam(name) {
+        if (!beamDesigns[name]) beamDesigns[name] = { ...beamDesigns['B101'] };
+        let d = beamDesigns[name];
+        document.getElementById('bw').value = d.bw; document.getElementById('bd').value = d.bd;
+        document.getElementById('bSpan').value = d.span; document.getElementById('bCov').value = d.cov;
+        document.getElementById('bLd').value = d.Ld; document.getElementById('bBotDia').value = d.botDia;
+        document.getElementById('bBotQty').value = d.botQty; document.getElementById('bCrankDia').value = d.crankDia;
+        document.getElementById('bCrankQty').value = d.crankQty; document.getElementById('bTopDia').value = d.topDia;
+        document.getElementById('bTopQty').value = d.topQty; document.getElementById('bExtraSupDia').value = d.extraSupDia;
+        document.getElementById('bExtraSupQty').value = d.extraSupQty; document.getElementById('bExtraSupLen').value = d.extraSupLen;
+        document.getElementById('bExtraMidDia').value = d.extraMidDia; document.getElementById('bExtraMidQty').value = d.extraMidQty;
+        document.getElementById('bExtraMidLen').value = d.extraMidLen; document.getElementById('bStirDia').value = d.stirDia;
+        document.getElementById('bStirSpA').value = d.spA; document.getElementById('bStirSpB').value = d.spB;
+        document.getElementById('beam-count').value = d.count||1; document.getElementById('current-beam').textContent = name;
+    }
+    function loadSlab(name) {
+        if (!slabDesigns[name]) slabDesigns[name] = { ...slabDesigns['S1'] };
+        let d = slabDesigns[name];
+        document.getElementById('sL').value = d.L; document.getElementById('sW').value = d.W;
+        document.getElementById('sBeam').value = d.beam; document.getElementById('sCov').value = d.cov;
+        document.getElementById('sMainDia').value = d.mainDia; document.getElementById('sMainSp').value = d.mainSp;
+        document.getElementById('sExtraDia').value = d.extraDia; document.getElementById('sExtraSp').value = d.extraSp;
+        document.getElementById('sExtraLen').value = d.extraLen; document.getElementById('sTopDia').value = d.topDia;
+        document.getElementById('slab-count').value = d.count||1; document.getElementById('current-slab').textContent = name;
+    }
+
+    document.getElementById('saveFooting').addEventListener('click', ()=>{
+        let name = currentFooting;
+        footingDesigns[name] = {
+            L:+fL.value, W:+fW.value, D:+fD.value, cov:+fCov.value, matType:fMatType.value,
+            botXdia:+fBotXdia.value, botXsp:+fBotXsp.value, botYdia:+fBotYdia.value, botYsp:+fBotYsp.value,
+            topXdia:+fTopXdia.value, topXsp:+fTopXsp.value, topYdia:+fTopYdia.value, topYsp:+fTopYsp.value,
+            count:+document.getElementById('footing-count').value
         };
-        
-        // Columns data - with corner and middle bars
-        let columnDesigns = {
-            'C1': {
-                colX: 300, colY: 230, H: 5700, cov: 40, Ld: 800,
-                cornerDia: 16, cornerQty: 4,
-                middleDia: 12, middleQty: 4,
-                tieDia: 8, spA: 150, spB: 250, zoneALen: 1000,
-                count: 1
-            }
+        alert('Footing saved');
+    });
+    document.getElementById('saveColumn').addEventListener('click', ()=>{
+        let name = currentColumn;
+        columnDesigns[name] = {
+            colX:+colX.value, colY:+colY.value, H:+colH.value, cov:+colCov.value, Ld:+colLd.value,
+            cornerDia:+colCornerDia.value, cornerQty:+colCornerQty.value,
+            middleDia:+colMiddleDia.value, middleQty:+colMiddleQty.value,
+            tieDia:+colTieDia.value, spA:+colTieSpA.value, spB:+colTieSpB.value, zoneALen:+colZoneALen.value,
+            count:+document.getElementById('column-count').value
         };
-        
-        // Beams data
-        let beamDesigns = {
-            'B101': {
-                bw: 300, bd: 380, span: 2500, cov: 25, Ld: 600,
-                botDia: 12, botQty: 2, crankDia: 12, crankQty: 2,
-                topDia: 10, topQty: 2,
-                extraSupDia: 12, extraSupQty: 2, extraSupLen: 625,
-                extraMidDia: 12, extraMidQty: 2, extraMidLen: 625,
-                stirDia: 8, spA: 150, spB: 250,
-                count: 1
-            }
+        alert('Column saved');
+    });
+    document.getElementById('saveBeam').addEventListener('click', ()=>{
+        let name = currentBeam;
+        beamDesigns[name] = {
+            bw:+bw.value, bd:+bd.value, span:+bSpan.value, cov:+bCov.value, Ld:+bLd.value,
+            botDia:+bBotDia.value, botQty:+bBotQty.value, crankDia:+bCrankDia.value, crankQty:+bCrankQty.value,
+            topDia:+bTopDia.value, topQty:+bTopQty.value,
+            extraSupDia:+bExtraSupDia.value, extraSupQty:+bExtraSupQty.value, extraSupLen:+bExtraSupLen.value,
+            extraMidDia:+bExtraMidDia.value, extraMidQty:+bExtraMidQty.value, extraMidLen:+bExtraMidLen.value,
+            stirDia:+bStirDia.value, spA:+bStirSpA.value, spB:+bStirSpB.value,
+            count:+document.getElementById('beam-count').value
         };
-        
-        // Slabs data
-        let slabDesigns = {
-            'S1': {
-                L: 5000, W: 5000, beam: 300, cov: 20,
-                mainDia: 8, mainSp: 200,
-                extraDia: 8, extraSp: 125, extraLen: 1500,
-                topDia: 8,
-                count: 1
-            }
+        alert('Beam saved');
+    });
+    document.getElementById('saveSlab').addEventListener('click', ()=>{
+        let name = currentSlab;
+        slabDesigns[name] = {
+            L:+sL.value, W:+sW.value, beam:+sBeam.value, cov:+sCov.value,
+            mainDia:+sMainDia.value, mainSp:+sMainSp.value,
+            extraDia:+sExtraDia.value, extraSp:+sExtraSp.value, extraLen:+sExtraLen.value,
+            topDia:+sTopDia.value, count:+document.getElementById('slab-count').value
         };
+        alert('Slab saved');
+    });
 
-        // Track currently selected element
-        let currentFooting = 'F1';
-        let currentColumn = 'C1';
-        let currentBeam = 'B101';
-        let currentSlab = 'S1';
-
-        // List of tags (order maintained)
-        let footings = ['F1'];
-        let columns = ['C1'];
-        let beams = ['B101'];
-        let slabs = ['S1'];
-
-        // Chart instances
-        let footingChart = null;
-        let columnChart = null;
-        let beamChart = null;
-        let slabChart = null;
-
-        // Helper functions to load design into inputs (identical to previous)
-        function loadFootingDesign(name) {
-            if (!footingDesigns[name]) {
-                footingDesigns[name] = { ...footingDesigns['F1'] };
-            }
-            const d = footingDesigns[name];
-            document.getElementById('fL').value = d.L;
-            document.getElementById('fW').value = d.W;
-            document.getElementById('fD').value = d.D;
-            document.getElementById('fCov').value = d.cov;
-            document.getElementById('fMatType').value = d.matType;
-            document.getElementById('fBotXdia').value = d.botXdia;
-            document.getElementById('fBotXsp').value = d.botXsp;
-            document.getElementById('fBotYdia').value = d.botYdia;
-            document.getElementById('fBotYsp').value = d.botYsp;
-            document.getElementById('fTopXdia').value = d.topXdia;
-            document.getElementById('fTopXsp').value = d.topXsp;
-            document.getElementById('fTopYdia').value = d.topYdia;
-            document.getElementById('fTopYsp').value = d.topYsp;
-            document.getElementById('footing-count').value = d.count || 1;
-            document.getElementById('current-footing').textContent = name;
-        }
-
-        function loadColumnDesign(name) {
-            if (!columnDesigns[name]) {
-                columnDesigns[name] = { ...columnDesigns['C1'] };
-            }
-            const d = columnDesigns[name];
-            document.getElementById('colX').value = d.colX;
-            document.getElementById('colY').value = d.colY;
-            document.getElementById('colH').value = d.H;
-            document.getElementById('colCov').value = d.cov;
-            document.getElementById('colLd').value = d.Ld;
-            document.getElementById('colCornerDia').value = d.cornerDia;
-            document.getElementById('colCornerQty').value = d.cornerQty;
-            document.getElementById('colMiddleDia').value = d.middleDia;
-            document.getElementById('colMiddleQty').value = d.middleQty;
-            document.getElementById('colTieDia').value = d.tieDia;
-            document.getElementById('colTieSpA').value = d.spA;
-            document.getElementById('colTieSpB').value = d.spB;
-            document.getElementById('colZoneALen').value = d.zoneALen;
-            document.getElementById('column-count').value = d.count || 1;
-            document.getElementById('current-column').textContent = name;
-        }
-
-        function loadBeamDesign(name) {
-            if (!beamDesigns[name]) {
-                beamDesigns[name] = { ...beamDesigns['B101'] };
-            }
-            const d = beamDesigns[name];
-            document.getElementById('bw').value = d.bw;
-            document.getElementById('bd').value = d.bd;
-            document.getElementById('bSpan').value = d.span;
-            document.getElementById('bCov').value = d.cov;
-            document.getElementById('bLd').value = d.Ld;
-            document.getElementById('bBotDia').value = d.botDia;
-            document.getElementById('bBotQty').value = d.botQty;
-            document.getElementById('bCrankDia').value = d.crankDia;
-            document.getElementById('bCrankQty').value = d.crankQty;
-            document.getElementById('bTopDia').value = d.topDia;
-            document.getElementById('bTopQty').value = d.topQty;
-            document.getElementById('bExtraSupDia').value = d.extraSupDia;
-            document.getElementById('bExtraSupQty').value = d.extraSupQty;
-            document.getElementById('bExtraSupLen').value = d.extraSupLen;
-            document.getElementById('bExtraMidDia').value = d.extraMidDia;
-            document.getElementById('bExtraMidQty').value = d.extraMidQty;
-            document.getElementById('bExtraMidLen').value = d.extraMidLen;
-            document.getElementById('bStirDia').value = d.stirDia;
-            document.getElementById('bStirSpA').value = d.spA;
-            document.getElementById('bStirSpB').value = d.spB;
-            document.getElementById('beam-count').value = d.count || 1;
-            document.getElementById('current-beam').textContent = name;
-        }
-
-        function loadSlabDesign(name) {
-            if (!slabDesigns[name]) {
-                slabDesigns[name] = { ...slabDesigns['S1'] };
-            }
-            const d = slabDesigns[name];
-            document.getElementById('sL').value = d.L;
-            document.getElementById('sW').value = d.W;
-            document.getElementById('sBeam').value = d.beam;
-            document.getElementById('sCov').value = d.cov;
-            document.getElementById('sMainDia').value = d.mainDia;
-            document.getElementById('sMainSp').value = d.mainSp;
-            document.getElementById('sExtraDia').value = d.extraDia;
-            document.getElementById('sExtraSp').value = d.extraSp;
-            document.getElementById('sExtraLen').value = d.extraLen;
-            document.getElementById('sTopDia').value = d.topDia;
-            document.getElementById('slab-count').value = d.count || 1;
-            document.getElementById('current-slab').textContent = name;
-        }
-
-        // Save current design including quantity (identical)
-        function saveCurrentFooting() {
-            const name = currentFooting;
-            footingDesigns[name] = {
-                L: +document.getElementById('fL').value,
-                W: +document.getElementById('fW').value,
-                D: +document.getElementById('fD').value,
-                cov: +document.getElementById('fCov').value,
-                matType: document.getElementById('fMatType').value,
-                botXdia: +document.getElementById('fBotXdia').value,
-                botXsp: +document.getElementById('fBotXsp').value,
-                botYdia: +document.getElementById('fBotYdia').value,
-                botYsp: +document.getElementById('fBotYsp').value,
-                topXdia: +document.getElementById('fTopXdia').value,
-                topXsp: +document.getElementById('fTopXsp').value,
-                topYdia: +document.getElementById('fTopYdia').value,
-                topYsp: +document.getElementById('fTopYsp').value,
-                count: +document.getElementById('footing-count').value
-            };
-            alert(`Footing ${name} design saved with quantity ${footingDesigns[name].count}`);
-        }
-
-        function saveCurrentColumn() {
-            const name = currentColumn;
-            columnDesigns[name] = {
-                colX: +document.getElementById('colX').value,
-                colY: +document.getElementById('colY').value,
-                H: +document.getElementById('colH').value,
-                cov: +document.getElementById('colCov').value,
-                Ld: +document.getElementById('colLd').value,
-                cornerDia: +document.getElementById('colCornerDia').value,
-                cornerQty: +document.getElementById('colCornerQty').value,
-                middleDia: +document.getElementById('colMiddleDia').value,
-                middleQty: +document.getElementById('colMiddleQty').value,
-                tieDia: +document.getElementById('colTieDia').value,
-                spA: +document.getElementById('colTieSpA').value,
-                spB: +document.getElementById('colTieSpB').value,
-                zoneALen: +document.getElementById('colZoneALen').value,
-                count: +document.getElementById('column-count').value
-            };
-            alert(`Column ${name} design saved with quantity ${columnDesigns[name].count}`);
-        }
-
-        function saveCurrentBeam() {
-            const name = currentBeam;
-            beamDesigns[name] = {
-                bw: +document.getElementById('bw').value,
-                bd: +document.getElementById('bd').value,
-                span: +document.getElementById('bSpan').value,
-                cov: +document.getElementById('bCov').value,
-                Ld: +document.getElementById('bLd').value,
-                botDia: +document.getElementById('bBotDia').value,
-                botQty: +document.getElementById('bBotQty').value,
-                crankDia: +document.getElementById('bCrankDia').value,
-                crankQty: +document.getElementById('bCrankQty').value,
-                topDia: +document.getElementById('bTopDia').value,
-                topQty: +document.getElementById('bTopQty').value,
-                extraSupDia: +document.getElementById('bExtraSupDia').value,
-                extraSupQty: +document.getElementById('bExtraSupQty').value,
-                extraSupLen: +document.getElementById('bExtraSupLen').value,
-                extraMidDia: +document.getElementById('bExtraMidDia').value,
-                extraMidQty: +document.getElementById('bExtraMidQty').value,
-                extraMidLen: +document.getElementById('bExtraMidLen').value,
-                stirDia: +document.getElementById('bStirDia').value,
-                spA: +document.getElementById('bStirSpA').value,
-                spB: +document.getElementById('bStirSpB').value,
-                count: +document.getElementById('beam-count').value
-            };
-            alert(`Beam ${name} design saved with quantity ${beamDesigns[name].count}`);
-        }
-
-        function saveCurrentSlab() {
-            const name = currentSlab;
-            slabDesigns[name] = {
-                L: +document.getElementById('sL').value,
-                W: +document.getElementById('sW').value,
-                beam: +document.getElementById('sBeam').value,
-                cov: +document.getElementById('sCov').value,
-                mainDia: +document.getElementById('sMainDia').value,
-                mainSp: +document.getElementById('sMainSp').value,
-                extraDia: +document.getElementById('sExtraDia').value,
-                extraSp: +document.getElementById('sExtraSp').value,
-                extraLen: +document.getElementById('sExtraLen').value,
-                topDia: +document.getElementById('sTopDia').value,
-                count: +document.getElementById('slab-count').value
-            };
-            alert(`Slab ${name} design saved with quantity ${slabDesigns[name].count}`);
-        }
-
-        // Render tags (identical)
-        function renderTags() {
-            let ftHtml = '';
-            footings.forEach(f => {
-                ftHtml += `<div class="element-tag ${f === currentFooting ? 'selected' : ''}" data-footing="${f}"><span>${f}</span><button class="remove-tag" data-type="footing" data-value="${f}">✕</button></div>`;
-            });
-            document.getElementById('footing-tags').innerHTML = ftHtml;
-            
-            let colHtml = '';
-            columns.forEach(c => {
-                colHtml += `<div class="element-tag ${c === currentColumn ? 'selected' : ''}" data-column="${c}"><span>${c}</span><button class="remove-tag" data-type="column" data-value="${c}">✕</button></div>`;
-            });
-            document.getElementById('column-tags').innerHTML = colHtml;
-            
-            let beamHtml = '';
-            beams.forEach(b => {
-                beamHtml += `<div class="element-tag ${b === currentBeam ? 'selected' : ''}" data-beam="${b}"><span>${b}</span><button class="remove-tag" data-type="beam" data-value="${b}">✕</button></div>`;
-            });
-            document.getElementById('beam-tags').innerHTML = beamHtml;
-            
-            let slabHtml = '';
-            slabs.forEach(s => {
-                slabHtml += `<div class="element-tag ${s === currentSlab ? 'selected' : ''}" data-slab="${s}"><span>${s}</span><button class="remove-tag" data-type="slab" data-value="${s}">✕</button></div>`;
-            });
-            document.getElementById('slab-tags').innerHTML = slabHtml;
-        }
-
-        // Add new tags (identical)
-        document.getElementById('add-footing').addEventListener('click', ()=>{
-            const inp = document.getElementById('new-footing-name');
-            if(inp.value.trim()) { 
-                const name = inp.value.trim();
-                footings.push(name);
-                footingDesigns[name] = { ...footingDesigns['F1'], count: 1 };
-                inp.value = ''; 
-                renderTags();
-                currentFooting = name;
-                loadFootingDesign(name);
-                renderTags();
-            }
-        });
-        
-        document.getElementById('add-column').addEventListener('click', ()=>{
-            const inp = document.getElementById('new-column-name');
-            if(inp.value.trim()) { 
-                const name = inp.value.trim();
-                columns.push(name);
-                columnDesigns[name] = { ...columnDesigns['C1'], count: 1 };
-                inp.value = ''; 
-                renderTags();
-                currentColumn = name;
-                loadColumnDesign(name);
-                renderTags();
-            }
-        });
-        
-        document.getElementById('add-beam').addEventListener('click', ()=>{
-            const inp = document.getElementById('new-beam-name');
-            if(inp.value.trim()) { 
-                const name = inp.value.trim();
-                beams.push(name);
-                beamDesigns[name] = { ...beamDesigns['B101'], count: 1 };
-                inp.value = ''; 
-                renderTags();
-                currentBeam = name;
-                loadBeamDesign(name);
-                renderTags();
-            }
-        });
-        
-        document.getElementById('add-slab').addEventListener('click', ()=>{
-            const inp = document.getElementById('new-slab-name');
-            if(inp.value.trim()) { 
-                const name = inp.value.trim();
-                slabs.push(name);
-                slabDesigns[name] = { ...slabDesigns['S1'], count: 1 };
-                inp.value = ''; 
-                renderTags();
-                currentSlab = name;
-                loadSlabDesign(name);
-                renderTags();
-            }
-        });
-
-        // Tag click selection (identical)
-        document.addEventListener('click', (e)=>{
-            if (e.target.closest('[data-footing]')) {
-                const tag = e.target.closest('[data-footing]');
-                const name = tag.dataset.footing;
-                currentFooting = name;
-                loadFootingDesign(name);
-                renderTags();
-            }
-            if (e.target.closest('[data-column]')) {
-                const tag = e.target.closest('[data-column]');
-                const name = tag.dataset.column;
-                currentColumn = name;
-                loadColumnDesign(name);
-                renderTags();
-            }
-            if (e.target.closest('[data-beam]')) {
-                const tag = e.target.closest('[data-beam]');
-                const name = tag.dataset.beam;
-                currentBeam = name;
-                loadBeamDesign(name);
-                renderTags();
-            }
-            if (e.target.closest('[data-slab]')) {
-                const tag = e.target.closest('[data-slab]');
-                const name = tag.dataset.slab;
-                currentSlab = name;
-                loadSlabDesign(name);
-                renderTags();
-            }
-
-            if(e.target.classList.contains('remove-tag')){
-                e.stopPropagation();
-                const type = e.target.dataset.type;
-                const val = e.target.dataset.value;
-                if(type === 'footing') { 
-                    const idx = footings.indexOf(val); 
-                    if(idx>-1) {
-                        footings.splice(idx,1);
-                        delete footingDesigns[val];
-                        if (currentFooting === val) {
-                            currentFooting = footings[0] || 'F1';
-                            if (footings.length > 0) loadFootingDesign(currentFooting);
-                        }
-                    }
-                }
-                if(type === 'column') { 
-                    const idx = columns.indexOf(val); 
-                    if(idx>-1) {
-                        columns.splice(idx,1);
-                        delete columnDesigns[val];
-                        if (currentColumn === val) {
-                            currentColumn = columns[0] || 'C1';
-                            if (columns.length > 0) loadColumnDesign(currentColumn);
-                        }
-                    }
-                }
-                if(type === 'beam') { 
-                    const idx = beams.indexOf(val); 
-                    if(idx>-1) {
-                        beams.splice(idx,1);
-                        delete beamDesigns[val];
-                        if (currentBeam === val) {
-                            currentBeam = beams[0] || 'B101';
-                            if (beams.length > 0) loadBeamDesign(currentBeam);
-                        }
-                    }
-                }
-                if(type === 'slab') { 
-                    const idx = slabs.indexOf(val); 
-                    if(idx>-1) {
-                        slabs.splice(idx,1);
-                        delete slabDesigns[val];
-                        if (currentSlab === val) {
-                            currentSlab = slabs[0] || 'S1';
-                            if (slabs.length > 0) loadSlabDesign(currentSlab);
-                        }
-                    }
-                }
-                renderTags();
-            }
-        });
-
-        // Save buttons
-        document.getElementById('saveFooting').addEventListener('click', saveCurrentFooting);
-        document.getElementById('saveColumn').addEventListener('click', saveCurrentColumn);
-        document.getElementById('saveBeam').addEventListener('click', saveCurrentBeam);
-        document.getElementById('saveSlab').addEventListener('click', saveCurrentSlab);
-
-        // Utility functions
-        const uw = (dia) => (dia * dia) / 162;
-        const r2 = (v) => Math.round(v * 100) / 100;
-        const r3 = (v) => Math.round(v * 1000) / 1000;
-
-        let footingHTML = '', columnHTML = '', beamHTML = '', slabHTML = '';
-        let footingWt = 0, columnWt = 0, beamWt = 0, slabWt = 0;
-
-        function captureFooting() { footingHTML = document.getElementById('footingResult').innerHTML; }
-        function captureColumn() { columnHTML = document.querySelector('#column-section .results-area').innerHTML; }
-        function captureBeam() { beamHTML = document.querySelector('#beam-section .results-area').innerHTML; }
-        function captureSlab() { slabHTML = document.querySelector('#slab-section .results-area').innerHTML; }
-
-        function updateGlobalSummary() {
-            const totalWt = footingWt + columnWt + beamWt + slabWt;
-            document.getElementById('globalStats').innerHTML = `
-                <div class="stat-block"><span class="stat-label">Footing</span><div class="stat-value">${r2(footingWt)} kg</div></div>
-                <div class="stat-block"><span class="stat-label">Column</span><div class="stat-value">${r2(columnWt)} kg</div></div>
-                <div class="stat-block"><span class="stat-label">Beam</span><div class="stat-value">${r2(beamWt)} kg</div></div>
-                <div class="stat-block"><span class="stat-label">Slab</span><div class="stat-value">${r2(slabWt)} kg</div></div>
-                <div class="stat-block" style="background:#d0e2ff;"><span class="stat-label">TOTAL</span><div class="stat-value">${r2(totalWt)} kg</div></div>
-            `;
-            document.getElementById('globalBreakdown').innerHTML = `<strong>📌 Breakdown:</strong> Footing ${r2(footingWt)} kg · Column ${r2(columnWt)} kg · Beam ${r2(beamWt)} kg · Slab ${r2(slabWt)} kg`;
-        }
-
-        // tabs
-        const compBtns = document.querySelectorAll('.comp-btn');
-        const sections = { footing: document.getElementById('footing-section'), column: document.getElementById('column-section'), beam: document.getElementById('beam-section'), slab: document.getElementById('slab-section') };
-        compBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                compBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const comp = btn.dataset.comp;
-                Object.values(sections).forEach(s => s.classList.remove('active'));
-                sections[comp].classList.add('active');
-            });
-        });
-
-        // Chart update functions (identical to previous)
-        function updateFootingChart() {
-            const barQuantities = {};
-            footings.forEach(f => {
-                const d = footingDesigns[f];
-                if (!d) return;
-                const count = d.count || 1;
-                const addBars = (dia, nos) => {
-                    barQuantities[dia] = (barQuantities[dia] || 0) + nos * count;
-                };
-                addBars(d.botXdia, Math.floor((d.L - 2*d.cov) / d.botXsp) + 1);
-                addBars(d.botYdia, Math.floor((d.W - 2*d.cov) / d.botYsp) + 1);
-                if (d.matType === 'double') {
-                    addBars(d.topXdia, Math.floor((d.L - 2*d.cov) / d.topXsp) + 1);
-                    addBars(d.topYdia, Math.floor((d.W - 2*d.cov) / d.topYsp) + 1);
-                }
-            });
-            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
-            const quantities = diameters.map(d => barQuantities[d]);
-            
-            if (footingChart) footingChart.destroy();
-            const ctx = document.getElementById('footingChart').getContext('2d');
-            footingChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: diameters.map(d => d + ' mm'),
-                    datasets: [{
-                        label: 'Number of Bars',
-                        data: quantities,
-                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
-                        borderColor: '#c9a959',
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                    }, {
-                        label: 'Cumulative %',
-                        data: quantities.map((v, i, arr) => {
-                            const sum = arr.reduce((a,b) => a + b, 0);
-                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
-                        }),
-                        type: 'line',
-                        borderColor: '#1e2b3c',
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        yAxisID: 'y1',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Footing Bar Quantities by Diameter' } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
-                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
-                }
-            });
-        }
-
-        function updateColumnChart() {
-            const barQuantities = {};
-            columns.forEach(c => {
-                const d = columnDesigns[c];
-                if (!d) return;
-                const count = d.count || 1;
-                barQuantities[d.cornerDia] = (barQuantities[d.cornerDia] || 0) + d.cornerQty * count;
-                barQuantities[d.middleDia] = (barQuantities[d.middleDia] || 0) + d.middleQty * count;
-                barQuantities[d.tieDia] = (barQuantities[d.tieDia] || 0) + (() => {
-                    const effZoneA = Math.min(d.zoneALen, d.H/3);
-                    const zoneACount = Math.floor(effZoneA / d.spA) + 1;
-                    const zoneBLength = d.H - 2 * effZoneA;
-                    let zoneBCount = 0;
-                    if (zoneBLength > 0) zoneBCount = Math.floor(zoneBLength / d.spB) - 1;
-                    if (zoneBCount < 0) zoneBCount = 0;
-                    return (zoneACount * 2 + zoneBCount) * count;
-                })();
-            });
-            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
-            const quantities = diameters.map(d => barQuantities[d]);
-            
-            if (columnChart) columnChart.destroy();
-            const ctx = document.getElementById('columnChart').getContext('2d');
-            columnChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: diameters.map(d => d + ' mm'),
-                    datasets: [{
-                        label: 'Number of Bars',
-                        data: quantities,
-                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
-                        borderColor: '#c9a959',
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                    }, {
-                        label: 'Cumulative %',
-                        data: quantities.map((v, i, arr) => {
-                            const sum = arr.reduce((a,b) => a + b, 0);
-                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
-                        }),
-                        type: 'line',
-                        borderColor: '#1e2b3c',
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        yAxisID: 'y1',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Column Bar Quantities by Diameter' } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
-                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
-                }
-            });
-        }
-
-        function updateBeamChart() {
-            const barQuantities = {};
-            beams.forEach(b => {
-                const d = beamDesigns[b];
-                if (!d) return;
-                const count = d.count || 1;
-                barQuantities[d.botDia] = (barQuantities[d.botDia] || 0) + d.botQty * count;
-                barQuantities[d.crankDia] = (barQuantities[d.crankDia] || 0) + d.crankQty * count;
-                barQuantities[d.topDia] = (barQuantities[d.topDia] || 0) + d.topQty * count;
-                barQuantities[d.extraSupDia] = (barQuantities[d.extraSupDia] || 0) + d.extraSupQty * 2 * count;
-                barQuantities[d.extraMidDia] = (barQuantities[d.extraMidDia] || 0) + d.extraMidQty * count;
-                barQuantities[d.stirDia] = (barQuantities[d.stirDia] || 0) + (() => {
-                    const zoneALen = d.span / 4;
-                    const zoneBLen = d.span / 2;
-                    const zoneACount = Math.floor(zoneALen / d.spA) + 1;
-                    let zoneBCount = Math.floor(zoneBLen / d.spB) - 1;
-                    if (zoneBCount < 0) zoneBCount = 0;
-                    return (zoneACount * 2 + zoneBCount) * count;
-                })();
-            });
-            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
-            const quantities = diameters.map(d => barQuantities[d]);
-            
-            if (beamChart) beamChart.destroy();
-            const ctx = document.getElementById('beamChart').getContext('2d');
-            beamChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: diameters.map(d => d + ' mm'),
-                    datasets: [{
-                        label: 'Number of Bars',
-                        data: quantities,
-                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
-                        borderColor: '#c9a959',
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                    }, {
-                        label: 'Cumulative %',
-                        data: quantities.map((v, i, arr) => {
-                            const sum = arr.reduce((a,b) => a + b, 0);
-                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
-                        }),
-                        type: 'line',
-                        borderColor: '#1e2b3c',
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        yAxisID: 'y1',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Beam Bar Quantities by Diameter' } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
-                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
-                }
-            });
-        }
-
-        function updateSlabChart() {
-            const barQuantities = {};
-            slabs.forEach(s => {
-                const d = slabDesigns[s];
-                if (!d) return;
-                const count = d.count || 1;
-                barQuantities[d.mainDia] = (barQuantities[d.mainDia] || 0) + (Math.floor((d.L - d.beam) / d.mainSp) + 1) * 2 * count; // main + distribution same dia
-                barQuantities[d.extraDia] = (barQuantities[d.extraDia] || 0) + (Math.floor((d.L - d.beam) / d.extraSp) + 1) * 4 * count;
-                barQuantities[d.topDia] = (barQuantities[d.topDia] || 0) + (Math.floor((d.extraLen - d.beam) / d.extraSp) + 1) * 4 * count;
-            });
-            const diameters = Object.keys(barQuantities).sort((a,b) => a - b);
-            const quantities = diameters.map(d => barQuantities[d]);
-            
-            if (slabChart) slabChart.destroy();
-            const ctx = document.getElementById('slabChart').getContext('2d');
-            slabChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: diameters.map(d => d + ' mm'),
-                    datasets: [{
-                        label: 'Number of Bars',
-                        data: quantities,
-                        backgroundColor: 'rgba(201, 169, 89, 0.7)',
-                        borderColor: '#c9a959',
-                        borderWidth: 1,
-                        yAxisID: 'y',
-                    }, {
-                        label: 'Cumulative %',
-                        data: quantities.map((v, i, arr) => {
-                            const sum = arr.reduce((a,b) => a + b, 0);
-                            return sum ? (arr.slice(0, i+1).reduce((a,b) => a + b, 0) / sum * 100) : 0;
-                        }),
-                        type: 'line',
-                        borderColor: '#1e2b3c',
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        yAxisID: 'y1',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top' }, title: { display: true, text: 'Slab Bar Quantities by Diameter' } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Number of Bars' } },
-                             y1: { beginAtZero: true, max: 100, position: 'right', title: { display: true, text: 'Cumulative %' }, grid: { drawOnChartArea: false } } }
-                }
-            });
-        }
-
-        // Generation functions (identical to previous, but with chart updates)
-        document.getElementById('calcFooting').addEventListener('click', ()=>{
-            let totalWt = 0;
-            let rows = '';
-            footings.forEach(f => {
-                const d = footingDesigns[f];
-                if (!d) return;
-                const count = d.count || 1;
-                const L = d.L, W = d.W, D = d.D, cov = d.cov, matType = d.matType;
-                const botXdia = d.botXdia, botXsp = d.botXsp;
-                const botYdia = d.botYdia, botYsp = d.botYsp;
-                const topXdia = d.topXdia, topXsp = d.topXsp;
-                const topYdia = d.topYdia, topYsp = d.topYsp;
-
-                function calcDir(len, perpDim, dia, sp) {
-                    const barLen = len - 2*cov;
-                    const bend = 2 * (D - 2*cov);
-                    const cut = (barLen + bend - 2*2*dia) / 1000;
-                    const nos = Math.floor((perpDim - 2*cov) / sp) + 1;
-                    const total = nos * cut;
-                    const wt = total * uw(dia);
-                    return { cut, nos, total, wt };
-                }
-
-                const botX = calcDir(L, W, botXdia, botXsp);
-                const botY = calcDir(W, L, botYdia, botYsp);
-                rows += `<tr><td>${f}</td><td>${count}</td><td>Bottom</td><td>X</td><td>${botXdia}</td><td>${botX.nos}</td><td>${r3(botX.cut)}</td><td>${r3(botX.total * count)}</td><td>${r2(botX.wt * count)}</td></tr>`;
-                rows += `<tr><td>${f}</td><td>${count}</td><td>Bottom</td><td>Y</td><td>${botYdia}</td><td>${botY.nos}</td><td>${r3(botY.cut)}</td><td>${r3(botY.total * count)}</td><td>${r2(botY.wt * count)}</td></tr>`;
-                totalWt += (botX.wt + botY.wt) * count;
-                if (matType === 'double') {
-                    const topX = calcDir(L, W, topXdia, topXsp);
-                    const topY = calcDir(W, L, topYdia, topYsp);
-                    rows += `<tr><td>${f}</td><td>${count}</td><td>Top</td><td>X</td><td>${topXdia}</td><td>${topX.nos}</td><td>${r3(topX.cut)}</td><td>${r3(topX.total * count)}</td><td>${r2(topX.wt * count)}</td></tr>`;
-                    rows += `<tr><td>${f}</td><td>${count}</td><td>Top</td><td>Y</td><td>${topYdia}</td><td>${topY.nos}</td><td>${r3(topY.cut)}</td><td>${r3(topY.total * count)}</td><td>${r2(topY.wt * count)}</td></tr>`;
-                    totalWt += (topX.wt + topY.wt) * count;
-                }
-            });
-            footingWt = totalWt;
-            document.getElementById('footingBody').innerHTML = rows;
-            document.getElementById('footingSummary').innerHTML = `<span>🧾 Total footing steel (${footings.length} types): ${r2(footingWt)} kg</span>`;
-            captureFooting(); updateGlobalSummary(); updateFootingChart();
-        });
-
-        document.getElementById('calcColumn').addEventListener('click', ()=>{
-            let totalWt = 0; let rows = '';
-            columns.forEach(c => {
-                const d = columnDesigns[c]; if (!d) return;
-                const count = d.count || 1;
-                const H = d.H, cov = d.cov, Ld = d.Ld, colX = d.colX, colY = d.colY;
-                const cornerDia = d.cornerDia, cornerQty = d.cornerQty;
-                const middleDia = d.middleDia, middleQty = d.middleQty;
-                const tieDia = d.tieDia; const spA = d.spA, spB = d.spB, zoneALen = d.zoneALen;
-                const longCut = H/1000;
-                const cornerTot = cornerQty * longCut; const cornerWt = cornerTot * uw(cornerDia);
-                const middleTot = middleQty * longCut; const middleWt = middleTot * uw(middleDia);
-                const a = colX - 2*cov; const b = colY - 2*cov;
-                const peri = 2*(a+b); const hook = 2*12*tieDia; const bend = 3*2*tieDia + 2*3*tieDia;
-                const tieCut = (peri + hook - bend)/1000;
-                const effZoneA = Math.min(zoneALen, H/3); const zoneACount = Math.floor(effZoneA / spA) + 1;
-                const zoneBLength = H - 2 * effZoneA; let zoneBCount = 0;
-                if (zoneBLength > 0) { zoneBCount = Math.floor(zoneBLength / spB) - 1; if (zoneBCount < 0) zoneBCount = 0; }
-                const totalTieNos = (zoneACount * 2) + zoneBCount; const tieTot = totalTieNos * tieCut; const tieWt = tieTot * uw(tieDia);
-                totalWt += (cornerWt + middleWt + tieWt) * count;
-                rows += `<tr><td>${c}</td><td>${count}</td><td>Corner bars</td><td>—</td><td>${cornerDia}</td><td>${cornerQty}</td><td>${r3(longCut)}</td><td>${r3(cornerTot * count)}</td><td>${r2(cornerWt * count)}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>${count}</td><td>Middle bars</td><td>—</td><td>${middleDia}</td><td>${middleQty}</td><td>${r3(longCut)}</td><td>${r3(middleTot * count)}</td><td>${r2(middleWt * count)}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>${count}</td><td>Ties (Zone-A)</td><td>A</td><td>${tieDia}</td><td>${zoneACount*2}</td><td>${r3(tieCut)}</td><td>${r3(zoneACount*2*tieCut * count)}</td><td>${r2(zoneACount*2*tieCut*uw(tieDia) * count)}</td></tr>`;
-                rows += `<tr><td>${c}</td><td>${count}</td><td>Ties (Zone-B)</td><td>B</td><td>${tieDia}</td><td>${zoneBCount}</td><td>${r3(tieCut)}</td><td>${r3(zoneBCount*tieCut * count)}</td><td>${r2(zoneBCount*tieCut*uw(tieDia) * count)}</td></tr>`;
-            });
-            columnWt = totalWt;
-            document.getElementById('columnBody').innerHTML = rows;
-            document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel (${columns.length} types): ${r2(columnWt)} kg</span>`;
-            captureColumn(); updateGlobalSummary(); updateColumnChart();
-        });
-
-        document.getElementById('calcBeam').addEventListener('click', ()=>{
-            let totalWt = 0; let rows = '';
-            beams.forEach(b => {
-                const d = beamDesigns[b]; if (!d) return;
-                const count = d.count || 1;
-                const bw = d.bw, bd = d.bd, span = d.span, cov = d.cov, Ld = d.Ld;
-                const botDia = d.botDia, botQty = d.botQty; const crankDia = d.crankDia, crankQty = d.crankQty;
-                const topDia = d.topDia, topQty = d.topQty;
-                const extraSupDia = d.extraSupDia, extraSupQty = d.extraSupQty, extraSupLen = d.extraSupLen;
-                const extraMidDia = d.extraMidDia, extraMidQty = d.extraMidQty, extraMidLen = d.extraMidLen;
-                const stirDia = d.stirDia, spA = d.spA, spB = d.spB;
-
-                const bottomCut = (span + 2*Ld - 2*cov) / 1000;
-                const crankH = bd - 2*cov; const crankExtra = 0.42 * crankH;
-                const crankCut = (span + 2*Ld - 2*cov + 2*crankExtra) / 1000;
-                const topCut = (span + 2*Ld - 2*cov) / 1000;
-                const extraSupCut = (extraSupLen - cov) / 1000; const extraMidCut = (extraMidLen - cov) / 1000;
-                const a = bw - 2*cov; const bb = bd - 2*cov; const peri = 2*(a+bb);
-                const hook = 2*12*stirDia; const bend = 3*2*stirDia + 2*3*stirDia; const stirCut = (peri + hook - bend)/1000;
-                const zoneALen = span / 4; const zoneBLen = span / 2;
-                const zoneACount = Math.floor(zoneALen / spA) + 1;
-                let zoneBCount = Math.floor(zoneBLen / spB) - 1; if (zoneBCount < 0) zoneBCount = 0;
-                const totalStirrups = (zoneACount * 2) + zoneBCount;
-
-                const botTot = botQty * bottomCut; const botWt = botTot * uw(botDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Bottom straight</td><td>${botDia}</td><td>${botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot * count)}</td><td>${r2(botWt * count)}</td></tr>`; totalWt += botWt * count;
-                const crankTot = crankQty * crankCut; const crankWt = crankTot * uw(crankDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Cranked bars</td><td>${crankDia}</td><td>${crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot * count)}</td><td>${r2(crankWt * count)}</td></tr>`; totalWt += crankWt * count;
-                const topTot = topQty * topCut; const topWt = topTot * uw(topDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Top straight</td><td>${topDia}</td><td>${topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot * count)}</td><td>${r2(topWt * count)}</td></tr>`; totalWt += topWt * count;
-                const extraSupTot = (extraSupQty * 2) * extraSupCut; const extraSupWt = extraSupTot * uw(extraSupDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra support top</td><td>${extraSupDia}</td><td>${extraSupQty*2}</td><td>${r3(extraSupCut)}</td><td>${r3(extraSupTot * count)}</td><td>${r2(extraSupWt * count)}</td></tr>`; totalWt += extraSupWt * count;
-                const extraMidTot = extraMidQty * extraMidCut; const extraMidWt = extraMidTot * uw(extraMidDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Extra mid-span</td><td>${extraMidDia}</td><td>${extraMidQty}</td><td>${r3(extraMidCut)}</td><td>${r3(extraMidTot * count)}</td><td>${r2(extraMidWt * count)}</td></tr>`; totalWt += extraMidWt * count;
-                const stirTot = totalStirrups * stirCut; const stirWt = stirTot * uw(stirDia);
-                rows += `<tr><td>${b}</td><td>${count}</td><td>Stirrups</td><td>${stirDia}</td><td>${totalStirrups}</td><td>${r3(stirCut)}</td><td>${r3(stirTot * count)}</td><td>${r2(stirWt * count)}</td></tr>`; totalWt += stirWt * count;
-            });
-            beamWt = totalWt;
-            document.getElementById('beamBody').innerHTML = rows;
-            document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel (${beams.length} types): ${r2(beamWt)} kg</span>`;
-            captureBeam(); updateGlobalSummary(); updateBeamChart();
-        });
-
-        document.getElementById('calcSlab').addEventListener('click', ()=>{
-            let totalWt = 0; let rows = '';
-            slabs.forEach(s => {
-                const d = slabDesigns[s]; if (!d) return;
-                const count = d.count || 1;
-                const L = d.L, beam = d.beam, cov = d.cov;
-                const mainDia = d.mainDia, mainSp = d.mainSp;
-                const extraDia = d.extraDia, extraSp = d.extraSp, extraLen = d.extraLen;
-                const topDia = d.topDia;
-
-                const mainNos = Math.floor((L - beam) / mainSp) + 1;
-                const mainCut = (L - 2*cov)/1000; const mainTot = mainNos * mainCut; const mainWt = mainTot * uw(mainDia);
-                const distNos = mainNos; const distTot = distNos * mainCut; const distWt = distTot * uw(mainDia);
-                const extraPerSide = Math.floor((L - beam) / extraSp) + 1;
-                const extraCut = (extraLen - cov)/1000; const extraXtot = extraPerSide * 2 * extraCut; const extraYtot = extraPerSide * 2 * extraCut; const extraWt = (extraXtot + extraYtot) * uw(extraDia);
-                const topPerSide = Math.floor((extraLen - beam) / extraSp) + 1; const topSafe = topPerSide > 0 ? topPerSide : 0;
-                const topCut = (L - 2*cov)/1000; const topXtot = topSafe * 2 * topCut; const topYtot = topSafe * 2 * topCut; const topWt = (topXtot + topYtot) * uw(topDia);
-                const perSlabWt = mainWt + distWt + extraWt + topWt; totalWt += perSlabWt * count;
-
-                rows += `<tr><td>${s}</td><td>${count}</td><td>Main bottom (X)</td><td>${mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(mainTot * count)}</td><td>${r2(mainWt * count)}</td></tr>`;
-                rows += `<tr><td>${s}</td><td>${count}</td><td>Distribution (Y)</td><td>${mainDia}</td><td>${distNos}</td><td>${r3(mainCut)}</td><td>${r3(distTot * count)}</td><td>${r2(distWt * count)}</td></tr>`;
-                rows += `<tr><td>${s}</td><td>${count}</td><td>Extra top (X+Y)</td><td>${extraDia}</td><td>${extraPerSide*4}</td><td>${r3(extraCut)}</td><td>${r3((extraXtot+extraYtot) * count)}</td><td>${r2(extraWt * count)}</td></tr>`;
-                rows += `<tr><td>${s}</td><td>${count}</td><td>Top distrib (X+Y)</td><td>${topDia}</td><td>${topSafe*4}</td><td>${r3(topCut)}</td><td>${r3((topXtot+topYtot) * count)}</td><td>${r2(topWt * count)}</td></tr>`;
-            });
-            slabWt = totalWt;
-            document.getElementById('slabBody').innerHTML = rows;
-            document.getElementById('slabSummary').innerHTML = `<span>🧾 Total slab steel (${slabs.length} types): ${r2(slabWt)} kg</span>`;
-            captureSlab(); updateGlobalSummary(); updateSlabChart();
-        });
-
-        // print full BBS - updated to match exact layout
-        document.getElementById('printFullBtn').addEventListener('click', ()=>{
-            // Trigger generation to capture latest HTML
-            document.getElementById('calcFooting').click();
-            document.getElementById('calcColumn').click();
-            document.getElementById('calcBeam').click();
-            document.getElementById('calcSlab').click();
-            
-            setTimeout(() => {
-                // Get current tags HTML and clean them for print (remove buttons)
-                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                
-                const globalHTML = document.getElementById('globalSummaryBlock').outerHTML;
-                
-                const win = window.open('', '_blank');
-                win.document.write(`
-                    <html>
-                    <head>
-                        <title>KAJAL · complete BBS</title>
-                        <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
-                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-                        <style>
-                            body {
-                                font-family: 'Inter', sans-serif;
-                                padding: 1.5rem;
-                                background: white;
-                                color: #1e293b;
-                            }
-                            .brand-header {
-                                background: #ffffff;
-                                padding: 1.5rem;
-                                border-bottom: 1px solid #e9eef3;
-                                text-align: center;
-                                margin-bottom: 1.5rem;
-                            }
-                            .brand-main {
-                                font-family: 'Cinzel Decorative', cursive;
-                                font-size: 2.5rem;
-                                font-weight: 700;
-                                color: #1e2b3c;
-                                line-height: 1.2;
-                            }
-                            .brand-sub {
-                                font-family: 'Inter', sans-serif;
-                                font-size: 1.1rem;
-                                font-weight: 300;
-                                letter-spacing: 2px;
-                                color: #000000;
-                                margin-top: 0.25rem;
-                                text-transform: uppercase;
-                            }
-                            .tagline {
-                                font-family: 'Inter', sans-serif;
-                                font-size: 0.95rem;
-                                font-weight: 400;
-                                color: #000000;
-                                margin-top: 0.5rem;
-                                background: #f8fafd;
-                                padding: 0.2rem 1.5rem;
-                                border-radius: 30px;
-                                display: inline-block;
-                            }
-                            .element-items {
-                                display: flex;
-                                flex-wrap: wrap;
-                                gap: 0.5rem;
-                                margin: 1rem 0;
-                            }
-                            .element-tag {
-                                background: #f0f5fc;
-                                border: 1px solid #1e2b3c;
-                                border-radius: 40px;
-                                padding: 0.3rem 1rem;
-                                font-weight: 500;
-                                color: #1e2b3c;
-                            }
-                            h2 {
-                                font-weight: 400;
-                                font-size: 1.5rem;
-                                color: #1e2b3c;
-                                border-bottom: 1px solid #e9eef3;
-                                padding-bottom: 0.5rem;
-                                margin-top: 1.5rem;
-                            }
-                            table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                font-size: 0.9rem;
-                                margin: 1rem 0;
-                            }
-                            th {
-                                background: #f9fbfd;
-                                color: #405b73;
-                                font-weight: 600;
-                                padding: 0.8rem;
-                                border-bottom: 1px solid #dbe1ec;
-                                font-size: 0.85rem;
-                                text-transform: uppercase;
-                                letter-spacing: 0.3px;
-                            }
-                            td {
-                                padding: 0.7rem;
-                                border-bottom: 1px solid #edf2f9;
-                                color: #2f4055;
-                            }
-                            .summary-card {
-                                background: #f9fbfd;
-                                border-left: 4px solid #c9a959;
-                                padding: 1rem 2rem;
-                                margin: 1rem 0;
-                                display: flex;
-                                gap: 2rem;
-                            }
-                            .summary-card span {
-                                font-size: 1.1rem;
-                                font-weight: 500;
-                                color: #1e2b3c;
-                            }
-                            .global-summary {
-                                background: #f9fbfd;
-                                border: 1px solid #e4eaf2;
-                                border-radius: 1.5rem;
-                                padding: 1.5rem;
-                                margin: 2rem 0;
-                            }
-                            .global-summary h2 {
-                                margin-top: 0;
-                                border-bottom: none;
-                            }
-                            .summary-stats {
-                                display: grid;
-                                grid-template-columns: repeat(5, 1fr);
-                                gap: 1rem;
-                            }
-                            .stat-block {
-                                background: white;
-                                padding: 1rem;
-                                border-radius: 1rem;
-                                border: 1px solid #eef2f6;
-                            }
-                            .stat-label {
-                                font-size: 0.8rem;
-                                color: #70859c;
-                                font-weight: 500;
-                                text-transform: uppercase;
-                            }
-                            .stat-value {
-                                font-size: 1.4rem;
-                                font-weight: 600;
-                                color: #1e2b3c;
-                            }
-                            .print-footer {
-                                margin-top: 2rem;
-                                text-align: center;
-                                color: #70859c;
-                                border-top: 1px solid #e9eef3;
-                                padding-top: 1rem;
-                                font-size: 0.9rem;
-                            }
-                            /* Page breaks */
-                            .footing-page, .column-page, .beam-page, .slab-page {
-                                page-break-after: always;
-                            }
-                            .summary-page {
-                                page-break-before: always;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="brand-header">
-                            <div class="brand-main">KAJAL</div>
-                            <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
-                            <div class="tagline">Build Smarter, Build Stronger</div>
-                        </div>
-                        
-                        <div class="footing-page">
-                            <h2>📐 Footing BBS · independent design</h2>
-                            <div class="element-items">${footingTags}</div>
-                            ${footingHTML}
-                        </div>
-                        
-                        <div class="column-page">
-                            <h2>📏 Column BBS · corner & middle bars</h2>
-                            <div class="element-items">${columnTags}</div>
-                            ${columnHTML}
-                        </div>
-                        
-                        <div class="beam-page">
-                            <h2>📦 Beam BBS · full details</h2>
-                            <div class="element-items">${beamTags}</div>
-                            ${beamHTML}
-                        </div>
-                        
-                        <div class="slab-page">
-                            <h2>🧱 Slab BBS · independent design</h2>
-                            <div class="element-items">${slabTags}</div>
-                            ${slabHTML}
-                        </div>
-                        
-                        <div class="summary-page">
-                            ${globalHTML}
-                        </div>
-                        
-                        <div class="print-footer">
-                            KAJAL STRUCTURAL DESIGN STUDIO · 9390396951 · designbykajal786@gmail.com<br>
-                            Generated on ${new Date().toLocaleString()}
-                        </div>
-                    </body>
-                    </html>
-                `);
-                win.document.close();
-                win.print();
-            }, 500);
-        });
-
-        // excel export (identical)
-        document.getElementById('excelFullBtn').addEventListener('click', ()=>{
-            document.getElementById('calcFooting').click();
-            document.getElementById('calcColumn').click();
-            document.getElementById('calcBeam').click();
-            document.getElementById('calcSlab').click();
-            
-            setTimeout(() => {
-                const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button\b[^>]*>(.*?)<\/button>/gi, '');
-                const html = `<html><head><meta charset="UTF-8"><style>td{border:1px solid #000;}</style></head><body>
-                    <h2>KAJAL STRUCTURAL DESIGN STUDIO</h2><h3>Build Smarter, Build Stronger</h3>
-                    ${document.getElementById('globalSummaryBlock').outerHTML}
-                    <h2>FOOTING BBS</h2>${footingTags}${footingHTML}
-                    <h2>COLUMN BBS (Corner & Middle Bars)</h2>${columnTags}${columnHTML}
-                    <h2>BEAM BBS (full details)</h2>${beamTags}${beamHTML}
-                    <h2>SLAB BBS</h2>${slabTags}${slabHTML}
-                    <p>Contact: 9390396951 · designbykajal786@gmail.com</p></body></html>`;
-                const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-                const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'KAJAL_full_bbs.xls'; a.click();
-            }, 500);
-        });
-
-        // Initial load
+    document.getElementById('add-footing').addEventListener('click', ()=>{
+        let inp = document.getElementById('new-footing-name');
+        if (!inp.value.trim()) return;
+        let name = inp.value.trim();
+        footings.push(name);
+        footingDesigns[name] = { ...footingDesigns['F1'], count:1 };
+        inp.value = '';
         renderTags();
-        loadFootingDesign('F1');
-        loadColumnDesign('C1');
-        loadBeamDesign('B101');
-        loadSlabDesign('S1');
-        
-        // Generate initial BBS and charts
-        setTimeout(() => {
-            document.getElementById('calcFooting').click();
-            document.getElementById('calcColumn').click();
-            document.getElementById('calcBeam').click();
-            document.getElementById('calcSlab').click();
-        }, 100);
-    })();
+        currentFooting = name;
+        loadFooting(name);
+        renderTags();
+    });
+    document.getElementById('add-column').addEventListener('click', ()=>{
+        let inp = document.getElementById('new-column-name');
+        if (!inp.value.trim()) return;
+        let name = inp.value.trim();
+        columns.push(name);
+        columnDesigns[name] = { ...columnDesigns['C1'], count:1 };
+        inp.value = '';
+        renderTags();
+        currentColumn = name;
+        loadColumn(name);
+        renderTags();
+    });
+    document.getElementById('add-beam').addEventListener('click', ()=>{
+        let inp = document.getElementById('new-beam-name');
+        if (!inp.value.trim()) return;
+        let name = inp.value.trim();
+        beams.push(name);
+        beamDesigns[name] = { ...beamDesigns['B101'], count:1 };
+        inp.value = '';
+        renderTags();
+        currentBeam = name;
+        loadBeam(name);
+        renderTags();
+    });
+    document.getElementById('add-slab').addEventListener('click', ()=>{
+        let inp = document.getElementById('new-slab-name');
+        if (!inp.value.trim()) return;
+        let name = inp.value.trim();
+        slabs.push(name);
+        slabDesigns[name] = { ...slabDesigns['S1'], count:1 };
+        inp.value = '';
+        renderTags();
+        currentSlab = name;
+        loadSlab(name);
+        renderTags();
+    });
+
+    document.addEventListener('click', e => {
+        if (e.target.closest('[data-footing]')) {
+            let n = e.target.closest('[data-footing]').dataset.footing;
+            currentFooting = n; loadFooting(n); renderTags();
+        }
+        if (e.target.closest('[data-column]')) {
+            let n = e.target.closest('[data-column]').dataset.column;
+            currentColumn = n; loadColumn(n); renderTags();
+        }
+        if (e.target.closest('[data-beam]')) {
+            let n = e.target.closest('[data-beam]').dataset.beam;
+            currentBeam = n; loadBeam(n); renderTags();
+        }
+        if (e.target.closest('[data-slab]')) {
+            let n = e.target.closest('[data-slab]').dataset.slab;
+            currentSlab = n; loadSlab(n); renderTags();
+        }
+        if (e.target.classList.contains('remove-tag')) {
+            e.stopPropagation();
+            let type = e.target.dataset.type, val = e.target.dataset.value;
+            if (type==='footing') { footings = footings.filter(v=>v!==val); delete footingDesigns[val]; if (currentFooting===val) { currentFooting = footings[0]||'F1'; if (footings.length) loadFooting(currentFooting); } }
+            if (type==='column') { columns = columns.filter(v=>v!==val); delete columnDesigns[val]; if (currentColumn===val) { currentColumn = columns[0]||'C1'; if (columns.length) loadColumn(currentColumn); } }
+            if (type==='beam') { beams = beams.filter(v=>v!==val); delete beamDesigns[val]; if (currentBeam===val) { currentBeam = beams[0]||'B101'; if (beams.length) loadBeam(currentBeam); } }
+            if (type==='slab') { slabs = slabs.filter(v=>v!==val); delete slabDesigns[val]; if (currentSlab===val) { currentSlab = slabs[0]||'S1'; if (slabs.length) loadSlab(currentSlab); } }
+            renderTags();
+        }
+    });
+
+    document.getElementById('saveProjectBtn').addEventListener('click', ()=>{
+        localStorage.setItem('kajalProj', JSON.stringify({footingDesigns,columnDesigns,beamDesigns,slabDesigns,footings,columns,beams,slabs,currentFooting,currentColumn,currentBeam,currentSlab}));
+        alert('Project saved');
+    });
+    document.getElementById('loadProjectBtn').addEventListener('click', ()=>{
+        let saved = localStorage.getItem('kajalProj');
+        if (!saved) return alert('No saved project');
+        try {
+            let p = JSON.parse(saved);
+            footingDesigns=p.footingDesigns; columnDesigns=p.columnDesigns; beamDesigns=p.beamDesigns; slabDesigns=p.slabDesigns;
+            footings=p.footings; columns=p.columns; beams=p.beams; slabs=p.slabs;
+            currentFooting=p.currentFooting; currentColumn=p.currentColumn; currentBeam=p.currentBeam; currentSlab=p.currentSlab;
+            renderTags();
+            loadFooting(currentFooting); loadColumn(currentColumn); loadBeam(currentBeam); loadSlab(currentSlab);
+            document.getElementById('calcFooting').click(); document.getElementById('calcColumn').click();
+            document.getElementById('calcBeam').click(); document.getElementById('calcSlab').click();
+            alert('Loaded');
+        } catch(e){ alert('Error'); }
+    });
+
+    document.querySelectorAll('.comp-btn').forEach(btn => btn.addEventListener('click', function() {
+        document.querySelectorAll('.comp-btn').forEach(b=>b.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.component-section').forEach(s=>s.classList.remove('active'));
+        document.getElementById(this.dataset.comp+'-section').classList.add('active');
+    }));
+
+    // ========== CALCULATIONS + CHARTS (ALL WORKING) ==========
+    document.getElementById('calcFooting').addEventListener('click', ()=>{
+        let totalWt=0, rows='';
+        footings.forEach(f => {
+            let d = footingDesigns[f]; if (!d) return;
+            let cnt = d.count||1, L=d.L, W=d.W, D=d.D, cov=d.cov, mat=d.matType;
+            let calc = (len, perp, dia, sp) => {
+                let bar = len-2*cov, bend = 2*(D-2*cov), cut = (bar+bend-2*2*dia)/1000;
+                let nos = Math.floor((perp-2*cov)/sp)+1;
+                return { cut, nos, total:nos*cut, wt:nos*cut*uw(dia) };
+            };
+            let bx = calc(L, W, d.botXdia, d.botXsp);
+            rows += `<tr><td>${f}</td><td>${cnt}</td><td>Bottom</td><td>X</td><td>${d.botXdia}</td><td>${bx.nos}</td><td>${r3(bx.cut)}</td><td>${r3(bx.total*cnt)}</td><td>${r2(bx.wt*cnt)}</td></tr>`;
+            totalWt += bx.wt*cnt;
+            let by = calc(W, L, d.botYdia, d.botYsp);
+            rows += `<tr><td>${f}</td><td>${cnt}</td><td>Bottom</td><td>Y</td><td>${d.botYdia}</td><td>${by.nos}</td><td>${r3(by.cut)}</td><td>${r3(by.total*cnt)}</td><td>${r2(by.wt*cnt)}</td></tr>`;
+            totalWt += by.wt*cnt;
+            if (mat==='double') {
+                let tx = calc(L, W, d.topXdia, d.topXsp);
+                rows += `<tr><td>${f}</td><td>${cnt}</td><td>Top</td><td>X</td><td>${d.topXdia}</td><td>${tx.nos}</td><td>${r3(tx.cut)}</td><td>${r3(tx.total*cnt)}</td><td>${r2(tx.wt*cnt)}</td></tr>`;
+                totalWt += tx.wt*cnt;
+                let ty = calc(W, L, d.topYdia, d.topYsp);
+                rows += `<tr><td>${f}</td><td>${cnt}</td><td>Top</td><td>Y</td><td>${d.topYdia}</td><td>${ty.nos}</td><td>${r3(ty.cut)}</td><td>${r3(ty.total*cnt)}</td><td>${r2(ty.wt*cnt)}</td></tr>`;
+                totalWt += ty.wt*cnt;
+            }
+        });
+        footingWt = totalWt;
+        document.getElementById('footingBody').innerHTML = rows;
+        document.getElementById('footingSummary').innerHTML = `<span>🧾 Total footing steel: ${r2(footingWt)} kg</span>`;
+        captureFooting(); updateGlobal();
+
+        let q = {};
+        footings.forEach(f => {
+            let d = footingDesigns[f]; if (!d) return;
+            let cnt = d.count||1;
+            let add = (dia, nos) => q[dia] = (q[dia]||0) + nos*cnt;
+            add(d.botXdia, Math.floor((d.L-2*d.cov)/d.botXsp)+1);
+            add(d.botYdia, Math.floor((d.W-2*d.cov)/d.botYsp)+1);
+            if (d.matType==='double') {
+                add(d.topXdia, Math.floor((d.L-2*d.cov)/d.topXsp)+1);
+                add(d.topYdia, Math.floor((d.W-2*d.cov)/d.topYsp)+1);
+            }
+        });
+        let diams = Object.keys(q).sort((a,b)=>a-b);
+        let qty = diams.map(d=>q[d]);
+        if (footingChart) footingChart.destroy();
+        footingChart = new Chart(document.getElementById('footingChart'), {
+            type:'bar',
+            data:{ labels:diams.map(d=>d+'mm'), datasets:[
+                { label:'Number of Bars', data:qty, backgroundColor:'rgba(201,169,89,0.7)', borderColor:'#c9a959', yAxisID:'y' },
+                { label:'Cumulative %', data:qty.map((v,i,a)=>{let s=a.reduce((x,y)=>x+y,0); return s? a.slice(0,i+1).reduce((x,y)=>x+y,0)/s*100:0; }), type:'line', borderColor:'#1e2b3c', borderWidth:2, tension:0.3, yAxisID:'y1' }
+            ]},
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'top'} }, scales:{ y:{ beginAtZero:true }, y1:{ beginAtZero:true, max:100, position:'right', grid:{drawOnChartArea:false} } } }
+        });
+    });
+
+    document.getElementById('calcColumn').addEventListener('click', ()=>{
+        let totalWt=0, rows='';
+        columns.forEach(c => {
+            let d = columnDesigns[c]; if (!d) return;
+            let cnt = d.count||1, H=d.H, cov=d.cov, Ld=d.Ld, X=d.colX, Y=d.colY;
+            let longCut = H/1000;
+            let cornerTot = d.cornerQty*longCut, cornerWt = cornerTot*uw(d.cornerDia);
+            rows += `<tr><td>${c}</td><td>${cnt}</td><td>Corner</td><td>—</td><td>${d.cornerDia}</td><td>${d.cornerQty}</td><td>${r3(longCut)}</td><td>${r3(cornerTot*cnt)}</td><td>${r2(cornerWt*cnt)}</td></tr>`;
+            totalWt += cornerWt*cnt;
+            let middleTot = d.middleQty*longCut, middleWt = middleTot*uw(d.middleDia);
+            rows += `<tr><td>${c}</td><td>${cnt}</td><td>Middle</td><td>—</td><td>${d.middleDia}</td><td>${d.middleQty}</td><td>${r3(longCut)}</td><td>${r3(middleTot*cnt)}</td><td>${r2(middleWt*cnt)}</td></tr>`;
+            totalWt += middleWt*cnt;
+            let a = X-2*cov, b = Y-2*cov;
+            let peri = 2*(a+b), hook = 2*12*d.tieDia, bend = 3*2*d.tieDia+2*3*d.tieDia;
+            let tieCut = (peri+hook-bend)/1000;
+            let zoneA = Math.min(d.zoneALen, H/3);
+            let zoneACnt = Math.floor(zoneA/d.spA)+1;
+            let zoneB = H-2*zoneA;
+            let zoneBCnt = zoneB>0 ? Math.floor(zoneB/d.spB)-1 : 0; if (zoneBCnt<0) zoneBCnt=0;
+            let tieNos = zoneACnt*2 + zoneBCnt;
+            let tieTot = tieNos*tieCut, tieWt = tieTot*uw(d.tieDia);
+            rows += `<tr><td>${c}</td><td>${cnt}</td><td>Ties</td><td>A+B</td><td>${d.tieDia}</td><td>${tieNos}</td><td>${r3(tieCut)}</td><td>${r3(tieTot*cnt)}</td><td>${r2(tieWt*cnt)}</td></tr>`;
+            totalWt += tieWt*cnt;
+        });
+        columnWt = totalWt;
+        document.getElementById('columnBody').innerHTML = rows;
+        document.getElementById('columnSummary').innerHTML = `<span>🧾 Total column steel: ${r2(columnWt)} kg</span>`;
+        captureColumn(); updateGlobal();
+
+        // Column chart
+        let q = {};
+        columns.forEach(c => {
+            let d = columnDesigns[c]; if (!d) return;
+            let cnt = d.count||1;
+            q[d.cornerDia] = (q[d.cornerDia]||0) + d.cornerQty * cnt;
+            q[d.middleDia] = (q[d.middleDia]||0) + d.middleQty * cnt;
+            // ties count
+            let zoneA = Math.min(d.zoneALen, d.H/3);
+            let zoneACnt = Math.floor(zoneA/d.spA)+1;
+            let zoneB = d.H-2*zoneA;
+            let zoneBCnt = zoneB>0 ? Math.floor(zoneB/d.spB)-1 : 0; if (zoneBCnt<0) zoneBCnt=0;
+            let tieNos = zoneACnt*2 + zoneBCnt;
+            q[d.tieDia] = (q[d.tieDia]||0) + tieNos * cnt;
+        });
+        let diams = Object.keys(q).sort((a,b)=>a-b);
+        let qty = diams.map(d=>q[d]);
+        if (columnChart) columnChart.destroy();
+        columnChart = new Chart(document.getElementById('columnChart'), {
+            type:'bar',
+            data:{ labels:diams.map(d=>d+'mm'), datasets:[
+                { label:'Number of Bars', data:qty, backgroundColor:'rgba(201,169,89,0.7)', borderColor:'#c9a959', yAxisID:'y' },
+                { label:'Cumulative %', data:qty.map((v,i,a)=>{let s=a.reduce((x,y)=>x+y,0); return s? a.slice(0,i+1).reduce((x,y)=>x+y,0)/s*100:0; }), type:'line', borderColor:'#1e2b3c', borderWidth:2, tension:0.3, yAxisID:'y1' }
+            ]},
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'top'} }, scales:{ y:{ beginAtZero:true }, y1:{ beginAtZero:true, max:100, position:'right', grid:{drawOnChartArea:false} } } }
+        });
+    });
+
+    document.getElementById('calcBeam').addEventListener('click', ()=>{
+        let totalWt=0, rows='';
+        beams.forEach(b => {
+            let d = beamDesigns[b]; if (!d) return;
+            let cnt = d.count||1;
+            let bottomCut = (d.span+2*d.Ld-2*d.cov)/1000;
+            let crankH = d.bd-2*d.cov;
+            let crankCut = (d.span+2*d.Ld-2*d.cov+2*0.42*crankH)/1000;
+            let topCut = (d.span+2*d.Ld-2*d.cov)/1000;
+            let botTot = d.botQty*bottomCut, botWt = botTot*uw(d.botDia);
+            rows += `<tr><td>${b}</td><td>${cnt}</td><td>Bottom str</td><td>${d.botDia}</td><td>${d.botQty}</td><td>${r3(bottomCut)}</td><td>${r3(botTot*cnt)}</td><td>${r2(botWt*cnt)}</td></tr>`;
+            totalWt += botWt*cnt;
+            let crankTot = d.crankQty*crankCut, crankWt = crankTot*uw(d.crankDia);
+            rows += `<tr><td>${b}</td><td>${cnt}</td><td>Cranked</td><td>${d.crankDia}</td><td>${d.crankQty}</td><td>${r3(crankCut)}</td><td>${r3(crankTot*cnt)}</td><td>${r2(crankWt*cnt)}</td></tr>`;
+            totalWt += crankWt*cnt;
+            let topTot = d.topQty*topCut, topWt = topTot*uw(d.topDia);
+            rows += `<tr><td>${b}</td><td>${cnt}</td><td>Top</td><td>${d.topDia}</td><td>${d.topQty}</td><td>${r3(topCut)}</td><td>${r3(topTot*cnt)}</td><td>${r2(topWt*cnt)}</td></tr>`;
+            totalWt += topWt*cnt;
+            let supCut = (d.extraSupLen-d.cov)/1000;
+            let supTot = d.extraSupQty*2*supCut, supWt = supTot*uw(d.extraSupDia);
+            rows += `<tr><td>${b}</td><td>${cnt}</td><td>Extra sup</td><td>${d.extraSupDia}</td><td>${d.extraSupQty*2}</td><td>${r3(supCut)}</td><td>${r3(supTot*cnt)}</td><td>${r2(supWt*cnt)}</td></tr>`;
+            totalWt += supWt*cnt;
+            let midCut = (d.extraMidLen-d.cov)/1000;
+            let midTot = d.extraMidQty*midCut, midWt = midTot*uw(d.extraMidDia);
+            rows += `<tr><td>${b}</td><td>${cnt}</td><td>Extra mid</td><td>${d.extraMidDia}</td><td>${d.extraMidQty}</td><td>${r3(midCut)}</td><td>${r3(midTot*cnt)}</td><td>${r2(midWt*cnt)}</td></tr>`;
+            totalWt += midWt*cnt;
+            let a = d.bw-2*d.cov, bb = d.bd-2*d.cov;
+            let peri = 2*(a+bb), hook = 2*12*d.stirDia, bend = 3*2*d.stirDia+2*3*d.stirDia;
+            let stirCut = (peri+hook-bend)/1000;
+            let zoneA = d.span/4, zoneB = d.span/2;
+            let cntA = Math.floor(zoneA/d.spA)+1;
+            let cntB = Math.floor(zoneB/d.spB)-1; if (cntB<0) cntB=0;
+            let stirNos = cntA*2+cntB;
+            let stirTot = stirNos*stirCut, stirWt = stirTot*uw(d.stirDia);
+            rows += `<tr><td>${b}</td><td>${cnt}</td><td>Stirrups</td><td>${d.stirDia}</td><td>${stirNos}</td><td>${r3(stirCut)}</td><td>${r3(stirTot*cnt)}</td><td>${r2(stirWt*cnt)}</td></tr>`;
+            totalWt += stirWt*cnt;
+        });
+        beamWt = totalWt;
+        document.getElementById('beamBody').innerHTML = rows;
+        document.getElementById('beamSummary').innerHTML = `<span>🧾 Total beam steel: ${r2(beamWt)} kg</span>`;
+        captureBeam(); updateGlobal();
+
+        // Beam chart
+        let q = {};
+        beams.forEach(b => {
+            let d = beamDesigns[b]; if (!d) return;
+            let cnt = d.count||1;
+            q[d.botDia] = (q[d.botDia]||0) + d.botQty * cnt;
+            q[d.crankDia] = (q[d.crankDia]||0) + d.crankQty * cnt;
+            q[d.topDia] = (q[d.topDia]||0) + d.topQty * cnt;
+            q[d.extraSupDia] = (q[d.extraSupDia]||0) + d.extraSupQty*2 * cnt;
+            q[d.extraMidDia] = (q[d.extraMidDia]||0) + d.extraMidQty * cnt;
+            let zoneA = d.span/4, zoneB = d.span/2;
+            let cntA = Math.floor(zoneA/d.spA)+1;
+            let cntB = Math.floor(zoneB/d.spB)-1; if (cntB<0) cntB=0;
+            let stirNos = cntA*2+cntB;
+            q[d.stirDia] = (q[d.stirDia]||0) + stirNos * cnt;
+        });
+        let diams = Object.keys(q).sort((a,b)=>a-b);
+        let qty = diams.map(d=>q[d]);
+        if (beamChart) beamChart.destroy();
+        beamChart = new Chart(document.getElementById('beamChart'), {
+            type:'bar',
+            data:{ labels:diams.map(d=>d+'mm'), datasets:[
+                { label:'Number of Bars', data:qty, backgroundColor:'rgba(201,169,89,0.7)', borderColor:'#c9a959', yAxisID:'y' },
+                { label:'Cumulative %', data:qty.map((v,i,a)=>{let s=a.reduce((x,y)=>x+y,0); return s? a.slice(0,i+1).reduce((x,y)=>x+y,0)/s*100:0; }), type:'line', borderColor:'#1e2b3c', borderWidth:2, tension:0.3, yAxisID:'y1' }
+            ]},
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'top'} }, scales:{ y:{ beginAtZero:true }, y1:{ beginAtZero:true, max:100, position:'right', grid:{drawOnChartArea:false} } } }
+        });
+    });
+
+    document.getElementById('calcSlab').addEventListener('click', ()=>{
+        let totalWt=0, rows='';
+        slabs.forEach(s => {
+            let d = slabDesigns[s]; if (!d) return;
+            let cnt = d.count||1;
+            let mainNos = Math.floor((d.L-d.beam)/d.mainSp)+1;
+            let mainCut = (d.L-2*d.cov)/1000;
+            let mainTot = mainNos*mainCut, mainWt = mainTot*uw(d.mainDia);
+            rows += `<tr><td>${s}</td><td>${cnt}</td><td>Main X</td><td>${d.mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(mainTot*cnt)}</td><td>${r2(mainWt*cnt)}</td></tr>`;
+            totalWt += mainWt*cnt;
+            let distTot = mainNos*mainCut, distWt = distTot*uw(d.mainDia);
+            rows += `<tr><td>${s}</td><td>${cnt}</td><td>Dist Y</td><td>${d.mainDia}</td><td>${mainNos}</td><td>${r3(mainCut)}</td><td>${r3(distTot*cnt)}</td><td>${r2(distWt*cnt)}</td></tr>`;
+            totalWt += distWt*cnt;
+            let extraPerSide = Math.floor((d.L-d.beam)/d.extraSp)+1;
+            let extraCut = (d.extraLen-d.cov)/1000;
+            let extraXtot = extraPerSide*2*extraCut, extraYtot = extraPerSide*2*extraCut;
+            let extraWt = (extraXtot+extraYtot)*uw(d.extraDia);
+            rows += `<tr><td>${s}</td><td>${cnt}</td><td>Extra</td><td>${d.extraDia}</td><td>${extraPerSide*4}</td><td>${r3(extraCut)}</td><td>${r3((extraXtot+extraYtot)*cnt)}</td><td>${r2(extraWt*cnt)}</td></tr>`;
+            totalWt += extraWt*cnt;
+            let topPerSide = Math.floor((d.extraLen-d.beam)/d.extraSp)+1; if (topPerSide<0) topPerSide=0;
+            let topCut = (d.L-2*d.cov)/1000;
+            let topXtot = topPerSide*2*topCut, topYtot = topPerSide*2*topCut;
+            let topWt = (topXtot+topYtot)*uw(d.topDia);
+            rows += `<tr><td>${s}</td><td>${cnt}</td><td>Top dist</td><td>${d.topDia}</td><td>${topPerSide*4}</td><td>${r3(topCut)}</td><td>${r3((topXtot+topYtot)*cnt)}</td><td>${r2(topWt*cnt)}</td></tr>`;
+            totalWt += topWt*cnt;
+        });
+        slabWt = totalWt;
+        document.getElementById('slabBody').innerHTML = rows;
+        document.getElementById('slabSummary').innerHTML = `<span>🧾 Total slab steel: ${r2(slabWt)} kg</span>`;
+        captureSlab(); updateGlobal();
+
+        // Slab chart
+        let q = {};
+        slabs.forEach(s => {
+            let d = slabDesigns[s]; if (!d) return;
+            let cnt = d.count||1;
+            let mainNos = Math.floor((d.L-d.beam)/d.mainSp)+1;
+            let extraPerSide = Math.floor((d.L-d.beam)/d.extraSp)+1;
+            let topPerSide = Math.floor((d.extraLen-d.beam)/d.extraSp)+1; if (topPerSide<0) topPerSide=0;
+            q[d.mainDia] = (q[d.mainDia]||0) + mainNos*2 * cnt; // main + distribution
+            q[d.extraDia] = (q[d.extraDia]||0) + extraPerSide*4 * cnt;
+            q[d.topDia] = (q[d.topDia]||0) + topPerSide*4 * cnt;
+        });
+        let diams = Object.keys(q).sort((a,b)=>a-b);
+        let qty = diams.map(d=>q[d]);
+        if (slabChart) slabChart.destroy();
+        slabChart = new Chart(document.getElementById('slabChart'), {
+            type:'bar',
+            data:{ labels:diams.map(d=>d+'mm'), datasets:[
+                { label:'Number of Bars', data:qty, backgroundColor:'rgba(201,169,89,0.7)', borderColor:'#c9a959', yAxisID:'y' },
+                { label:'Cumulative %', data:qty.map((v,i,a)=>{let s=a.reduce((x,y)=>x+y,0); return s? a.slice(0,i+1).reduce((x,y)=>x+y,0)/s*100:0; }), type:'line', borderColor:'#1e2b3c', borderWidth:2, tension:0.3, yAxisID:'y1' }
+            ]},
+            options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'top'} }, scales:{ y:{ beginAtZero:true }, y1:{ beginAtZero:true, max:100, position:'right', grid:{drawOnChartArea:false} } } }
+        });
+    });
+
+    // ----- PRINT FUNCTION (EXACT LAYOUT) -----
+    document.getElementById('printFullBtn').addEventListener('click', ()=>{
+        captureFooting(); captureColumn(); captureBeam(); captureSlab();
+
+        const footingTags = document.getElementById('footing-tags').innerHTML.replace(/<button[\s\S]*?<\/button>/g, '');
+        const columnTags = document.getElementById('column-tags').innerHTML.replace(/<button[\s\S]*?<\/button>/g, '');
+        const beamTags = document.getElementById('beam-tags').innerHTML.replace(/<button[\s\S]*?<\/button>/g, '');
+        const slabTags = document.getElementById('slab-tags').innerHTML.replace(/<button[\s\S]*?<\/button>/g, '');
+
+        const globalHTML = document.getElementById('globalSummaryBlock').outerHTML;
+
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>KAJAL · complete BBS</title>
+                <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                <style>
+                    body { font-family:'Inter',sans-serif; padding:1.5rem; background:white; color:#1e293b; margin:0; }
+                    .brand-header { background:#ffffff; padding:1.5rem; border-bottom:1px solid #e9eef3; text-align:center; margin-bottom:1.5rem; }
+                    .brand-main { font-family:'Cinzel Decorative',cursive; font-size:2.5rem; font-weight:700; color:#1e2b3c; }
+                    .brand-sub { font-size:1rem; font-weight:300; letter-spacing:2px; color:#000000; text-transform:uppercase; margin-top:0.25rem; }
+                    .tagline { font-size:0.9rem; color:#000000; background:#f8fafd; padding:0.2rem 1.5rem; border-radius:30px; display:inline-block; margin-top:0.5rem; border:1px solid #e0e7ef; }
+                    .element-items { display:flex; flex-wrap:wrap; gap:0.5rem; margin:1rem 0; }
+                    .element-tag { background:#f0f5fc; border:1px solid #1e2b3c; border-radius:40px; padding:0.3rem 1rem; font-weight:500; color:#1e2b3c; }
+                    h2 { font-weight:400; font-size:1.5rem; color:#1e2b3c; border-bottom:1px solid #e9eef3; padding-bottom:0.5rem; margin-top:1.5rem; }
+                    table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:1rem 0; }
+                    th { background:#f9fbfd; color:#405b73; font-weight:600; padding:0.8rem 0.6rem; border-bottom:1px solid #dbe1ec; font-size:0.8rem; text-transform:uppercase; }
+                    td { padding:0.7rem 0.6rem; border-bottom:1px solid #edf2f9; color:#2f4055; }
+                    .summary-card { background:#f9fbfd; border-left:4px solid #c9a959; padding:1rem 1.5rem; display:flex; flex-wrap:wrap; gap:1.5rem; margin:1rem 0; border-radius:1rem; }
+                    .global-summary { background:#f9fbfd; border:1px solid #e4eaf2; border-radius:1.5rem; padding:1.5rem; margin:2rem 0; }
+                    .summary-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; }
+                    .stat-block { background:white; padding:0.8rem 1rem; border-radius:1rem; border:1px solid #eef2f6; }
+                    .stat-label { font-size:0.75rem; color:#70859c; font-weight:500; text-transform:uppercase; }
+                    .stat-value { font-size:1.3rem; font-weight:600; color:#1e2b3c; }
+                    .print-footer { margin-top:2rem; text-align:center; color:#70859c; border-top:1px solid #e9eef3; padding-top:1rem; font-size:0.9rem; }
+                    .footing-page { page-break-after: always; }
+                    .column-page { page-break-after: always; }
+                    .beam-page { page-break-after: always; }
+                    .slab-page { page-break-after: avoid; }
+                    .summary-page { page-break-before: always; }
+                </style>
+            </head>
+            <body>
+                <div class="brand-header">
+                    <div class="brand-main">KAJAL</div>
+                    <div class="brand-sub">STRUCTURAL DESIGN STUDIO</div>
+                    <div class="tagline">Build Smarter, Build Stronger</div>
+                </div>
+
+                <div class="footing-page"><h2>📐 Footing BBS</h2><div class="element-items">${footingTags}</div>${footingHTML}</div>
+                <div class="column-page"><h2>📏 Column BBS</h2><div class="element-items">${columnTags}</div>${columnHTML}</div>
+                <div class="beam-page"><h2>📦 Beam BBS</h2><div class="element-items">${beamTags}</div>${beamHTML}</div>
+                <div class="slab-page"><h2>🧱 Slab BBS</h2><div class="element-items">${slabTags}</div>${slabHTML}</div>
+
+                <div class="summary-page">${globalHTML}</div>
+
+                <div class="print-footer">
+                    KAJAL STRUCTURAL DESIGN STUDIO · 9390396951 · designbykajal786@gmail.com<br>
+                    Generated on ${new Date().toLocaleString()}
+                </div>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    });
+
+    // excel
+    document.getElementById('excelFullBtn').addEventListener('click', ()=>{
+        captureFooting(); captureColumn(); captureBeam(); captureSlab();
+        let html = `<html><head><meta charset="UTF-8"></head><body>${document.getElementById('globalSummaryBlock').outerHTML}${footingHTML}${columnHTML}${beamHTML}${slabHTML}</body></html>`;
+        let blob = new Blob([html], {type:'application/vnd.ms-excel'});
+        let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'KAJAL_bbs.xls'; a.click();
+    });
+
+    renderTags();
+    loadFooting('F1'); loadColumn('C1'); loadBeam('B101'); loadSlab('S1');
+    setTimeout(()=>{
+        document.getElementById('calcFooting').click();
+        document.getElementById('calcColumn').click();
+        document.getElementById('calcBeam').click();
+        document.getElementById('calcSlab').click();
+    },200);
+})();
 </script>
 </body>
 </html>
